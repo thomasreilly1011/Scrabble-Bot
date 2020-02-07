@@ -1,4 +1,4 @@
-package scrabble;
+package main;
 
 
 public class Player 
@@ -7,9 +7,9 @@ public class Player
 	//	A class called Player that:
 	//	o Allows the player data to be reset ~
 	//	o Allows the name of the player to be set ~
-	//	o Allows a player’s score to be increased ~
+	//	o Allows a playerâ€™s score to be increased ~
 	//	o Allows access to their score ~
-	//	o Allows access to a player’s frame (tiles) ~
+	//	o Allows access to a playerâ€™s frame (tiles) ~
 	//	o Allows display of a players name 
 	
 	String playerName;
