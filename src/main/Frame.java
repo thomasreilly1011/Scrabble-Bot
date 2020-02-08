@@ -27,6 +27,13 @@ public class Frame {
     }
 
     /*
+    Allows access to the tiles of the array and therefore also the letters.
+     */
+    public Tile getTile(int i) {
+        return tiles.get(i);
+    }
+
+    /*
     Returns true if tile has successfully been removed from the frame.
     Returns false if the tile could not be found in the frame.
      */
@@ -35,41 +42,25 @@ public class Frame {
         if (!Character.isLetter(letter)) {
             throw new IllegalArgumentException("removeTile can only take a letter as input. Digits and special characters are invalid.");
         }
-        if (!this.hasString(Character.toString(letter))) {
-            throw new IllegalArgumentException("Given letter does not exist in this frame");
-        }
 
-        //Then, find that letter and remove it.
+        //Then, find that letter and return it.
         for (int i=0; i<tiles.size(); i++) {
             if(tiles.get(i).getLetter() == letter){
+                Pool.returnTile(tiles.get(i));
                 tiles.remove(i);
+                //Then, add a new random tile from the pool.
+                tiles.add(Pool.drawRandomTile());
                 return true;
             }
         }
 
-        tiles.add(Pool.drawRandomTile());
         return false;
     }
 
     public boolean isEmpty() {
         return tiles.isEmpty();
     }
-    /*
-    Used to display the letters of a frame. (and the value of each letter)
-     */
-    public String toString() {
-        //Used to display the contents of a Frame.
-        String s = "[";
-        for (int i = 0; i < tiles.size(); i++) {
-            s += tiles.get(i).getLetter();
-            s += ":" + tiles.get(i).getValue();
-            if (i+1 != tiles.size()) {
-                s += ", ";
-            }
-        }
-        s += "]";
-        return s;
-    }
+
 
     /*
     Takes a string as input and checks to see if the letters of the frame can make up the word in the string.
@@ -105,9 +96,19 @@ public class Frame {
     }
 
     /*
-    Allows access to the tiles of the array and therefore also the letters.
+    Used to display the letters of a frame. (and the value of each letter)
      */
-    public ArrayList<Tile> getTiles() {
-        return tiles;
+    public String toString() {
+        //Used to display the contents of a Frame.
+        String s = "[";
+        for (int i = 0; i < tiles.size(); i++) {
+            s += tiles.get(i).getLetter();
+            s += ":" + tiles.get(i).getValue();
+            if (i+1 != tiles.size()) {
+                s += ", ";
+            }
+        }
+        s += "]";
+        return s;
     }
 }
