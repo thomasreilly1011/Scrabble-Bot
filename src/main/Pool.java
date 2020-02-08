@@ -18,7 +18,7 @@ public class Pool
         set();
     }
 
-    static void set()
+    public static void set()
     {
         int i;
         for(i=0; i<9; i++)// A Tiles
