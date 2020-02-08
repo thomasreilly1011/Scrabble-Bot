@@ -1,3 +1,5 @@
+package main;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -13,10 +15,10 @@ public class Pool
 
     public Pool() //constructor
     {
-        setTiles();
+        set();
     }
 
-    private static void setTiles()
+    static void set()
     {
         int i;
         for(i=0; i<9; i++)// A Tiles
@@ -120,6 +122,10 @@ public class Pool
         Random random = new Random();
         int random_num = random.nextInt(pool.size());
 
+        /*Tile selectedTile = pool.get(random_num);
+
+        pool.remove(random_num);*/
+
         return pool.remove(random_num); //ensure this properly returns the tile
 
     }
@@ -131,8 +137,16 @@ public class Pool
 
     public static void resetPool()
     {
-        setTiles();
+        set();
     }
+
+    public static int test()
+    {
+        Random random = new Random();
+        int random_num = random.nextInt(pool.size());
+        return random_num;
+    }
+
 
     public static int getNumOfTilesRemaining() //is this proper use of get term or should this be a toString method?
     {
@@ -141,14 +155,8 @@ public class Pool
 
     public static boolean isEmpty()
     {
-        if(pool.size() == 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return pool.size() == 0;
     }
+
 
 }

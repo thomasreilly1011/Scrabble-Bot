@@ -11,18 +11,18 @@ public class Frame {
         this.refill();
     }
 
-    private void refill() {
+    public void refill() {
         //Needs Pool class
         //First clear all elements from tiles.
-
         for(int i=0; i<tiles.size(); i++) {
             //Send tiles back to pool.
             Pool.returnTile(tiles.get(i));
-            tiles.remove(i);
         }
+        //Then remove them all from the frame.
+        tiles.removeAll(tiles);
         //Then, fill it with random tiles from Pool.
         for(int i=0; i<NUM_TILES; i++) {
-            tiles.add(PlayerTest.pool.drawRandomTile());
+            tiles.add(Pool.drawRandomTile());
         }
     }
 
@@ -46,6 +46,8 @@ public class Frame {
                 return true;
             }
         }
+
+        tiles.add(Pool.drawRandomTile());
         return false;
     }
 
@@ -72,36 +74,34 @@ public class Frame {
     /*
     Takes a string as input and checks to see if the letters of the frame can make up the word in the string.
      */
-    public boolean hasString(String word) {
+    public boolean hasString(String w) {
         //First, exception handling..
-        word = word.trim();
-        if (word.contains(" ")) {
-            throw new IllegalArgumentException("hasString should only take a singular word as argument");
-        }
+        String word = w.toUpperCase();
         if (word.matches("^a-z A-Z")) {
             throw new IllegalArgumentException("Input has characters that do not respond to a scabble tile");
         }
         word = word.toLowerCase();
 
         //Then, check if the letters of the word against the letters in the tiles of the frame..
-        boolean hasString = false;
+        boolean hasChar = false;
         char[] wordCharArray;
         wordCharArray = word.toCharArray();
         ArrayList<Tile> tempTiles = new ArrayList<Tile>();
         tempTiles = (ArrayList<Tile>) tiles.clone();
         for (char c : wordCharArray) {
             for (int j = 0; j < tempTiles.size(); j++) {
-                if (tempTiles.get(j).getLetter() == c) {
+                if (tempTiles.get(j).getLetter() == Character.toUpperCase(c)) {
                     tempTiles.remove(j);
-                    hasString = true;
+                    hasChar = true;
                     break;
                 }
             }
-            if (!hasString) {
+            if (!hasChar) {
                 return false;
             }
+            hasChar = false;
         }
-        return false;
+        return true;
     }
 
     /*

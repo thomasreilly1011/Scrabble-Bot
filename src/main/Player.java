@@ -19,7 +19,7 @@ public class Player
 	public Player(String playerName) //Constructor
 	{
 		this.playerName = playerName;
-		frame = new Frame(this);
+		frame = new Frame();
 		playerScore = 0;
 	}
 	
