@@ -14,9 +14,9 @@ public class Frame {
     public void refill() {
         //Needs Pool class
         //First clear all elements from tiles.
-        for(int i=0; i<tiles.size(); i++) {
+        for (Tile tile : tiles) {
             //Send tiles back to pool.
-            Pool.returnTile(tiles.get(i));
+            Pool.returnTile(tile);
         }
         //Then remove them all from the frame.
         tiles.removeAll(tiles);
@@ -37,7 +37,8 @@ public class Frame {
     Returns true if tile has successfully been removed from the frame.
     Returns false if the tile could not be found in the frame.
      */
-    public boolean removeTile(char letter) {
+    public boolean
+    removeTile(char letter) {
         //First, exception handling
         if (!Character.isLetter(letter)) {
             throw new IllegalArgumentException("removeTile can only take a letter as input. Digits and special characters are invalid.");
@@ -68,10 +69,13 @@ public class Frame {
     public boolean hasString(String w) {
         //First, exception handling..
         String word = w.toUpperCase();
-        if (word.matches("^a-z A-Z")) {
-            throw new IllegalArgumentException("Input has characters that do not respond to a scrabble tile");
+        for (int i=0; i<word.length(); i++) {
+            if (!Character.isLetter(word.charAt(i))) {
+                throw new IllegalArgumentException("Input has characters that do not respond to a scrabble tile");
+            }
         }
-        word = word.toLowerCase();
+
+        word = word.toUpperCase();
 
         //Then, check if the letters of the word against the letters in the tiles of the frame..
         boolean hasChar = false;
@@ -81,7 +85,7 @@ public class Frame {
         tempTiles = (ArrayList<Tile>) tiles.clone();
         for (char c : wordCharArray) {
             for (int j = 0; j < tempTiles.size(); j++) {
-                if (tempTiles.get(j).getLetter() == Character.toUpperCase(c)) {
+                if (tempTiles.get(j).getLetter() == c) {
                     tempTiles.remove(j);
                     hasChar = true;
                     break;

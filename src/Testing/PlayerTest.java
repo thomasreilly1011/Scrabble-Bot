@@ -12,7 +12,7 @@ public class PlayerTest {
         testPlayerFrame();
     }
 
-    public static void testPlayerClass()
+    private static void testPlayerClass()
     {
         //Testing the construction of a player's name
         Player p1 = new Player("daniel byrne");
@@ -37,8 +37,7 @@ public class PlayerTest {
 
     }
 
-    public static
-    void testPlayerFrame() {
+    private static void testPlayerFrame() {
         //Tests the creation and display of a players frame.
         Player p1 = new Player("Player 1");
         Player p2 = new Player("Player 2");
@@ -72,6 +71,25 @@ public class PlayerTest {
         System.out.println("Player 1's frame: " + p1.getFrame());
         p1.getFrame().removeTile(p1.getFrame().getTile(0).getLetter());
         System.out.println("The tile at index 0 has been removed and replaced. Player 1's frame now looks like: " + p1.getFrame());
+        System.out.println();
+
+        //Attempts to call Frame methods with invalid arguments.
+        try {
+            p1.getFrame().removeTile('3');
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
+        try {
+            p1.getFrame().hasString("@ucd.ie");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
+        try {
+            p1.getFrame().hasString("12345");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
+
     }
 
 }
