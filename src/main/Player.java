@@ -1,5 +1,8 @@
 package main;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class Player 
 {
@@ -12,15 +15,24 @@ public class Player
 	//	o Allows access to a player’s frame (tiles) ~
 	//	o Allows display of a players name 
 	
-	String playerName;
-	int playerScore;
-	Frame frame;
+	private String playerName;
+	private int playerScore;
+	private Frame frame;
 	
 	public Player(String playerName) //Constructor
 	{
 		this.playerName = playerName;
 		frame = new Frame();
 		playerScore = 0;
+
+		//Error handling for illegal characters
+//		Pattern pattern = Pattern.compile("[a-zA-Z0-9]");
+//
+//		Matcher matcher = pattern.matcher(playerName);
+//
+//		if (!matcher.matches()) {
+//			throw new IllegalArgumentException("Name cannot contain special characters");
+//		}
 	}
 	
 	public void incScore(int amount) //method used to increment score

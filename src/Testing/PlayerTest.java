@@ -12,7 +12,28 @@ public class PlayerTest {
         testPlayerFrame();
     }
 
-    public static void testPlayerClass() {
+    public static void testPlayerClass()
+    {
+        //Testing the construction of a player's name
+        Player p1 = new Player("daniel byrne");
+        Player p2 = new Player("thomas reilly");
+        System.out.println("Player 1's name: " + p1.getPlayerName());
+        System.out.println("Player 2's name: " + p2.getPlayerName());
+        System.out.println();
+
+        //Tests the increment function of a player's score
+        System.out.println(p1.getPlayerName() + "'s score before being incremented: " + p1.getPlayerScore());
+        p1.incScore(10);
+        System.out.println(p1.getPlayerName() + "'s score after being incremented: " + p1.getPlayerScore());
+        System.out.println();
+
+        //Tests the reset data function of a player's data
+        System.out.println("Player 1's data before being reset: ");
+        System.out.println("Player name: " + p1.getPlayerScore() + "    Player score: " + p1.getPlayerName());
+        p1.resetData();
+        System.out.println("Player 1's data after being reset: ");
+        System.out.println("Player name: " + p1.getPlayerScore() + "    Player score: " + p1.getPlayerName());
+        System.out.println();
 
     }
 

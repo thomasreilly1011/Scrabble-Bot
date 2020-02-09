@@ -69,7 +69,7 @@ public class Frame {
         //First, exception handling..
         String word = w.toUpperCase();
         if (word.matches("^a-z A-Z")) {
-            throw new IllegalArgumentException("Input has characters that do not respond to a scabble tile");
+            throw new IllegalArgumentException("Input has characters that do not respond to a scrabble tile");
         }
         word = word.toLowerCase();
 
