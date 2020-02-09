@@ -81,7 +81,7 @@ public class Frame {
         boolean hasChar = false;
         char[] wordCharArray;
         wordCharArray = word.toCharArray();
-        ArrayList<Tile> tempTiles = new ArrayList<Tile>();
+        ArrayList<Tile> tempTiles;
         tempTiles = (ArrayList<Tile>) tiles.clone();
         for (char c : wordCharArray) {
             for (int j = 0; j < tempTiles.size(); j++) {

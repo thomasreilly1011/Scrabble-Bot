@@ -71,8 +71,8 @@ public class PlayerTest {
         System.out.println("Player 1's frame: " + p1.getFrame());
         p1.getFrame().removeTile(p1.getFrame().getTile(0).getLetter());
         System.out.println("The tile at index 0 has been removed and replaced. Player 1's frame now looks like: " + p1.getFrame());
+        System.out.println("Attempting to remove the letter a from player 1's frame returns: " + p1.getFrame().removeTile('A'));
         System.out.println();
-
         //Attempts to call Frame methods with invalid arguments.
         try {
             p1.getFrame().removeTile('3');
