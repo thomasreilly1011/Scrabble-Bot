@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Pool
+public final class Pool
 {
     //9A_1, 2B_3, 2C_3, 4D_2, 12E_1, 2F_4, 3G_2, 2H_4, 9I_1, 1J_8, 1K_5, 4L_1, 2M_3, 6N_1
     //8O_1, 2P_3, 1Q_10, 6R_1, 4S_1, 6T_1, 4U_1, 2V_4, 2W_4, 1X_8, 2Y_4, 1Z_10, 2BLANK_0
@@ -13,7 +13,7 @@ public class Pool
 
     private static ArrayList<Tile> pool = new ArrayList<>();
 
-    public Pool() //constructor
+    private Pool() //constructor
     {
         set();
     }
@@ -117,14 +117,10 @@ public class Pool
     }
 
     //removing a random tile
-    public static Tile drawRandomTile()
+    public static Tile getRandomTile()
     {
         Random random = new Random();
         int random_num = random.nextInt(pool.size());
-
-        /*Tile selectedTile = pool.get(random_num);
-
-        pool.remove(random_num);*/
 
         return pool.remove(random_num); //ensure this properly returns the tile
 
@@ -137,18 +133,11 @@ public class Pool
 
     public static void resetPool()
     {
+        pool.clear();
         set();
     }
 
-    public static int test()
-    {
-        Random random = new Random();
-        int random_num = random.nextInt(pool.size());
-        return random_num;
-    }
-
-
-    public static int getNumOfTilesRemaining() //is this proper use of get term or should this be a toString method?
+    public static int getNumberOfTilesRemaining()
     {
         return pool.size();
     }
@@ -157,6 +146,5 @@ public class Pool
     {
         return pool.size() == 0;
     }
-
-
+    
 }

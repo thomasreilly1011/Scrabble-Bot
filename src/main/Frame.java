@@ -22,7 +22,7 @@ public class Frame {
         tiles.removeAll(tiles);
         //Then, fill it with random tiles from Pool.
         for(int i=0; i<NUM_TILES; i++) {
-            tiles.add(Pool.drawRandomTile());
+            tiles.add(Pool.getRandomTile());
         }
     }
 
@@ -50,7 +50,7 @@ public class Frame {
                 Pool.returnTile(tiles.get(i));
                 tiles.remove(i);
                 //Then, add a new random tile from the pool.
-                tiles.add(Pool.drawRandomTile());
+                tiles.add(Pool.getRandomTile());
                 return true;
             }
         }
