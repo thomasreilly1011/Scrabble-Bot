@@ -6,15 +6,6 @@ import java.util.regex.Pattern;
 
 public class Player 
 {
-	
-	//	A class called Player that:
-	//	o Allows the player data to be reset ~
-	//	o Allows the name of the player to be set ~
-	//	o Allows a player’s score to be increased ~
-	//	o Allows access to their score ~
-	//	o Allows access to a player’s frame (tiles) ~
-	//	o Allows display of a players name 
-	
 	private String playerName;
 	private int playerScore;
 	private Frame frame;
@@ -26,18 +17,24 @@ public class Player
 		playerScore = 0;
 
 		//Error handling for illegal characters
-//		Pattern pattern = Pattern.compile("[a-zA-Z0-9]");
-//
-//		Matcher matcher = pattern.matcher(playerName);
-//
-//		if (!matcher.matches()) {
-//			throw new IllegalArgumentException("Name cannot contain special characters");
-//		}
+		for(int i = 0; i < playerName.length(); i++)
+		{
+			if(!Character.isDigit(playerName.charAt(i)) && !Character.isLetter(playerName.charAt(i)) && !Character.isWhitespace(playerName.charAt(i)))
+			{
+				throw ( new IllegalArgumentException("Illegal Character in String"));
+			}
+		}//end for loop
 	}
 	
 	public void incScore(int amount) //method used to increment score
 	{
 		this.playerScore += amount;
+
+		//Error handling for an incorrect amount value
+		if(amount < 0)
+		{
+			throw ( new IllegalArgumentException("Score cannot be incremented by a negative value"));
+		}
 	}
 	
 	public String getPlayerName() //PlayerName getter
@@ -60,7 +57,8 @@ public class Player
 	{
 		return this.frame;
 	}
-	
+
+	@Override
 	public String toString() //Prints string PlayerName
 	{
 		return "Player: " + playerName + " Score: " + playerScore;
