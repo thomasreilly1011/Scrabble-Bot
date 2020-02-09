@@ -2,26 +2,31 @@ package main;
 
 import java.util.ArrayList;
 
-public class Frame {
+public class Frame
+{
     private static final int NUM_TILES = 7;
 
     private ArrayList<Tile> tiles = new ArrayList<>();
 
-    Frame() {
+    Frame()
+    {
         this.refill();
     }
 
-    public void refill() {
+    public void refill()
+    {
         //Needs Pool class
         //First clear all elements from tiles.
-        for (Tile tile : tiles) {
+        for (Tile tile : tiles)
+        {
             //Send tiles back to pool.
             Pool.returnTile(tile);
         }
         //Then remove them all from the frame.
         tiles.removeAll(tiles);
         //Then, fill it with random tiles from Pool.
-        for(int i=0; i<NUM_TILES; i++) {
+        for(int i=0; i<NUM_TILES; i++)
+        {
             tiles.add(Pool.getRandomTile());
         }
     }
@@ -29,7 +34,8 @@ public class Frame {
     /*
     Allows access to the tiles of the array and therefore also the letters.
      */
-    public Tile getTile(int i) {
+    public Tile getTile(int i)
+    {
         return tiles.get(i);
     }
 
@@ -38,15 +44,19 @@ public class Frame {
     Returns false if the tile could not be found in the frame.
      */
     public boolean
-    removeTile(char letter) {
+    removeTile(char letter)
+    {
         //First, exception handling
-        if (!Character.isLetter(letter)) {
+        if (!Character.isLetter(letter))
+        {
             throw new IllegalArgumentException("removeTile can only take a letter as input. Digits and special characters are invalid.");
         }
 
         //Then, find that letter and return it.
-        for (int i=0; i<tiles.size(); i++) {
-            if(tiles.get(i).getLetter() == letter){
+        for (int i=0; i<tiles.size(); i++)
+        {
+            if(tiles.get(i).getLetter() == letter)
+            {
                 Pool.returnTile(tiles.get(i));
                 tiles.remove(i);
                 //Then, add a new random tile from the pool.
@@ -66,11 +76,14 @@ public class Frame {
     /*
     Takes a string as input and checks to see if the letters of the frame can make up the word in the string.
      */
-    public boolean hasString(String w) {
+    public boolean hasString(String w)
+    {
         //First, exception handling..
         String word = w.toUpperCase();
-        for (int i=0; i<word.length(); i++) {
-            if (!Character.isLetter(word.charAt(i))) {
+        for (int i=0; i<word.length(); i++)
+        {
+            if (!Character.isLetter(word.charAt(i)))
+            {
                 throw new IllegalArgumentException("Input has characters that do not respond to a scrabble tile");
             }
         }
@@ -83,15 +96,19 @@ public class Frame {
         wordCharArray = word.toCharArray();
         ArrayList<Tile> tempTiles;
         tempTiles = (ArrayList<Tile>) tiles.clone();
-        for (char c : wordCharArray) {
-            for (int j = 0; j < tempTiles.size(); j++) {
-                if (tempTiles.get(j).getLetter() == c) {
+        for (char c : wordCharArray)
+        {
+            for (int j = 0; j < tempTiles.size(); j++)
+            {
+                if (tempTiles.get(j).getLetter() == c)
+                {
                     tempTiles.remove(j);
                     hasChar = true;
                     break;
                 }
             }
-            if (!hasChar) {
+            if (!hasChar)
+            {
                 return false;
             }
             hasChar = false;
@@ -102,13 +119,16 @@ public class Frame {
     /*
     Used to display the letters of a frame. (and the value of each letter)
      */
-    public String toString() {
+    public String toString()
+    {
         //Used to display the contents of a Frame.
         String s = "[";
-        for (int i = 0; i < tiles.size(); i++) {
+        for (int i = 0; i < tiles.size(); i++)
+        {
             s += tiles.get(i).getLetter();
             s += ":" + tiles.get(i).getValue();
-            if (i+1 != tiles.size()) {
+            if (i+1 != tiles.size())
+            {
                 s += ", ";
             }
         }
