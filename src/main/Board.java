@@ -1,9 +1,17 @@
 package main;
 
-public class Board {
+public class Board
+{
 
-    public Board() {
+    public Board()
+    {
 
+    }
+
+    @Override
+    public String toString() //Prints Board
+    {
+        return tile + board;
     }
 
 }
