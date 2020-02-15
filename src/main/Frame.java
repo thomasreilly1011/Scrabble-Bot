@@ -47,7 +47,7 @@ public class Frame
     removeTile(char letter)
     {
         //First, exception handling
-        if (!Character.isLetter(letter))
+        if (!Character.isLetter(letter) && !(letter == ' '))
         {
             throw new IllegalArgumentException("removeTile can only take a letter as input. Digits and special characters are invalid.");
         }

@@ -13,7 +13,7 @@ public final class Pool
 
     private static ArrayList<Tile> pool = new ArrayList<>();
 
-    private Pool() //constructor
+    public Pool() //constructor
     {
         set();
     }

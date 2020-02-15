@@ -4,11 +4,12 @@ import main.Player;
 import main.Pool;
 
 public class PlayerTest {
-
     public static void main(String[] args) {
         Pool.set();
 
+        System.out.println("-------------Player Class Tests-------------");
         testPlayerClass();
+        System.out.println("-------------Player Frame Class Tests-------------");
         testPlayerFrame();
     }
 
