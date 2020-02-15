@@ -1,23 +1,28 @@
 package main;
 
-public class Tile {
+public class Tile
+{
     char letter;
     int value;
 
-    public Tile(char letter, int value) {
+    public Tile(char letter, int value)
+    {
         this.letter = letter;
         this.value = value;
     }
 
-    public char getLetter() {
+    public char getLetter()
+    {
         return letter;
     }
 
-    public int getValue() {
+    public int getValue()
+    {
         return value;
     }
 
-    public String toString() {
+    public String toString()
+    {
         return letter + ":" + value;
     }
 }
