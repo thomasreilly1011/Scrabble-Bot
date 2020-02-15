@@ -5,7 +5,7 @@ public class Square
     SquareType e;
     Tile t;
 
-    public Square(SquareType e, Tile t) //constructor
+    public Square(SquareType e) //constructor
     {
         this.e = e;
         this.t = null;
