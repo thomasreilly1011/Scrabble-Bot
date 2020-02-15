@@ -6,5 +6,6 @@ public enum SquareType
     DL,     //double letter
     TL,     //triple letter
     DW,     //double word
-    TW      //triple word
+    TW,      //triple word
+    BLANK
 }
