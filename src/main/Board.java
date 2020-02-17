@@ -79,41 +79,47 @@ public class Board
     @Override
     public String toString()
     {
-        //Pool pool = new Pool();
-        char [][] scrabbleBoard = new char [16][16];
-
-        for (int i = 0; i<scrabbleBoard.length; i++)
+        for (int i = 0; i<squares.length; i++)
         {
             if (i != 0)
             {
-                System.out.println("\t");
-                System.out.print(i-1);
-            }
+                return "\t" + "\t" + (i-1);
 
-            for (int j = 1; j <scrabbleBoard.length; j++)
-            {
-                if (j == 8 && i == 8)
+                for (int j = 1; j <squares.length; j++)
                 {
-                    scrabbleBoard[i][j] = '*';
-                    System.out.print(scrabbleBoard[i][j]);
-                }
-                else
+                    if (squares[i][j].getType() == SquareType.CENTRE)
+                    {
+                        return "CENTRE";
+                    }
+                    else if(squares[i][j].getType() == SquareType.DL)
+                    {
+                        return "DL";
+                    }
+                    else if(squares[i][j].getType() == SquareType.TL)
+                    {
+                        return "TL";
+                    }
+                    else if(squares[i][j].getType() == SquareType.DW)
+                    {
+                        return "DW";
+                    }
+                    else if(squares[i][j].getType() == SquareType.TW)
+                    {
+                        return "TW";
+                    }
+                    else
                     {
                         if (i == 0)
                         {
-                            System.out.print("\t");
-                            System.out.print(j-1);
+                            return "\t" + (j - 1);
                         }
                         else
                         {
-                        scrabbleBoard[i][j] = '_';
-                        System.out.print("\t");
-                        System.out.print(""+scrabbleBoard[i][j]);
+                            return "|" + "\t" + ""+scrabbleBoard[i][j];
                         }
                     }
+                }
             }
-        }
-
     }
 
 
