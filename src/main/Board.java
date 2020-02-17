@@ -27,8 +27,13 @@ public class Board
                     }
                 }
                 //DOUBLE WORD CONDITIONS
-                else if ((i == 1 || i ==  2 || i == 3 || i == 4) && (j == 1 || j == 2 || j == 3 || j == 4))
-                {
+                else if ((i == 1 || i == 13) && (j == 1 || j == 13)) {
+                    squares[i][j] = new Square(SquareType.DW);
+                } else if ((i == 2 || i == 12) && (j == 2 || j == 12)) {
+                    squares[i][j] = new Square(SquareType.DW);
+                } else if ((i == 3 || i == 11) && (j == 3 || j == 11)) {
+                    squares[i][j] = new Square(SquareType.DW);
+                } else if ((i == 4 || i == 10) && (j == 4 || j == 10)) {
                     squares[i][j] = new Square(SquareType.DW);
                 }
                 //TRIPLE LETTER CONDITIONS
@@ -48,10 +53,6 @@ public class Board
                 {
                     squares[i][j] = new Square(SquareType.DL);
                 }
-                else if ((i == 3 || i == 12) && (j == 6 || j == 8))
-                {
-                    squares[i][j] = new Square(SquareType.DL);
-                }
                 else if ((i == 2 || i == 12) && (j == 6 || j == 8))
                 {
                     squares[i][j] = new Square(SquareType.DL);
@@ -60,7 +61,7 @@ public class Board
                 {
                     squares[i][j] = new Square(SquareType.DL);
                 }
-                else if ((i == 3 && j == 7) || (i == 7 && (j == 3 || j == 10)) || (i == 10 && j == 7))
+                else if ((i == 3 && j == 7) || (i == 7 && (j == 3 || j == 10)) || (i == 11 && j == 7))
                 {
                     squares[i][j] = new Square(SquareType.DL);
                 }
@@ -104,7 +105,7 @@ public class Board
 //                    if (i == 0) {
 //                        board.append("\t").append(j - 1);
 //                    } else {
-                        board.append("  ");
+                    board.append("  ");
 //                    }
                 }
             }
