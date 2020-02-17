@@ -79,47 +79,38 @@ public class Board
     @Override
     public String toString()
     {
-        for (int i = 0; i<squares.length; i++)
+        StringBuilder board = new StringBuilder();
+        for (int i = 0; i < squares.length; i++)
         {
-            if (i != 0)
+            //board.append("\t" + "\t").append(i - 1);
+            for (int j = 0; j < squares.length; j++)
             {
-                return "\t" + "\t" + (i-1);
-
-                for (int j = 1; j <squares.length; j++)
+                if (squares[i][j].getType() == SquareType.CENTRE)
                 {
-                    if (squares[i][j].getType() == SquareType.CENTRE)
-                    {
-                        return "CENTRE";
-                    }
-                    else if(squares[i][j].getType() == SquareType.DL)
-                    {
-                        return "DL";
-                    }
-                    else if(squares[i][j].getType() == SquareType.TL)
-                    {
-                        return "TL";
-                    }
-                    else if(squares[i][j].getType() == SquareType.DW)
-                    {
-                        return "DW";
-                    }
-                    else if(squares[i][j].getType() == SquareType.TW)
-                    {
-                        return "TW";
-                    }
-                    else
-                    {
-                        if (i == 0)
-                        {
-                            return "\t" + (j - 1);
-                        }
-                        else
-                        {
-                            return "|" + "\t" + ""+scrabbleBoard[i][j];
-                        }
-                    }
+                    board.append("**");
+                } else if (squares[i][j].getType() == SquareType.DL)
+                {
+                    board.append("DL");
+                } else if (squares[i][j].getType() == SquareType.TL)
+                {
+                    board.append("TL");
+                } else if (squares[i][j].getType() == SquareType.DW)
+                {
+                    board.append("DW");
+                } else if (squares[i][j].getType() == SquareType.TW)
+                {
+                    board.append("TW");
+                } else {
+//                    if (i == 0) {
+//                        board.append("\t").append(j - 1);
+//                    } else {
+                        board.append("  ");
+//                    }
                 }
             }
+            board.append("\n");
+        }
+        return board.toString();
     }
 
 
