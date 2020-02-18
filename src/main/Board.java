@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Arrays;
+
 public class Board
 {
     private static final int ROWS = 15;
@@ -61,7 +63,7 @@ public class Board
                 {
                     squares[i][j] = new Square(SquareType.DL);
                 }
-                else if ((i == 3 && j == 7) || (i == 7 && (j == 3 || j == 10)) || (i == 11 && j == 7))
+                else if ((i == 3 && j == 7) || (i == 7 && (j == 3 || j == 11)) || (i == 11 && j == 7))
                 {
                     squares[i][j] = new Square(SquareType.DL);
                 }
@@ -76,6 +78,56 @@ public class Board
             }
         }
     }
+    public boolean placeWord(int row, int col, String word, Frame fromFrame, boolean verticle) {
+        //First perform all tests
+        if(!checkBounds(row, col, verticle, word)) {
+            return false;
+        }
+        Tile[] iTiles = checkIntersection(row, col, word, verticle);
+        //Check for origin / intersecting tiles.
+        if ((row != 7 || col != 7) && iTiles == null) {
+            //The word isn't being placed at the origin and it does not connect with other words on the board.
+            return false;
+        }
+
+        if(!hasTiles(iTiles, fromFrame, word)) {
+            return false;
+        }
+        /*
+        Place the word on the Board removing tiles from the Frame as you go. If one of the intersecting tiles has been reached
+        skip it. This is legal as all checks have been made. Once completed, return true to indicate success.
+         */
+        //I.E. SEAN'S JOB.
+        return true;
+    }
+    /*
+    Simply checks if the word placed at the coordinates fits the bounds of the board.
+    If it fits, returns true.
+    If it overlaps the edge of the board it returns false.
+     */
+    public boolean checkBounds(int row, int col, boolean verticle, String word) {
+        return false;
+    }
+
+    /*
+    Checks to see if the word intersects any tiles.
+    If it does not, it returns null
+    If it does, it returns an array of tiles containing that it intersects.
+     */
+    public Tile[] checkIntersection(int row, int col, String word, boolean verticle) {
+        return null;
+    }
+
+    /*
+    Checks if the word can be made from the tiles in the frame and any intersecting tiles.
+    Returns true if the word can be made.
+    Returns false otherwise.
+    NOTE check must fail if all tiles in iTiles haven't been used in the making of the word.
+     */
+    public boolean hasTiles(Tile[] iTiles, Frame frame, String word) {
+        return false;
+    }
+
 
     @Override
     public String toString()
@@ -86,6 +138,7 @@ public class Board
             //board.append("\t" + "\t").append(i - 1);
             for (int j = 0; j < squares.length; j++)
             {
+                //TODO Add an if for if there's a tile on a square (Display the letter of the tile).
                 if (squares[i][j].getType() == SquareType.CENTRE)
                 {
                     board.append("**");
