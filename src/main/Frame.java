@@ -100,7 +100,8 @@ public class Frame
         {
             for (int j = 0; j < tempTiles.size(); j++)
             {
-                if (tempTiles.get(j).getLetter() == c)
+                //NOTE if c == ' ', then you can ignore it as ' ' represents a tile that is already on the board.
+                if (tempTiles.get(j).getLetter() == c || c == ' ')
                 {
                     tempTiles.remove(j);
                     hasChar = true;

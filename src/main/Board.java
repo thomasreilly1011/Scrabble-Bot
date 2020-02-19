@@ -1,5 +1,6 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Board
@@ -80,17 +81,20 @@ public class Board
     }
     public boolean placeWord(int row, int col, String word, Frame fromFrame, boolean verticle) {
         //First perform all tests
-        if(!checkBounds(row, col, verticle, word)) {
+        if(!checkBounds(row, col, verticle, word))
+        {
             return false;
         }
         Tile[] iTiles = checkIntersection(row, col, word, verticle);
         //Check for origin / intersecting tiles.
-        if ((row != 7 || col != 7) && iTiles == null) {
+        if ((row != 7 || col != 7) && iTiles == null)
+        {
             //The word isn't being placed at the origin and it does not connect with other words on the board.
             return false;
         }
 
-        if(!hasTiles(iTiles, fromFrame, word)) {
+        if(!hasTiles(iTiles, fromFrame, word))
+        {
             return false;
         }
         /*
@@ -124,8 +128,28 @@ public class Board
     Returns false otherwise.
     NOTE check must fail if all tiles in iTiles haven't been used in the making of the word.
      */
-    public boolean hasTiles(Tile[] iTiles, Frame frame, String word) {
-        return false;
+    public boolean hasTiles(Tile[] iTiles, Frame frame, String word)
+    {
+        //Perform a check to make sure all intersecting tiles are used in the desired word.
+        boolean pass = false;
+        for (Tile t:iTiles)
+        {
+            for (int i = 0; i < word.length(); i++)
+            {
+                if (word.charAt(i) == t.getLetter())
+                {
+                    pass = true;
+                    //If the intersecting tile is part of the word, remove it from the string as it is not needed in the Frame part of the test.
+                    word = word.replace(word.charAt(i), ' ');
+            }
+            if (!pass)
+            {
+                return false;
+            }
+            pass = false;
+        }
+            //Now check that the frame has all remaining required letters to finish making up the word.
+        return frame.hasString(word);
     }
 
 
