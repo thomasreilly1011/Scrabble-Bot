@@ -134,16 +134,14 @@ public class Board
         boolean pass = false;
         for (Tile t:iTiles)
         {
-            for (int i = 0; i < word.length(); i++)
-            {
-                if (word.charAt(i) == t.getLetter())
-                {
+            for (int i = 0; i < word.length(); i++) {
+                if (word.charAt(i) == t.getLetter()) {
                     pass = true;
                     //If the intersecting tile is part of the word, remove it from the string as it is not needed in the Frame part of the test.
                     word = word.replace(word.charAt(i), ' ');
+                }
             }
-            if (!pass)
-            {
+            if (!pass) {
                 return false;
             }
             pass = false;
