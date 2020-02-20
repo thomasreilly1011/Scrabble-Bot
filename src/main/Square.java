@@ -26,7 +26,7 @@ public class Square
         this.e = null;
     }
 
-    public void removeTile()
+    public void removeTile() 
     {
         this.t = null;
     }
