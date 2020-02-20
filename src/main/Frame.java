@@ -43,14 +43,15 @@ public class Frame
     Returns true if tile has successfully been removed from the frame.
     Returns false if the tile could not be found in the frame.
      */
-    public boolean
-    removeTile(char letter)
+    public Tile removeTile(char letter)
     {
         //First, exception handling
-        if (!Character.isLetter(letter) && !(letter == ' '))
+        if (!Character.isLetter(letter) && !(letter == '_'))
         {
             throw new IllegalArgumentException("removeTile can only take a letter as input. Digits and special characters are invalid.");
         }
+
+        letter = Character.toUpperCase(letter);
 
         //Then, find that letter and return it.
         for (int i=0; i<tiles.size(); i++)
@@ -58,17 +59,18 @@ public class Frame
             if(tiles.get(i).getLetter() == letter)
             {
                 Pool.returnTile(tiles.get(i));
-                tiles.remove(i);
+                Tile temp = tiles.remove(i);
                 //Then, add a new random tile from the pool.
                 tiles.add(Pool.getRandomTile());
-                return true;
+                return temp;
             }
         }
 
-        return false;
+        return null;
     }
 
-    public boolean isEmpty() {
+    public boolean isEmpty()
+    {
         return tiles.isEmpty();
     }
 
