@@ -112,7 +112,7 @@ public final class Pool
         pool.add(new Tile('Z', 10)); //single Z Tile
         for(i=0;i<2; i++)// BLANK Tiles
         {
-            pool.add(new Tile(' ', 0));
+            pool.add(new Tile('_', 0));
         }
     }
 
