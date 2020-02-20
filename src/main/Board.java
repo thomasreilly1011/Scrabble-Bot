@@ -11,6 +11,11 @@ public class Board
 
     public Board()
     {
+        createBoard();
+    }
+
+    private void createBoard()
+    {
         //TODO Test the following code once toString is finished for bugs.
         for (int i=0; i < ROWS; i++)
         {
@@ -78,6 +83,20 @@ public class Board
             }
         }
     }
+
+    public void resetBoard()
+    {
+        for(int i=0; i<15; i++)
+        {
+            for(int j=0; j<15; j++)
+            {
+                squares[i][j] = null;
+            }
+        }
+
+        createBoard();
+    }
+
     public boolean placeWord(int row, int col, String word, Frame frame, boolean verticle)
     {
         //First perform all tests
