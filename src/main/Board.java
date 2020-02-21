@@ -96,12 +96,13 @@ public class Board
         //First perform all tests
         if(!checkBounds(row, col, verticle, word))
         {
-
             return false;
         }
+
         Tile[] intersectingTiles = checkIntersection(row, col, word, verticle);
+
         //Check that a tile is either being placed at the origin (the first play of the game) or being placed adjacent with another tile (the only other legal play)
-        if((row != 7 || col != 7) && intersectingTiles == null)
+        if(!intersectsCenter(row, col, word, verticle) && intersectingTiles[0] == null)
         {
             //The word isn't being placed at the origin and it does not connect with other words on the board.
             return false;
@@ -152,6 +153,7 @@ public class Board
             }
         return true;
     }
+
     /*
     Simply checks if the word placed at the coordinates fits the bounds of the board.
     If it fits, returns true.
@@ -184,7 +186,7 @@ public class Board
             {
                 if (squares[row][col+i].hasTile())
                 {
-                    intersectTiles[j] = squares[row][col+1].getTile();
+                    intersectTiles[j] = squares[row+i][col].getTile();
                     j++;
                 }
             }
@@ -195,12 +197,36 @@ public class Board
             {
                 if (squares[row+i][col].hasTile())
                 {
-                    intersectTiles[j] = squares[row+i][col].getTile();
+                    intersectTiles[j] = squares[row][col+i].getTile();
                     j++;
                 }
             }
         }
         return intersectTiles;
+    }
+
+    public boolean intersectsCenter(int row, int col, String word, boolean verticle) {
+        if (row == 7 || col == 7) {
+            if (verticle) {
+                for (int i = 0; i < word.length(); i++)
+                {
+                    if (row+i == 7 && col == 7) {
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < word.length(); i++)
+                {
+                    if (row == 7 && col+i == 7) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        return false;
     }
 
     /*
@@ -209,7 +235,6 @@ public class Board
     Returns false otherwise.
     NOTE check must fail if all tiles in intersectingTiles haven't been used in the making of the word.
      */
-
     public boolean hasTiles(Tile[] intersectingTiles, Frame frame, String word)
     {
         //Perform a check to make sure all intersecting tiles are used in the desired word.
