@@ -1,7 +1,5 @@
 package main;
 
-import java.util.Arrays;
-
 public class Board
 {
     private static final int ROWS = 15;
@@ -85,7 +83,9 @@ public class Board
         {
             return false;
         }
+
         Tile[] intersectingTiles = checkIntersection(row, col, word, verticle);
+
         //Check that a tile is either being placed at the origin (the first play of the game) or being placed adjacent with another tile (the only other legal play)
         if((row != 7 || col != 7) && intersectingTiles == null)
         {
@@ -99,7 +99,7 @@ public class Board
             {
                 return false;
             }
-            if (!squares[row][col].isEmpty())
+            if (!squares[row][col].isEmpty()) //Whats this
             {
                 return false;
             }
@@ -150,7 +150,7 @@ public class Board
     If it fits, returns true.
     If it overlaps the edge of the board it returns false.
      */
-    public boolean checkBounds(int row, int col, boolean verticle, String word)
+    private boolean checkBounds(int row, int col, boolean verticle, String word)
     {
         return false;
     }
@@ -160,9 +160,33 @@ public class Board
     If it does not, it returns null
     If it does, it returns an array of tiles containing that it intersects.
      */
-    public Tile[] checkIntersection(int row, int col, String word, boolean verticle)
-    {
-        return null;
+    private Tile[] checkIntersection(int row, int col, String word, boolean verticle) {
+        Tile[] iTiles = new Tile[word.length()];
+        int j = 0;
+
+        if (verticle)
+        {
+            for (int i = 0; i < word.length() ; i++)
+            {
+                if (squares[row][col+i].hasTile())
+                {
+                    iTiles[j] = squares[row][col+1].getTile();
+                    j++;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < word.length() ; i++)
+            {
+                if (squares[row+i][col].hasTile())
+                {
+                    iTiles[j] = squares[row+i][col].getTile();
+                    j++;
+                }
+            }
+        }
+        return iTiles;
     }
 
     /*
@@ -172,8 +196,9 @@ public class Board
     NOTE check must fail if all tiles in intersectingTiles haven't been used in the making of the word.
      */
 
-    public boolean hasTiles(Tile[] intersectingTiles, Frame frame, String word)
+    private boolean hasTiles(Tile[] intersectingTiles, Frame frame, String w)
     {
+        String word = w;
         //Perform a check to make sure all intersecting tiles are used in the desired word.
         boolean pass = false;
         for (Tile t:intersectingTiles)
@@ -185,6 +210,7 @@ public class Board
                     pass = true;
                     //If the intersecting tile is part of the word, remove it from the string as it is not needed in the Frame part of the test.
                     word = word.replace(word.charAt(i), ' ');
+                    break;
                 }
             }
             if (!pass)
@@ -207,7 +233,7 @@ public class Board
             //board.append("\t" + "\t").append(i - 1);
             for (int j = 0; j < squares.length; j++)
             {
-                //TODO Add an if for if there's a tile on a square (Display the letter of the tile).
+                //TODO Add an if for if there's a tile on a square (Display the letter & value of the tile).
                 if (squares[i][j].getType() == SquareType.CENTRE)
                 {
                     board.append("**");

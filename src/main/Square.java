@@ -26,6 +26,10 @@ public class Square
         this.e = null;
     }
 
+    public boolean hasTile() {
+        return t != null;
+    }
+
     public void removeTile()
     {
         this.t = null;
