@@ -15,7 +15,7 @@ class BoardTest extends Board
 
     @Test
     void testResetBoard()
-    {
+    { //For Spoob
         Tile t1 = new Tile('A', 1);
         Tile t2 = new Tile('D', 2);
         Tile t3 = new Tile('J', 8);
@@ -51,7 +51,7 @@ class BoardTest extends Board
 
     @Test
     void testPlaceWord()
-    {
+    { // For Spoob
         Pool.set();
 
         Frame frame = new Frame();
@@ -60,11 +60,8 @@ class BoardTest extends Board
 
         System.out.println(frame);
 
-        System.out.println(placeWord(3, 7, "HELLO", frame, true));
-
-        //assertTrue(placeWord(3, 7, "HELLO", frame, true));
-        //assertTrue(placeWord(7, 6, "NOT", frame, false));
-
+        assertTrue(board.placeWord(3, 7, "HELLO", frame, true));
+        assertTrue(board.placeWord(7, 6, "NOT", frame, false));
 
         assertEquals(new Tile('H', 4), board.squares[3][7].getTile());
         assertEquals(new Tile('E', 1), board.squares[4][7].getTile());
@@ -91,13 +88,13 @@ class BoardTest extends Board
 
     @Test
     void testCheckIntersection()
-    {
-        
+    { // For toe
+
     }
 
     @Test
     void testIntersectsCenter()
-    {
+    { //For toe
         //Expected true cases:
         assertTrue(intersectsCenter(7, 7, "Hello", true));
         assertTrue(intersectsCenter(7, 7, "Hello", false));
@@ -113,12 +110,12 @@ class BoardTest extends Board
 
     @Test
     void testHasTiles()
-    {
+    { //For toe
     }
 
     @Test
     void testToString()
-    {
+    { // For Dan
     }
 
 }

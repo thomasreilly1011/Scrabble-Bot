@@ -102,7 +102,6 @@ public class Board
         }
 
         Tile[] intersectingTiles = checkIntersection(row, col, word, verticle);
-        System.out.println(Arrays.toString(intersectingTiles));
 
         //Check that a tile is either being placed at the origin (the first play of the game) or being placed adjacent with another tile (the only other legal play)
         if(!intersectsCenter(row, col, word, verticle) && intersectingTiles[0] == null)
@@ -254,7 +253,6 @@ public class Board
                 }
                 for (int i = 0; i < word.length(); i++)
                 {
-                    System.out.println(word.charAt(i));
                     if (word.charAt(i) == t.getLetter())
                     {
                         pass = true;
@@ -269,7 +267,6 @@ public class Board
                 pass = false;
             }
         }
-        System.out.println("Word after removing iTiles: " + word);
             //Now check that the frame has all remaining required letters to finish making up the word.
         return frame.hasString(word);
     }
