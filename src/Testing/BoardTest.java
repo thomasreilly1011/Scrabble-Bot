@@ -96,6 +96,22 @@ class BoardTest extends Board
     }
 
     @Test
+    void testIntersectsCenter()
+    {
+        //Expected true cases:
+        assertTrue(intersectsCenter(7, 7, "Hello", true));
+        assertTrue(intersectsCenter(7, 7, "Hello", false));
+        assertTrue(intersectsCenter(5, 7, "Hello", true));
+        assertTrue(intersectsCenter(7, 5, "Hello", false));
+
+        //Expected false cases:
+        assertFalse(intersectsCenter(7, 0, "Hi", true));
+        assertFalse(intersectsCenter(1, 7, "Hi", true));
+        assertFalse(intersectsCenter(6, 7, "Hi", false));
+
+    }
+
+    @Test
     void testHasTiles()
     {
     }
