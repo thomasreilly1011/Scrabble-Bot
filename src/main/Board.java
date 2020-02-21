@@ -164,7 +164,7 @@ public class Board
      */
     private boolean checkBounds(int row, int col, boolean verticle, String word)
     {
-        return false;
+        return true;
     }
 
     /*

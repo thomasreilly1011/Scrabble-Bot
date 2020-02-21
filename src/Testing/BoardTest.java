@@ -60,8 +60,17 @@ class BoardTest extends Board
 
         System.out.println(frame);
 
-        placeWord(3, 7, "Hello", frame, true);
-        placeWord(7, 6, "Not", frame, false);
+        placeWord(3, 7, "HELLO", frame, true);
+        placeWord(7, 6, "NOT", frame, false);
+
+        assertEquals(new Tile('H', 4), board.squares[3][7].getTile());
+        assertEquals(new Tile('E', 1), board.squares[4][7].getTile());
+        assertEquals(new Tile('L', 1), board.squares[5][7].getTile());
+        assertEquals(new Tile('L', 1), board.squares[6][7].getTile());
+        assertEquals(new Tile('O', 1), board.squares[7][7].getTile());
+
+        assertEquals(new Tile('N', 1), board.squares[7][6].getTile());
+        assertEquals(new Tile('T', 1), board.squares[7][8].getTile());
     }
 
     @Test
