@@ -7,7 +7,7 @@ public class Board
     private static final int ROWS = 15;
     private static final int COLS = 15;
 
-    private Square[][] squares = new Square[ROWS][COLS];
+    public Square[][] squares = new Square[ROWS][COLS];
 
     public Board()
     {
@@ -78,11 +78,25 @@ public class Board
             }
         }
     }
+
+    public void resetBoard()
+    {
+        for(int i=0; i<15; i++)
+        {
+            for(int j=0; j<15; j++)
+            {
+                squares[i][j].setTile(null);
+            }
+        }
+    }
+
     public boolean placeWord(int row, int col, String word, Frame frame, boolean verticle)
     {
+        int wrong;
         //First perform all tests
         if(!checkBounds(row, col, verticle, word))
         {
+
             return false;
         }
         Tile[] intersectingTiles = checkIntersection(row, col, word, verticle);
@@ -160,9 +174,33 @@ public class Board
     If it does not, it returns null
     If it does, it returns an array of tiles containing that it intersects.
      */
-    public Tile[] checkIntersection(int row, int col, String word, boolean verticle)
-    {
-        return null;
+    private Tile[] checkIntersection(int row, int col, String word, boolean verticle) {
+        Tile[] intersectTiles = new Tile[word.length()];
+        int j = 0;
+
+        if (verticle)
+        {
+            for (int i = 0; i < word.length() ; i++)
+            {
+                if (squares[row][col+i].hasTile())
+                {
+                    intersectTiles[j] = squares[row][col+1].getTile();
+                    j++;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < word.length() ; i++)
+            {
+                if (squares[row+i][col].hasTile())
+                {
+                    intersectTiles[j] = squares[row+i][col].getTile();
+                    j++;
+                }
+            }
+        }
+        return intersectTiles;
     }
 
     /*
