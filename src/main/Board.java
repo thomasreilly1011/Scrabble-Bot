@@ -92,24 +92,29 @@ public class Board
 
     public boolean placeWord(int row, int col, String word, Frame frame, boolean verticle)
     {
-        int wrong;
+        word = word.toUpperCase();
         //First perform all tests
+
         if(!checkBounds(row, col, verticle, word))
         {
+            System.out.println("That word is out of bounds!");
             return false;
         }
 
         Tile[] intersectingTiles = checkIntersection(row, col, word, verticle);
+        System.out.println(Arrays.toString(intersectingTiles));
 
         //Check that a tile is either being placed at the origin (the first play of the game) or being placed adjacent with another tile (the only other legal play)
         if(!intersectsCenter(row, col, word, verticle) && intersectingTiles[0] == null)
         {
             //The word isn't being placed at the origin and it does not connect with other words on the board.
+            System.out.println("That word doesn't go through the origin or another word on the board");
             return false;
         }
 
         if(!hasTiles(intersectingTiles, frame, word))
         {
+            System.out.println("You don't have the tiles for that word");
             return false;
         }
 
@@ -184,7 +189,7 @@ public class Board
         {
             for (int i = 0; i < word.length() ; i++)
             {
-                if (squares[row][col+i].hasTile())
+                if (!squares[row+i][col].isEmpty())
                 {
                     intersectTiles[j] = squares[row+i][col].getTile();
                     j++;
@@ -195,7 +200,7 @@ public class Board
         {
             for (int i = 0; i < word.length() ; i++)
             {
-                if (squares[row+i][col].hasTile())
+                if (!squares[row][col+i].isEmpty())
                 {
                     intersectTiles[j] = squares[row][col+i].getTile();
                     j++;
@@ -239,23 +244,32 @@ public class Board
     {
         //Perform a check to make sure all intersecting tiles are used in the desired word.
         boolean pass = false;
-        for (Tile t:intersectingTiles)
-        {
-            for (int i = 0; i < word.length(); i++)
+
+        if (intersectingTiles[0] != null) {
+            for (Tile t:intersectingTiles)
             {
-                if (word.charAt(i) == t.getLetter())
+                if (t == null)
                 {
-                    pass = true;
-                    //If the intersecting tile is part of the word, remove it from the string as it is not needed in the Frame part of the test.
-                    word = word.replace(word.charAt(i), ' ');
+                    break;
                 }
+                for (int i = 0; i < word.length(); i++)
+                {
+                    System.out.println(word.charAt(i));
+                    if (word.charAt(i) == t.getLetter())
+                    {
+                        pass = true;
+                        //If the intersecting tile is part of the word, remove it from the string as it is not needed in the Frame part of the test.
+                        word = word.replace(word.charAt(i), ' ');
+                    }
+                }
+                if (!pass)
+                {
+                    return false;
+                }
+                pass = false;
             }
-            if (!pass)
-            {
-                return false;
-            }
-            pass = false;
         }
+        System.out.println("Word after removing iTiles: " + word);
             //Now check that the frame has all remaining required letters to finish making up the word.
         return frame.hasString(word);
     }
@@ -274,14 +288,12 @@ public class Board
                 {
                     board.append(j).append("\t");
                 }*/
-                //TODO Add an if for if there's a tile on a square (Display the letter of the tile).
-                if(squares[i][j].hasTile())
+                if(!squares[i][j].isEmpty())
                 {
                     board.append(squares[i][j].getTile().toString());
 
                 }
-                //TODO Add an if for if there's a tile on a square (Display the letter & value of the tile).
-                if (squares[i][j].getType() == SquareType.CENTRE)
+                else if (squares[i][j].getType() == SquareType.CENTRE)
                 {
                     board.append("**");
                 } else if (squares[i][j].getType() == SquareType.DL)
