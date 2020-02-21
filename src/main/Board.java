@@ -146,7 +146,28 @@ public class Board
      */
     public boolean checkBounds(int row, int col, boolean verticle, String word)
     {
-        return false;
+        if(verticle)
+        {
+            if(word.length()+row > ROWS)
+            {
+                return false;
+            }
+            else
+                {
+                    return true;
+            }
+        }
+        else
+            {
+                if(word.length()+col > COLS)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+        }
     }
 
     /*
