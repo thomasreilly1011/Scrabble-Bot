@@ -76,6 +76,18 @@ public class Board
             }
         }
     }
+
+    public void resetBoard()
+    {
+        for(int i=0; i<15; i++)
+        {
+            for(int j=0; j<15; j++)
+            {
+                squares[i][j].setTile(null);
+            }
+        }
+    }
+
     public boolean placeWord(int row, int col, String word, Frame frame, boolean verticle)
     {
         //First perform all tests
