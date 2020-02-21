@@ -122,8 +122,7 @@ public final class Pool
         Random random = new Random();
         int random_num = random.nextInt(pool.size());
 
-        return pool.remove(random_num); //ensure this properly returns the tile
-
+        return pool.remove(random_num);
     }
 
     public static void returnTile(Tile t)
