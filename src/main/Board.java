@@ -7,7 +7,7 @@ public class Board
     private static final int ROWS = 15;
     private static final int COLS = 15;
 
-    private Square[][] squares = new Square[ROWS][COLS];
+    public Square[][] squares = new Square[ROWS][COLS];
 
     public Board()
     {
