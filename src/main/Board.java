@@ -107,54 +107,48 @@ public class Board
 
         if(!hasTiles(intersectingTiles, frame, word))
         {
-            if (!hasTiles(intersectingTiles, frame, word))
-            {
-                return false;
-            }
-            if (!squares[row][col].isEmpty()) //Whats this
-            {
-                return false;
-            }
+            return false;
+        }
 
             /////////////////////////////////////////////////////////////////////// checks are complete, main body proceeds
 
-            char[] letters = word.toCharArray();
+        char[] letters = word.toCharArray();
 
-            if (verticle)
+        if (verticle)
+        {
+            for (int i = 0; i < word.length(); i++)
             {
-                for (int i = 0; i < word.length(); i++)
+                if(squares[row + i][col].isEmpty())
                 {
-                    if(squares[row + i][col].isEmpty())
-                    {
-                        squares[row + i][col].setTile(frame.removeTile(letters[i]));
-                    }
-                    /*else //else may become redundant if hasTiles can implement the intersecting tiles part
-                    {
-                        if (!(squares[row + i][col].getTile().getLetter() == letters[i]))
-                        {
-                            return false; //returns false if the tile the word is intersecting is not apart of the word
-                        }
-                    }*/
+                    squares[row + i][col].setTile(frame.removeTile(letters[i]));
                 }
-            }
-            else
+                /*else //else may become redundant if hasTiles can implement the intersecting tiles part
                 {
-                for (int i = 0; i < word.length(); i++)
-                {
-                    if (squares[row][col + i].isEmpty())
+                    if (!(squares[row + i][col].getTile().getLetter() == letters[i]))
                     {
-                        squares[row][col + i].setTile(frame.removeTile(letters[i]));
+                        return false; //returns false if the tile the word is intersecting is not apart of the word
                     }
-                    /*else //else may become redundant if hasTiles can implement the intersecting tiles part
-                    {
-                        if (!(squares[row][col + i].getTile().getLetter() == letters[i]))
-                        {
-                            return false; //returns false if the tile the word is intersecting is not apart of the word
-                        }
-                    }*/
-                }
+                }*/
             }
         }
+        else
+            {
+            for (int i = 0; i < word.length(); i++)
+            {
+                if (squares[row][col + i].isEmpty())
+                {
+                    squares[row][col + i].setTile(frame.removeTile(letters[i]));
+                }
+                /*else //else may become redundant if hasTiles can implement the intersecting tiles part
+                {
+                    if (!(squares[row][col + i].getTile().getLetter() == letters[i]))
+                    {
+                        return false; //returns false if the tile the word is intersecting is not apart of the word
+                    }
+                }*/
+            }
+        }
+
         return true;
     }
     /*
@@ -208,29 +202,35 @@ public class Board
     NOTE check must fail if all tiles in intersectingTiles haven't been used in the making of the word.
      */
 
-    private boolean hasTiles(Tile[] intersectingTiles, Frame frame, String w)
+    public boolean hasTiles(Tile[] intersectingTiles, Frame frame, String word)
     {
-        String word = w;
         //Perform a check to make sure all intersecting tiles are used in the desired word.
         boolean pass = false;
-        for (Tile t:intersectingTiles)
-        {
-            for (int i = 0; i < word.length(); i++)
-            {
-                if (word.charAt(i) == t.getLetter())
-                {
-                    pass = true;
-                    //If the intersecting tile is part of the word, remove it from the string as it is not needed in the Frame part of the test.
-                    word = word.replace(word.charAt(i), ' ');
-                    break;
-                }
-            }
-            if (!pass)
-            {
-                return false;
-            }
-            pass = false;
+        if (word == null) {
+            return false;
         }
+        if (!(intersectingTiles[0] == null)) {
+            for (Tile t:intersectingTiles)
+            {
+                for (int i = 0; i < word.length(); i++)
+                {
+                    System.out.println(word.charAt(i));
+                    if (word.charAt(i) == t.getLetter())
+                    {
+                        pass = true;
+                        //If the intersecting tile is part of the word, remove it from the string as it is not needed in the Frame part of the test.
+                        word = word.replace(word.charAt(i), ' ');
+                        break;
+                    }
+                }
+                if (!pass)
+                {
+                    return false;
+                }
+                pass = false;
+            }
+        }
+
             //Now check that the frame has all remaining required letters to finish making up the word.
         return frame.hasString(word);
     }
