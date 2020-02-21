@@ -152,7 +152,28 @@ public class Board
      */
     public boolean checkBounds(int row, int col, boolean verticle, String word)
     {
-        return false;
+        if(verticle)
+        {
+            if(word.length()+row > ROWS)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            if(word.length()+col > COLS)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 
     /*
@@ -204,10 +225,19 @@ public class Board
         StringBuilder board = new StringBuilder();
         for (int i = 0; i < squares.length; i++)
         {
-            //board.append("\t" + "\t").append(i - 1);
+            board.append(i).append("\t");
             for (int j = 0; j < squares.length; j++)
             {
+                /*if (i == 0)
+                {
+                    board.append(j).append("\t");
+                }*/
                 //TODO Add an if for if there's a tile on a square (Display the letter of the tile).
+                if(squares[i][j].hasTiles())
+                {
+                    board.append(squares[i][j].getTile().toString());
+
+                }
                 if (squares[i][j].getType() == SquareType.CENTRE)
                 {
                     board.append("**");
@@ -223,7 +253,9 @@ public class Board
                 } else if (squares[i][j].getType() == SquareType.TW)
                 {
                     board.append("TW");
-                } else {
+                }
+                else
+                    {
 //                    if (i == 0) {
 //                        board.append("\t").append(j - 1);
 //                    } else {

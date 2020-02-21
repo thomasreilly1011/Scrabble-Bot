@@ -23,6 +23,6 @@ public class Tile
 
     public String toString()
     {
-        return letter + ":" + value;
+        return letter + Integer.toString(value);
     }
 }
