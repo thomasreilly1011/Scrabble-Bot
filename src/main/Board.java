@@ -136,7 +136,6 @@ public class Board
                     }*/
                 }
             }
-        }
         return true;
     }
     /*
@@ -148,25 +147,11 @@ public class Board
     {
         if(verticle)
         {
-            if(word.length()+row > ROWS)
-            {
-                return false;
-            }
-            else
-                {
-                    return true;
-            }
+            return word.length() + row <= ROWS;
         }
         else
             {
-                if(word.length()+col > COLS)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                return word.length() + col <= COLS;
         }
     }
 
@@ -227,7 +212,7 @@ public class Board
                     board.append(j).append("\t");
                 }*/
                 //TODO Add an if for if there's a tile on a square (Display the letter of the tile).
-                if(squares[i][j].hasTiles())
+                if(squares[i][j].hasTile())
                 {
                     board.append(squares[i][j].getTile().toString());
 

@@ -60,8 +60,9 @@ class BoardTest extends Board
 
         System.out.println(frame);
 
-        placeWord(3, 7, "HELLO", frame, true);
-        placeWord(7, 6, "NOT", frame, false);
+        assertTrue(placeWord(3, 7, "HELLO", frame, true));
+        assertTrue(placeWord(7, 6, "NOT", frame, false));
+
 
         assertEquals(new Tile('H', 4), board.squares[3][7].getTile());
         assertEquals(new Tile('E', 1), board.squares[4][7].getTile());
@@ -76,11 +77,13 @@ class BoardTest extends Board
     @Test
     void testCheckBounds()
     {
+
     }
 
     @Test
     void testCheckIntersection()
     {
+
     }
 
     @Test
