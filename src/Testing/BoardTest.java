@@ -15,7 +15,7 @@ class BoardTest extends Board
 
     @Test
     void testResetBoard()
-    { //For Spoob
+    {
         Tile t1 = new Tile('A', 1);
         Tile t2 = new Tile('D', 2);
         Tile t3 = new Tile('J', 8);
@@ -51,7 +51,7 @@ class BoardTest extends Board
 
     @Test
     void testPlaceWord()
-    { // For Spoob
+    {
         Pool.set();
 
         Frame frame = new Frame();
@@ -71,6 +71,8 @@ class BoardTest extends Board
 
         assertEquals(new Tile('N', 1), board.squares[7][6].getTile());
         assertEquals(new Tile('T', 1), board.squares[7][8].getTile());
+
+        System.out.println(board);
     }
 
     @Test
@@ -88,7 +90,7 @@ class BoardTest extends Board
 
     @Test
     void testCheckIntersection()
-    { // For toe
+    { // For Dan
 
     }
 
