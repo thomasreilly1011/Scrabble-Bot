@@ -227,7 +227,7 @@ public class Board
                     board.append(j).append("\t");
                 }*/
                 //TODO Add an if for if there's a tile on a square (Display the letter of the tile).
-                if(squares[i][j].hasTiles())
+                if(squares[i][j].getTile() != null)
                 {
                     board.append(squares[i][j].getTile().toString());
 
