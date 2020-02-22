@@ -285,12 +285,14 @@ public class Board
                 {
                     board.append(j).append("\t");
                 }*/
-                if(!squares[i][j].isEmpty())
+                //TODO Add an if for if there's a tile on a square (Display the letter of the tile).
+                if(squares[i][j].hasTile())
                 {
                     board.append(squares[i][j].getTile().toString());
 
                 }
-                else if (squares[i][j].getType() == SquareType.CENTRE)
+                //TODO Add an if for if there's a tile on a square (Display the letter & value of the tile).
+                if (squares[i][j].getType() == SquareType.CENTRE)
                 {
                     board.append("**");
                 } else if (squares[i][j].getType() == SquareType.DL)
