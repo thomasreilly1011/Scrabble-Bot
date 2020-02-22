@@ -4,6 +4,7 @@ import main.Board;
 import main.Pool;
 import main.Tile;
 import main.Frame;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,11 +12,21 @@ import static org.junit.jupiter.api.Assertions.*;
 class BoardTest extends Board
 {
 
-    Board board = new Board();
+    Board board;
+    Frame frame;
+
+    @BeforeEach
+    void init() {
+        Pool.set();
+
+        board = new Board();
+        frame = new Frame();
+        frame.createTestableFrame();
+    }
 
     @Test
     void testResetBoard()
-    { //For Spoob
+    {
         Tile t1 = new Tile('A', 1);
         Tile t2 = new Tile('D', 2);
         Tile t3 = new Tile('J', 8);
@@ -52,12 +63,6 @@ class BoardTest extends Board
     @Test
     void testPlaceWord()
     { // For Spoob
-        Pool.set();
-
-        Frame frame = new Frame();
-
-        frame.createTestableFrame();
-
         System.out.println(frame);
 
         assertTrue(board.placeWord(3, 7, "HELLO", frame, true));
@@ -88,13 +93,19 @@ class BoardTest extends Board
 
     @Test
     void testCheckIntersection()
-    { // For toe
+    { // For Dan
 
     }
 
+    /*
+    testIntersectsCenter()'s expected I/O:
+    Input: coordinates of the word (i, j), the ideal word (string), boolean representing if the word is to be placed vertically.
+    Output: true if the given word, coordinates, and orientation cause it to go through the center tile.
+            false otherwise.
+     */
     @Test
     void testIntersectsCenter()
-    { //For toe
+    {
         //Expected true cases:
         assertTrue(intersectsCenter(7, 7, "Hello", true));
         assertTrue(intersectsCenter(7, 7, "Hello", false));
@@ -108,9 +119,35 @@ class BoardTest extends Board
 
     }
 
+    /*
+    hasTiles()'s expected I/O:
+    Input: an array of intersecting Tiles, a Frame and a word (string).
+    Output: true if the given word can be made from tiles in the given Frame and array of intersecting Tiles.
+            false otherwise.
+     */
     @Test
     void testHasTiles()
-    { //For toe
+    {
+        System.out.println(frame);
+
+        //Mock 'intersectingTiles' arrays for testing purposes:
+        Tile[] iT1 = {new Tile('O', 1)};
+        Tile[] iT2 = {null, null, null, null, null};
+        Tile[] iT3= {new Tile('C', 3)};
+        Tile[] iT4= {new Tile('T', 1), new Tile('R', 1)};
+        Tile[] iT5= {new Tile('T', 1)};
+
+        //Expected true cases:
+        assertTrue(hasTiles(iT2, frame, "Hello"));
+        assertTrue(hasTiles(iT1, frame, "Not"));
+        assertTrue(hasTiles(iT3, frame, "Cot"));
+        assertTrue(hasTiles(iT4, frame, "Hotter"));
+
+        //Expected false cases:
+        assertFalse(hasTiles(iT2, frame, "Supercalifragilisticexpialidocious"));//Missing almost all tiles
+        assertFalse(hasTiles(iT5, frame, "Hotter")); //Missing 'R' tile
+        assertFalse(hasTiles(iT5, frame, "Rate")); //Missing 'A' tile
+
     }
 
     @Test

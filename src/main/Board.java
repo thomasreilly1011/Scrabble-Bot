@@ -241,6 +241,8 @@ public class Board
      */
     public boolean hasTiles(Tile[] intersectingTiles, Frame frame, String word)
     {
+        word = word.toUpperCase();
+
         //Perform a check to make sure all intersecting tiles are used in the desired word.
         boolean pass = false;
 
