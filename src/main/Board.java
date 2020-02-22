@@ -291,7 +291,7 @@ public class Board
                 {
                     board.append(squares[i][j].getTile().toString());
                 }
-                if (squares[i][j].getType() == SquareType.CENTRE)
+                else if (squares[i][j].getType() == SquareType.CENTRE)
                 {
                     board.append("**");
                 }

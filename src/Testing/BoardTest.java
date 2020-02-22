@@ -4,7 +4,6 @@ import main.Board;
 import main.Pool;
 import main.Tile;
 import main.Frame;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -62,7 +61,7 @@ class BoardTest extends Board
 
     @Test
     void testPlaceWord()
-    { // For Spoob
+    {
         System.out.println(frame);
 
         assertTrue(board.placeWord(3, 7, "HELLO", frame, true));
@@ -76,6 +75,8 @@ class BoardTest extends Board
 
         assertEquals(new Tile('N', 1), board.squares[7][6].getTile());
         assertEquals(new Tile('T', 1), board.squares[7][8].getTile());
+
+        System.out.println(board);
     }
 
     @Test
@@ -97,12 +98,6 @@ class BoardTest extends Board
 
     }
 
-    /*
-    testIntersectsCenter()'s expected I/O:
-    Input: coordinates of the word (i, j), the ideal word (string), boolean representing if the word is to be placed vertically.
-    Output: true if the given word, coordinates, and orientation cause it to go through the center tile.
-            false otherwise.
-     */
     @Test
     void testIntersectsCenter()
     {
@@ -119,12 +114,6 @@ class BoardTest extends Board
 
     }
 
-    /*
-    hasTiles()'s expected I/O:
-    Input: an array of intersecting Tiles, a Frame and a word (string).
-    Output: true if the given word can be made from tiles in the given Frame and array of intersecting Tiles.
-            false otherwise.
-     */
     @Test
     void testHasTiles()
     {
