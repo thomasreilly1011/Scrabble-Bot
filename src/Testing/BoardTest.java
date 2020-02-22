@@ -60,8 +60,11 @@ class BoardTest extends Board
 
         System.out.println(frame);
 
-        placeWord(3, 7, "HELLO", frame, true);
-        placeWord(7, 6, "NOT", frame, false);
+        System.out.println(placeWord(3, 7, "HELLO", frame, true));
+
+        //assertTrue(placeWord(3, 7, "HELLO", frame, true));
+        //assertTrue(placeWord(7, 6, "NOT", frame, false));
+
 
         assertEquals(new Tile('H', 4), board.squares[3][7].getTile());
         assertEquals(new Tile('E', 1), board.squares[4][7].getTile());
@@ -74,13 +77,22 @@ class BoardTest extends Board
     }
 
     @Test
-    void testCheckBounds()
+    void testCheckBounds() // TODO might not be thorough enough, I just got bored. ~Spawn.
     {
+        assertTrue(checkBounds(0, 0, true, "Oxyphenbutazone"));
+        assertTrue(checkBounds(14, 0, false, "Oxyphenbutazone"));
+        assertTrue(checkBounds(7, 7, true, "Eighteen"));
+        assertTrue(checkBounds(7, 7, false, "Eighteen"));
+
+        assertFalse(checkBounds(7, 7, false, "Something"));
+        assertFalse(checkBounds(0, 0, true, "Oxyphenbutazones"));
+        assertFalse(checkBounds(14, 0, false, "Oxyphenbutazones"));
     }
 
     @Test
     void testCheckIntersection()
     {
+        
     }
 
     @Test
