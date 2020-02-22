@@ -92,7 +92,7 @@ class BoardTest extends Board
     @Test
     void testCheckIntersection()
     {
-        
+
     }
 
     @Test

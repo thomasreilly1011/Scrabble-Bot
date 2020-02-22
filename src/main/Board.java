@@ -264,48 +264,49 @@ public class Board
     @Override
     public String toString()
     {
+    	System.out.println("                             Scrabble Board");
         StringBuilder board = new StringBuilder();
-        for (int i = 0; i < squares.length; i++)
+        for (int i = 0; i < ROWS; i++)
         {
-            //board.append("\t" + "\t").append(i - 1);
-            for (int j = 0; j < squares.length; j++)
+        	
+            board.append(" ----------------------------------------------------------------------------\n");
+            for (int j = 0; j < COLS; j++)
             {
-                /*if (i == 0)
-                {
-                    board.append(j).append("\t");
-                }*/
-                //TODO Add an if for if there's a tile on a square (Display the letter of the tile).
+            	board.append(" | ");
+
                 if(squares[i][j].getTile() != null)
                 {
                     board.append(squares[i][j].getTile().toString());
-
                 }
-                //TODO Add an if for if there's a tile on a square (Display the letter & value of the tile).
                 if (squares[i][j].getType() == SquareType.CENTRE)
                 {
                     board.append("**");
-                } else if (squares[i][j].getType() == SquareType.DL)
+                } 
+                else if (squares[i][j].getType() == SquareType.DL)
                 {
                     board.append("DL");
-                } else if (squares[i][j].getType() == SquareType.TL)
+                } 
+                else if (squares[i][j].getType() == SquareType.TL)
                 {
                     board.append("TL");
-                } else if (squares[i][j].getType() == SquareType.DW)
+                }
+                else if (squares[i][j].getType() == SquareType.DW)
                 {
                     board.append("DW");
-                } else if (squares[i][j].getType() == SquareType.TW)
+                } 
+                else if (squares[i][j].getType() == SquareType.TW)
                 {
                     board.append("TW");
-                } else {
-//                    if (i == 0) {
-//                        board.append("\t").append(j - 1);
-//                    } else {
+                } 
+                else 
+                {
                     board.append("  ");
-//                    }
                 }
+               
             }
-            board.append("\n");
+            board.append(" |\n");
         }
+        board.append(" ----------------------------------------------------------------------------\n");
         return board.toString();
     }
 
