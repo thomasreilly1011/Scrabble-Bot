@@ -273,8 +273,8 @@ public class Board
     @Override
     public String toString()
     {
-    	System.out.println("                             Scrabble Board");
         StringBuilder board = new StringBuilder();
+    	board.append("                             Scrabble Board\n");
         for (int i = 0; i < ROWS; i++)
         {
         	
