@@ -25,4 +25,20 @@ public class Tile
     {
         return letter + Integer.toString(value);
     }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        Tile t;
+        try {
+            t = (Tile) obj;
+        } catch (ClassCastException e) {
+            throw new IllegalArgumentException("Given object is not a tile");
+        }
+        if (t.getLetter() == letter && t.getValue() == value) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

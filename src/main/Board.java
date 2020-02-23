@@ -259,25 +259,6 @@ public class Board
             //Now check that the frame has all remaining required letters to finish making up the word.
         return frame.hasString(word);
     }
-    
-    
-    void testResetBoard()
-    {
-    	Board board = new Board();
-    	
-    	Pool.set();
-
-        Frame frame = new Frame();
-
-        frame.createTestableFrame();
-
-        System.out.println(frame);
-
-        System.out.println(placeWord(3, 7, "HELLO", frame, true));
-        
-        System.out.println(board.toString());
-
-    }
 
 
     @Override
@@ -328,5 +309,7 @@ public class Board
         board.append(" ----------------------------------------------------------------------------\n");
         return board.toString();
     }
+
+
 
 }

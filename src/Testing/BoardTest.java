@@ -11,7 +11,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class BoardTest extends Board
 {
 
-    Board board = new Board();
+    Board board;
+    Frame frame;
+
+    @BeforeEach
+    void init() {
+        Pool.set();
+
+        board = new Board();
+        frame = new Frame();
+        frame.createTestableFrame();
+    }
 
     @Test
     void testResetBoard()
@@ -52,19 +62,10 @@ class BoardTest extends Board
     @Test
     void testPlaceWord()
     {
-        Pool.set();
-
-        Frame frame = new Frame();
-
-        frame.createTestableFrame();
-
         System.out.println(frame);
 
-        System.out.println(placeWord(3, 7, "HELLO", frame, true));
-
-        //assertTrue(placeWord(3, 7, "HELLO", frame, true));
-        //assertTrue(placeWord(7, 6, "NOT", frame, false));
-
+        assertTrue(board.placeWord(3, 7, "HELLO", frame, true));
+        assertTrue(board.placeWord(7, 6, "NOT", frame, false));
 
         assertEquals(new Tile('H', 4), board.squares[3][7].getTile());
         assertEquals(new Tile('E', 1), board.squares[4][7].getTile());
@@ -74,6 +75,8 @@ class BoardTest extends Board
 
         assertEquals(new Tile('N', 1), board.squares[7][6].getTile());
         assertEquals(new Tile('T', 1), board.squares[7][8].getTile());
+
+        System.out.println(board);
     }
 
     @Test
@@ -91,18 +94,54 @@ class BoardTest extends Board
 
     @Test
     void testCheckIntersection()
+    { // For Dan
+
+    }
+
+    @Test
+    void testIntersectsCenter()
     {
+        //Expected true cases:
+        assertTrue(intersectsCenter(7, 7, "Hello", true));
+        assertTrue(intersectsCenter(7, 7, "Hello", false));
+        assertTrue(intersectsCenter(5, 7, "Hello", true));
+        assertTrue(intersectsCenter(7, 5, "Hello", false));
+
+        //Expected false cases:
+        assertFalse(intersectsCenter(7, 0, "Hi", true));
+        assertFalse(intersectsCenter(1, 7, "Hi", true));
+        assertFalse(intersectsCenter(6, 7, "Hi", false));
 
     }
 
     @Test
     void testHasTiles()
     {
+        System.out.println(frame);
+
+        //Mock 'intersectingTiles' arrays for testing purposes:
+        Tile[] iT1 = {new Tile('O', 1)};
+        Tile[] iT2 = {null, null, null, null, null};
+        Tile[] iT3= {new Tile('C', 3)};
+        Tile[] iT4= {new Tile('T', 1), new Tile('R', 1)};
+        Tile[] iT5= {new Tile('T', 1)};
+
+        //Expected true cases:
+        assertTrue(hasTiles(iT2, frame, "Hello"));
+        assertTrue(hasTiles(iT1, frame, "Not"));
+        assertTrue(hasTiles(iT3, frame, "Cot"));
+        assertTrue(hasTiles(iT4, frame, "Hotter"));
+
+        //Expected false cases:
+        assertFalse(hasTiles(iT2, frame, "Supercalifragilisticexpialidocious"));//Missing almost all tiles
+        assertFalse(hasTiles(iT5, frame, "Hotter")); //Missing 'R' tile
+        assertFalse(hasTiles(iT5, frame, "Rate")); //Missing 'A' tile
+
     }
 
     @Test
     void testToString()
-    {
+    { // For Dan
     }
 
 }

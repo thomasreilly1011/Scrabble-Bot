@@ -98,7 +98,7 @@ public class Frame
         String word = w.toUpperCase();
         for (int i=0; i<word.length(); i++)
         {
-            if (!Character.isLetter(word.charAt(i)))
+            if (!Character.isLetter(word.charAt(i)) && word.charAt(i) != ' ' && word.charAt(i) != '_')
             {
                 throw new IllegalArgumentException("Input has characters that do not respond to a scrabble tile");
             }
@@ -117,9 +117,14 @@ public class Frame
             for (int j = 0; j < tempTiles.size(); j++)
             {
                 //NOTE if c == ' ', then you can ignore it as ' ' represents a tile that is already on the board.
-                if (tempTiles.get(j).getLetter() == c || c == ' ')
+                if (tempTiles.get(j).getLetter() == c)
                 {
                     tempTiles.remove(j);
+                    hasChar = true;
+                    break;
+                }
+                else if (c == ' ')
+                {
                     hasChar = true;
                     break;
                 }
