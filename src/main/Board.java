@@ -92,12 +92,10 @@ public class Board
 
     public boolean placeWord(int row, int col, String word, Frame frame, boolean verticle)
     {
-        word = word.toUpperCase();
+        int wrong;
         //First perform all tests
-
         if(!checkBounds(row, col, verticle, word))
         {
-            System.out.println("That word is out of bounds!");
             return false;
         }
 
@@ -107,13 +105,11 @@ public class Board
         if(!intersectsCenter(row, col, word, verticle) && intersectingTiles[0] == null)
         {
             //The word isn't being placed at the origin and it does not connect with other words on the board.
-            System.out.println("That word doesn't go through the origin or another word on the board");
             return false;
         }
 
         if(!hasTiles(intersectingTiles, frame, word))
         {
-            System.out.println("You don't have the tiles for that word");
             return false;
         }
 
@@ -188,7 +184,7 @@ public class Board
         {
             for (int i = 0; i < word.length() ; i++)
             {
-                if (!squares[row+i][col].isEmpty())
+                if (squares[row][col+i].hasTile())
                 {
                     intersectTiles[j] = squares[row+i][col].getTile();
                     j++;
@@ -199,7 +195,7 @@ public class Board
         {
             for (int i = 0; i < word.length() ; i++)
             {
-                if (!squares[row][col+i].isEmpty())
+                if (squares[row+i][col].hasTile())
                 {
                     intersectTiles[j] = squares[row][col+i].getTile();
                     j++;
@@ -241,33 +237,24 @@ public class Board
      */
     public boolean hasTiles(Tile[] intersectingTiles, Frame frame, String word)
     {
-        word = word.toUpperCase();
-
         //Perform a check to make sure all intersecting tiles are used in the desired word.
         boolean pass = false;
-
-        if (intersectingTiles[0] != null) {
-            for (Tile t:intersectingTiles)
+        for (Tile t:intersectingTiles)
+        {
+            for (int i = 0; i < word.length(); i++)
             {
-                if (t == null)
+                if (word.charAt(i) == t.getLetter())
                 {
-                    break;
+                    pass = true;
+                    //If the intersecting tile is part of the word, remove it from the string as it is not needed in the Frame part of the test.
+                    word = word.replace(word.charAt(i), ' ');
                 }
-                for (int i = 0; i < word.length(); i++)
-                {
-                    if (word.charAt(i) == t.getLetter())
-                    {
-                        pass = true;
-                        //If the intersecting tile is part of the word, remove it from the string as it is not needed in the Frame part of the test.
-                        word = word.replace(word.charAt(i), ' ');
-                    }
-                }
-                if (!pass)
-                {
-                    return false;
-                }
-                pass = false;
             }
+            if (!pass)
+            {
+                return false;
+            }
+            pass = false;
         }
             //Now check that the frame has all remaining required letters to finish making up the word.
         return frame.hasString(word);
@@ -277,28 +264,28 @@ public class Board
     @Override
     public String toString()
     {
-        System.out.println("                             Scrabble Board");
+    	System.out.println("                             Scrabble Board");
         StringBuilder board = new StringBuilder();
         for (int i = 0; i < ROWS; i++)
         {
-
+        	
             board.append(" ----------------------------------------------------------------------------\n");
             for (int j = 0; j < COLS; j++)
             {
-                board.append(" | ");
+            	board.append(" | ");
 
                 if(squares[i][j].getTile() != null)
                 {
                     board.append(squares[i][j].getTile().toString());
                 }
-                else if (squares[i][j].getType() == SquareType.CENTRE)
+                if (squares[i][j].getType() == SquareType.CENTRE)
                 {
                     board.append("**");
-                }
+                } 
                 else if (squares[i][j].getType() == SquareType.DL)
                 {
                     board.append("DL");
-                }
+                } 
                 else if (squares[i][j].getType() == SquareType.TL)
                 {
                     board.append("TL");
@@ -306,23 +293,22 @@ public class Board
                 else if (squares[i][j].getType() == SquareType.DW)
                 {
                     board.append("DW");
-                }
+                } 
                 else if (squares[i][j].getType() == SquareType.TW)
                 {
                     board.append("TW");
-                }
-                else
+                } 
+                else 
                 {
                     board.append("  ");
                 }
-
+               
             }
             board.append(" |\n");
         }
         board.append(" ----------------------------------------------------------------------------\n");
         return board.toString();
     }
-
 
 
 
