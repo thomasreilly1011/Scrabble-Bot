@@ -159,8 +159,12 @@ class BoardTest extends Board
     @Test
     void testToString()
     {
-        assertTrue(board.placeWord(3, 7, "HELLO", frame, true));
-        assertTrue(board.placeWord(7, 6, "NOT", frame, false));
+        String board1 = " ";
+        assertEquals(board1, board.toString());
+
+        String board2 = " ";
+        placeWord(3,7,"HELLO",frame,true);
+        assertEquals(board2, board.toString());
 
     }
 
