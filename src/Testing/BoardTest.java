@@ -4,6 +4,7 @@ import main.Board;
 import main.Pool;
 import main.Tile;
 import main.Frame;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -94,8 +95,33 @@ class BoardTest extends Board
 
     @Test
     void testCheckIntersection()
-    { // For Dan
-
+    {
+    	board.placeWord(3, 7, "HELLO", frame, true);
+    	board.placeWord(2, 6, "HEY", frame, false);
+    	
+    	String E = "E";
+    	
+    	assertEquals(E, checkIntersection(2, 6, "HEY", false));
+    	
+    	board.resetBoard();
+    	
+    	board.placeWord(5, 7, "HAIRY", frame, true);
+    	board.placeWord(4, 6, "MARRY", frame, false);
+    	
+    	String A = "A";
+    	
+    	assertEquals(A, checkIntersection(2, 6, "MARRY", false));
+    	
+    	board.resetBoard();
+    	
+    	board.placeWord(2, 9, "BINGO", frame, true);
+    	board.placeWord(1, 8, "LITTLE", frame, false);
+    	
+    	String I = "I";
+    	
+    	assertEquals(I, checkIntersection(2, 6, "LITTLE", false));
+    	 
+    	board.resetBoard();
     }
 
     @Test
@@ -141,7 +167,10 @@ class BoardTest extends Board
 
     @Test
     void testToString()
-    { // For Dan
+    {
+        assertTrue(board.placeWord(3, 7, "HELLO", frame, true));
+        assertTrue(board.placeWord(7, 6, "NOT", frame, false));
+
     }
 
 }
