@@ -7,6 +7,8 @@ import main.Frame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest extends Board
@@ -97,29 +99,31 @@ class BoardTest extends Board
     void testCheckIntersection()
     {
     	board.placeWord(3, 7, "HELLO", frame, true);
-    	board.placeWord(2, 6, "HEY", frame, false);
+    	//board.placeWord(2, 6, "HEY", frame, false);
+
+        System.out.println(board);
+
+    	Tile[] E = {new Tile('E', 1), null ,null};
     	
-    	String E = "E";
-    	
-    	assertEquals(E, checkIntersection(2, 6, "HEY", false));
+    	assertEquals(Arrays.toString(E), Arrays.toString(board.checkIntersection(4, 6, "HEY", false)));
     	
     	board.resetBoard();
     	
     	board.placeWord(5, 7, "HAIRY", frame, true);
-    	board.placeWord(4, 6, "MARRY", frame, false);
+    	//board.placeWord(4, 6, "MARRY", frame, false);
+
+    	Tile[] A = {new Tile('A', 1), null, null, null, null};
     	
-    	String A = "A";
-    	
-    	assertEquals(A, checkIntersection(2, 6, "MARRY", false));
+    	assertEquals(Arrays.toString(A), Arrays.toString(board.checkIntersection(2, 6, "MARRY", false)));
     	
     	board.resetBoard();
     	
     	board.placeWord(2, 9, "BINGO", frame, true);
-    	board.placeWord(1, 8, "LITTLE", frame, false);
+    	//board.placeWord(1, 8, "LITTLE", frame, false);
+
+        Tile[] I = {new Tile('I', 1), null, null, null, null, null};
     	
-    	String I = "I";
-    	
-    	assertEquals(I, checkIntersection(2, 6, "LITTLE", false));
+    	assertEquals(Arrays.toString(I), Arrays.toString(board.checkIntersection(2, 6, "LITTLE", false)));
     	 
     	board.resetBoard();
     }

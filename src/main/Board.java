@@ -176,7 +176,7 @@ public class Board
     If it does not, it returns null
     If it does, it returns an array of tiles containing that it intersects.
      */
-    protected Tile[] checkIntersection(int row, int col, String word, boolean verticle) {
+    public Tile[] checkIntersection(int row, int col, String word, boolean verticle) {
         Tile[] intersectTiles = new Tile[word.length()];
         int j = 0;
 
