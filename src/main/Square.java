@@ -2,16 +2,18 @@ package main;
 
 public class Square
 {
-    SquareType e;
-    Tile t;
+    private SquareType e;
+    private Tile t;
 
-    public Square(SquareType e) //constructor
+    //constructor
+    Square(SquareType e)
     {
         this.e = e;
         this.t = null;
     }
 
-    public SquareType getType() //type getter
+    //type getter
+    SquareType getType()
     {
         return e;
     }
@@ -26,17 +28,21 @@ public class Square
         this.e = null;
     }
 
-    public void removeTile()
+    public Tile removeTile()
     {
+        Tile temp = this.t;
         this.t = null;
+        return temp;
     }
 
-    public Tile getTile() //tile getter
+    //tile getter
+    public Tile getTile()
     {
         return t;
     }
 
-    public boolean isEmpty() //checks to make sure there is no tile already on the square
+    //checks to make sure there is no tile already on the square
+    boolean isEmpty()
     {
         return t == null;
     }

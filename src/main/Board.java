@@ -1,7 +1,5 @@
 package main;
 
-import java.util.Arrays;
-
 public class Board
 {
     private static final int ROWS = 15;
@@ -11,7 +9,6 @@ public class Board
 
     public Board()
     {
-        //TODO Test the following code once toString is finished for bugs.
         for (int i=0; i < ROWS; i++)
         {
             for (int j = 0; j < COLS; j++)
@@ -92,10 +89,12 @@ public class Board
 
     public boolean placeWord(int row, int col, String word, Frame frame, boolean verticle)
     {
-        int wrong;
-        //First perform all tests
+        word = word.toUpperCase();
+
+        //First perform all tests to make sure this is a valid move.
         if(!checkBounds(row, col, verticle, word))
         {
+            System.out.println("That word is out of bounds!");
             return false;
         }
 
@@ -105,15 +104,17 @@ public class Board
         if(!intersectsCenter(row, col, word, verticle) && intersectingTiles[0] == null)
         {
             //The word isn't being placed at the origin and it does not connect with other words on the board.
+            System.out.println("That word doesn't go through the origin or another word on the board");
             return false;
         }
 
         if(!hasTiles(intersectingTiles, frame, word))
         {
+            System.out.println("You don't have the tiles for that word");
             return false;
         }
 
-            /////////////////////////////////////////////////////////////////////// checks are complete, main body proceeds
+        //All checks are complete, physical placing of the word on the board proceeds..
 
             char[] letters = word.toCharArray();
 
@@ -125,13 +126,6 @@ public class Board
                     {
                         squares[row + i][col].setTile(frame.removeTile(letters[i]));
                     }
-                    /*else //else may become redundant if hasTiles can implement the intersecting tiles part
-                    {
-                        if (!(squares[row + i][col].getTile().getLetter() == letters[i]))
-                        {
-                            return false; //returns false if the tile the word is intersecting is not apart of the word
-                        }
-                    }*/
                 }
             }
             else
@@ -142,13 +136,6 @@ public class Board
                     {
                         squares[row][col + i].setTile(frame.removeTile(letters[i]));
                     }
-                    /*else //else may become redundant if hasTiles can implement the intersecting tiles part
-                    {
-                        if (!(squares[row][col + i].getTile().getLetter() == letters[i]))
-                        {
-                            return false; //returns false if the tile the word is intersecting is not apart of the word
-                        }
-                    }*/
                 }
             }
         return true;
@@ -159,7 +146,7 @@ public class Board
     If it fits, returns true.
     If it overlaps the edge of the board it returns false.
      */
-    public boolean checkBounds(int row, int col, boolean verticle, String word)
+    protected boolean checkBounds(int row, int col, boolean verticle, String word)
     {
         if(verticle)
         {
@@ -205,7 +192,7 @@ public class Board
         return intersectTiles;
     }
 
-    public boolean intersectsCenter(int row, int col, String word, boolean verticle) {
+    protected boolean intersectsCenter(int row, int col, String word, boolean verticle) {
         if (row == 7 || col == 7) {
             if (verticle) {
                 for (int i = 0; i < word.length(); i++)
@@ -235,7 +222,7 @@ public class Board
     Returns false otherwise.
     NOTE check must fail if all tiles in intersectingTiles haven't been used in the making of the word.
      */
-    public boolean hasTiles(Tile[] intersectingTiles, Frame frame, String word)
+    protected boolean hasTiles(Tile[] intersectingTiles, Frame frame, String word)
     {
         word = word.toUpperCase();
 
