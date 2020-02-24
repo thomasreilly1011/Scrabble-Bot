@@ -59,7 +59,6 @@ class BoardUnitTest extends Board
         assertNull(board.squares[11][2].getTile());
         assertNull(board.squares[1][12].getTile());
         assertNull(board.squares[13][10].getTile());
-
     }
 
     @Test
@@ -90,9 +89,12 @@ class BoardUnitTest extends Board
         assertTrue(checkBounds(7, 7, true, "Eighteen"));
         assertTrue(checkBounds(7, 7, false, "Eighteen"));
 
+
         assertFalse(checkBounds(7, 7, false, "Something"));
+        assertFalse(checkBounds(7, 7, true, "Something"));
         assertFalse(checkBounds(0, 0, true, "Oxyphenbutazones"));
         assertFalse(checkBounds(14, 0, false, "Oxyphenbutazones"));
+        assertFalse(checkBounds(77, 0, false, "Oxyphenbutazones"));
     }
 
     @Test
