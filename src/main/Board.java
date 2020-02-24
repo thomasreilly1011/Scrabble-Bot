@@ -114,7 +114,7 @@ public class Board
             return false;
         }
 
-        //All checks are complete, physical placing of the word on the board proceeds..
+        // All checks are complete, physical placing of the word on the board proceeds..
 
             char[] letters = word.toCharArray();
 

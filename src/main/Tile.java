@@ -2,8 +2,8 @@ package main;
 
 public class Tile
 {
-    char letter;
-    int value;
+    private char letter;
+    private int value;
 
     public Tile(char letter, int value)
     {
@@ -16,7 +16,7 @@ public class Tile
         return letter;
     }
 
-    public int getValue()
+    int getValue()
     {
         return value;
     }
@@ -30,11 +30,18 @@ public class Tile
     public boolean equals(Object obj)
     {
         Tile t;
+
+        if (obj == null)
+        {
+            return false;
+        }
+
         try {
             t = (Tile) obj;
         } catch (ClassCastException e) {
             throw new IllegalArgumentException("Given object is not a tile");
         }
+
         if (t.getLetter() == letter && t.getValue() == value) {
             return true;
         } else {
