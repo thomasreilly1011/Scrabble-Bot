@@ -78,11 +78,31 @@ class BoardUnitTest extends Board
         assertEquals(new Tile('N', 1), board.squares[7][6].getTile());
         assertEquals(new Tile('T', 1), board.squares[7][8].getTile());
 
+        assertFalse(board.placeWord(7, 5, "KNOT", frame, false));
+        assertNotEquals(new Tile('K', 5), board.squares[7][5].getTile());
+
+        frame.createTestableFrame2();
+
+        assertFalse(board.placeWord(7, 5, "KNOT", frame, true));
+
+        assertTrue(board.placeWord(7, 5, "KNOT", frame, false));
+        assertEquals(new Tile('K', 5), board.squares[7][5].getTile()); //checking K was added
+        assertEquals(new Tile('O', 1), board.squares[7][7].getTile()); //checking this placing did not affect any other squares
+        assertEquals(new Tile('N', 1), board.squares[7][6].getTile());
+        assertEquals(new Tile('T', 1), board.squares[7][8].getTile());
+
+        frame.createTestableFrame2();
+        assertFalse(board.placeWord(0, 0, "HELLO", frame, false));
+        frame.createTestableFrame2();
+        assertFalse(board.placeWord(7, 8, "HELLO", frame, false));
+        frame.createTestableFrame2();
+        assertFalse(board.placeWord(7, 7, "HELLOS", frame, true)); //cannot place as there is no S in the frame (dictionary not implemented yet)
+
         System.out.println(board);
     }
 
     @Test
-    void testCheckBounds() // TODO might not be thorough enough, I just got bored. ~Spawn.
+    void testCheckBounds()
     {
         assertTrue(checkBounds(0, 0, true, "Oxyphenbutazone"));
         assertTrue(checkBounds(14, 0, false, "Oxyphenbutazone"));
