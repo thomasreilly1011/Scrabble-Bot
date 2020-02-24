@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class BoardUnitTest extends Board
 {
 
-    Board board;
-    Frame frame;
+    private Board board;
+    private Frame frame;
 
     @BeforeEach
     void init() {
