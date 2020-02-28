@@ -2,13 +2,15 @@ package main;
 
 public class Board
 {
+    //Board dimensions:
     private static final int ROWS = 15;
     private static final int COLS = 15;
 
     //Error codes:
     private static final int OUT_OF_BOUNDS = 0;
     private static final int NO_CONNECTION = 1;
-    private static final int TILES = 2;
+    private static final int INSUFFICIENT_TILES = 2;
+    private static final int SUCCESS = 5;
 
     public Square[][] squares = new Square[ROWS][COLS];
 
@@ -92,7 +94,7 @@ public class Board
         }
     }
 
-    public boolean placeWord(int row, int col, String word, Frame frame, boolean verticle)
+    public int placeWord(int row, int col, String word, Frame frame, boolean verticle)
     {
         word = word.toUpperCase();
 
@@ -100,7 +102,7 @@ public class Board
         if(!checkBounds(row, col, verticle, word))
         {
             System.out.println("That word is out of bounds!");
-            return false;
+            return OUT_OF_BOUNDS;
         }
 
         Tile[] intersectingTiles = checkIntersection(row, col, word, verticle);
@@ -110,13 +112,13 @@ public class Board
         {
             //The word isn't being placed at the origin and it does not connect with other words on the board.
             System.out.println("That word doesn't go through the origin or another word on the board");
-            return false;
+            return NO_CONNECTION;
         }
 
         if(!hasTiles(intersectingTiles, frame, word))
         {
             System.out.println("You don't have the tiles for that word");
-            return false;
+            return INSUFFICIENT_TILES;
         }
 
         // All checks are complete, physical placing of the word on the board proceeds..
@@ -143,7 +145,7 @@ public class Board
                     }
                 }
             }
-        return true;
+        return SUCCESS;
     }
 
     /*
