@@ -45,20 +45,6 @@ public class Frame
         tiles.add(new Tile('T', 1)); //adds the letters to create Not off the O in Hello
     }
 
-    public void createTestableFrame2() //purely for the use of testing placeWord in BoardTest
-    {
-        tiles.removeAll(tiles);
-
-        tiles.add(new Tile('H', 4));
-        tiles.add(new Tile('E', 1));
-        tiles.add(new Tile('L', 1));
-        tiles.add(new Tile('L', 1));
-        tiles.add(new Tile('O', 1)); //adds the letters to create Hello
-
-        tiles.add(new Tile('N', 1));
-        tiles.add(new Tile('K', 5)); //adds the letter to create Knot off of Not
-    }
-
     /*
     Allows access to the tiles of the array and therefore also the letters.
      */

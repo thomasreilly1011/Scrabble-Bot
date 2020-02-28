@@ -18,7 +18,8 @@ class BoardUnitTest extends Board
     private Frame frame;
 
     @BeforeEach
-    void init() {
+    void init()
+    {
         Pool.set();
 
         board = new Board();
@@ -78,26 +79,6 @@ class BoardUnitTest extends Board
         assertEquals(new Tile('N', 1), board.squares[7][6].getTile());
         assertEquals(new Tile('T', 1), board.squares[7][8].getTile());
 
-        assertFalse(board.placeWord(7, 5, "KNOT", frame, false));
-        assertNotEquals(new Tile('K', 5), board.squares[7][5].getTile());
-
-        frame.createTestableFrame2();
-
-        assertFalse(board.placeWord(7, 5, "KNOT", frame, true));
-
-        assertTrue(board.placeWord(7, 5, "KNOT", frame, false));
-        assertEquals(new Tile('K', 5), board.squares[7][5].getTile()); //checking K was added
-        assertEquals(new Tile('O', 1), board.squares[7][7].getTile()); //checking this placing did not affect any other squares
-        assertEquals(new Tile('N', 1), board.squares[7][6].getTile());
-        assertEquals(new Tile('T', 1), board.squares[7][8].getTile());
-
-        frame.createTestableFrame2();
-        assertFalse(board.placeWord(0, 0, "HELLO", frame, false));
-        frame.createTestableFrame2();
-        assertFalse(board.placeWord(7, 8, "HELLO", frame, false));
-        frame.createTestableFrame2();
-        assertFalse(board.placeWord(7, 7, "HELLOS", frame, true)); //cannot place as there is no S in the frame (dictionary not implemented yet)
-
         System.out.println(board);
     }
 
@@ -120,21 +101,21 @@ class BoardUnitTest extends Board
     @Test
     void testCheckIntersection()
     {
-    	board.placeWord(3, 7, "HELLO", frame, true);
+        board.placeWord(3, 7, "HELLO", frame, true);
 
-    	Tile[] E = {new Tile('E', 1), null ,null};
-    	
-    	assertEquals(Arrays.toString(E), Arrays.toString(board.checkIntersection(4, 6, "HEY", false)));
+        Tile[] E = {new Tile('E', 1), null, null};
 
-    	Tile[] L = {new Tile('L', 1), null, null, null, null};
+        assertEquals(Arrays.toString(E), Arrays.toString(board.checkIntersection(4, 6, "HEY", false)));
 
-    	assertEquals(Arrays.toString(L), Arrays.toString(board.checkIntersection(5, 7, "LEMON", false)));
+        Tile[] L = {new Tile('L', 1), null, null, null, null};
+
+        assertEquals(Arrays.toString(L), Arrays.toString(board.checkIntersection(5, 7, "LEMON", false)));
 
         Tile[] O = {new Tile('O', 1), null, null, null};
-    	
-    	assertEquals(Arrays.toString(O), Arrays.toString(board.checkIntersection(7, 5, "GOLD", false)));
-    	 
-    	board.resetBoard();
+
+        assertEquals(Arrays.toString(O), Arrays.toString(board.checkIntersection(7, 5, "GOLD", false)));
+
+        board.resetBoard();
     }
 
     @Test
@@ -161,9 +142,9 @@ class BoardUnitTest extends Board
         //Mock 'intersectingTiles' arrays for testing purposes:
         Tile[] iT1 = {new Tile('O', 1)};
         Tile[] iT2 = {null, null, null, null, null};
-        Tile[] iT3= {new Tile('C', 3)};
-        Tile[] iT4= {new Tile('T', 1), new Tile('R', 1)};
-        Tile[] iT5= {new Tile('T', 1)};
+        Tile[] iT3 = {new Tile('C', 3)};
+        Tile[] iT4 = {new Tile('T', 1), new Tile('R', 1)};
+        Tile[] iT5 = {new Tile('T', 1)};
 
         //Expected true cases:
         assertTrue(hasTiles(iT2, frame, "Hello"));
@@ -248,7 +229,7 @@ class BoardUnitTest extends Board
                 " ----------------------------------------------------------------------------\n" +
                 " | TW |    |    | DL |    |    |    | TW |    |    |    | DL |    |    | TW |\n" +
                 " ----------------------------------------------------------------------------\n";
-        board.placeWord(3,7,"HELLO",frame,true);
+        board.placeWord(3, 7, "HELLO", frame, true);
         System.out.println("Board after placing word 'hello'\n" + board);
         assertEquals(board2, board.toString());
 
