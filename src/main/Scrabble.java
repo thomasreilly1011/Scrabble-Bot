@@ -4,31 +4,20 @@ import java.util.Scanner;
 
 public class Scrabble
 {
+    public boolean gameOver = false;
 
     public static void main(String[] args)
     {
         Pool pool = new Pool();
-        Board board = new Board();
+        Board board = new Board(); //initialise the game
 
-        Scanner in = new Scanner(System.in);
+        Player player1 = UI.playerInit();
+        Player player2 = UI.playerInit();
 
-        System.out.println("Enter Player 1's name:");
-        String s1 = in.nextLine();
-
-        System.out.println("Enter Player 2's name:");
-        String s2 = in.nextLine();
-
-        Player player1 = new Player(s1);
-        Player player2 = new Player(s2);
-
-        System.out.println("\n" + s1 + "'s Frame:\n" + player1.getFrame());
-        System.out.println(s2 + "'s Frame:\n" + player2.getFrame());
-
-
-
-        for(int i=0; i<10; i++)
+        for(int i=0; i<5; i++)
         {
-            UI.playersmove();
+            UI.playerMove(player1);
+            UI.playerMove(player2);
         }
     }
 
