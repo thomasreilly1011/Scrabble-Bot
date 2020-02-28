@@ -2,15 +2,15 @@ package main;
 
 public class Board
 {
+    //Error codes:
+    static final int OUT_OF_BOUNDS = 0;
+    static final int NO_CONNECTION = 1;
+    static final int INSUFFICIENT_TILES = 2;
+    static final int SUCCESS = 5;
+
     //Board dimensions:
     private static final int ROWS = 15;
     private static final int COLS = 15;
-
-    //Error codes:
-    private static final int OUT_OF_BOUNDS = 0;
-    private static final int NO_CONNECTION = 1;
-    private static final int INSUFFICIENT_TILES = 2;
-    private static final int SUCCESS = 5;
 
     public Square[][] squares = new Square[ROWS][COLS];
 
