@@ -5,6 +5,11 @@ public class Board
     private static final int ROWS = 15;
     private static final int COLS = 15;
 
+    //Error codes:
+    private static final int OUT_OF_BOUNDS = 0;
+    private static final int NO_CONNECTION = 1;
+    private static final int TILES = 2;
+
     public Square[][] squares = new Square[ROWS][COLS];
 
     public Board()
