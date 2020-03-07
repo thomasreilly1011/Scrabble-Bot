@@ -21,6 +21,8 @@ public class Scrabble
 
     public static void calculateScore(int row, int column, String word, Boolean vertical)
     {
+        int length = word.length();
+
 
     }
 
@@ -28,9 +30,15 @@ public class Scrabble
     {
         if(parseInt(strings[0]) == 0)
         {
-            board.placeWord(parseInt(strings[1]), parseInt(strings[2]), strings[3], player.getFrame(), parseBoolean(strings[4]));
-
-            calculateScore(parseInt(strings[1]), parseInt(strings[2]), strings[3], parseBoolean(strings[4]));
+            int i = board.placeWord(parseInt(strings[2]), parseInt(strings[3]), strings[1], player.getFrame(), parseBoolean(strings[4]));
+            if(i == 5)
+            {
+                calculateScore(parseInt(strings[2]), parseInt(strings[3]), strings[1], parseBoolean(strings[4]));
+            }
+            else
+            {
+                UI.error(i, player);
+            }
         }
         else if(parseInt(strings[0]) == 2)
         {
@@ -51,6 +59,7 @@ public class Scrabble
         for(int i=0; i<5; i++)
         {
             move(UI.playerMove(player1), player1);
+            System.out.println(board.score);
             move(UI.playerMove(player2), player2);
         }
     }

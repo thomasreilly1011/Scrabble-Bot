@@ -94,6 +94,28 @@ public class Board
         }
     }
 
+    int score = 0;
+    int wordmultiplier = 1;
+
+    public int scoring(int row, int col, int i)
+    {
+
+        int lettermultiplier = squares[row + i][col].getType().getValue();
+
+        if(lettermultiplier == 4) //eg if tile is placed on double word tile
+        {
+            wordmultiplier *= 2;
+            lettermultiplier = 1;
+        }
+        else if(lettermultiplier == 5) //eg if tile is placed on triple word tile
+        {
+            wordmultiplier *= 1;
+            lettermultiplier = 1;
+        }
+
+        return score += lettermultiplier * squares[row + i][col].getTile().getValue();
+    }
+
     public int placeWord(int row, int col, String word, Frame frame, boolean verticle)
     {
         word = word.toUpperCase();
@@ -123,28 +145,35 @@ public class Board
 
         // All checks are complete, physical placing of the word on the board proceeds..
 
-            char[] letters = word.toCharArray();
+        int score = 0;
 
-            if (verticle)
+        char[] letters = word.toCharArray();
+
+        if (verticle)
+        {
+            for (int i = 0; i < word.length(); i++)
             {
-                for (int i = 0; i < word.length(); i++)
+                if(squares[row + i][col].isEmpty())
                 {
-                    if(squares[row + i][col].isEmpty())
-                    {
-                        squares[row + i][col].setTile(frame.removeTile(letters[i]));
-                    }
+                    squares[row + i][col].setTile(frame.removeTile(letters[i]));
+                    scoring(row, col, i);
                 }
             }
-            else
+        }
+        else
+            {
+            for (int i = 0; i < word.length(); i++)
+            {
+                if (squares[row][col + i].isEmpty())
                 {
-                for (int i = 0; i < word.length(); i++)
-                {
-                    if (squares[row][col + i].isEmpty())
-                    {
-                        squares[row][col + i].setTile(frame.removeTile(letters[i]));
-                    }
+                    squares[row][col + i].setTile(frame.removeTile(letters[i]));
+                    scoring(row, col, i);
                 }
             }
+        }
+
+        score = score*wordmultiplier;
+
         return SUCCESS;
     }
 

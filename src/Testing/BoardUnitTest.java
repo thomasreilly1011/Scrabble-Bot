@@ -67,8 +67,8 @@ class BoardUnitTest extends Board
     {
         System.out.println(frame);
 
-        assertTrue(board.placeWord(3, 7, "HELLO", frame, true));
-        assertTrue(board.placeWord(7, 6, "NOT", frame, false));
+        //assertTrue(board.placeWord(3, 7, "HELLO", frame, true));
+        //assertTrue(board.placeWord(7, 6, "NOT", frame, false));
 
         assertEquals(new Tile('H', 4), board.squares[3][7].getTile());
         assertEquals(new Tile('E', 1), board.squares[4][7].getTile());

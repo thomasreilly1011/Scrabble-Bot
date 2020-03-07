@@ -2,10 +2,21 @@ package main;
 
 public enum SquareType
 {
-    CENTRE, //centre square
-    DL,     //double letter
-    TL,     //triple letter
-    DW,     //double word
-    TW,      //triple word
-    BLANK
+    CENTRE(1), //centre square
+    DL(2),     //double letter
+    TL(3),     //triple letter
+    DW(4),     //double word
+    TW(5),      //triple word
+    BLANK(1);
+
+    private int value = 0;
+    private SquareType(int value)
+    {
+        this.value = value;
+    }
+
+    public int getValue()
+    {
+        return value;
+    }
 }

@@ -23,9 +23,9 @@ public class UI
     Returns an array where the first element (args[0]) is always the move type.
     If move type is PASS, QUIT or REFILL, no other arguments are provided.
     If move type is PLACE_WORD the other arguments are as follows
-    args[1] = internal row coordinate
-    args[2] = internal column coordinate
-    args[3] = desired word
+    args[1] = desired word
+    args[2] = internal row coordinate
+    args[3] = internal column coordinate
     args[4] = vertical boolean
      */
     static String[] playerMove(Player player)
@@ -34,6 +34,7 @@ public class UI
         String input;
         System.out.println("It is " + player.getPlayerName() + "'s turn!");
         System.out.println("Type 'HELP' to see instructions again.");
+        System.out.print(Scrabble.board);
         while (true)
         {
             while (true)
