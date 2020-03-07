@@ -123,7 +123,6 @@ public class Board
         //First perform all tests to make sure this is a valid move.
         if(!checkBounds(row, col, verticle, word))
         {
-            System.out.println("That word is out of bounds!");
             return OUT_OF_BOUNDS;
         }
 
@@ -133,13 +132,11 @@ public class Board
         if(!intersectsCenter(row, col, word, verticle) && intersectingTiles[0] == null)
         {
             //The word isn't being placed at the origin and it does not connect with other words on the board.
-            System.out.println("That word doesn't go through the origin or another word on the board");
             return NO_CONNECTION;
         }
 
         if(!hasTiles(intersectingTiles, frame, word))
         {
-            System.out.println("You don't have the tiles for that word");
             return INSUFFICIENT_TILES;
         }
 
@@ -156,7 +153,7 @@ public class Board
                 if(squares[row + i][col].isEmpty())
                 {
                     squares[row + i][col].setTile(frame.removeTile(letters[i]));
-                    scoring(row, col, i);
+                    //scoring(row, col, i);
                 }
             }
         }
@@ -167,7 +164,7 @@ public class Board
                 if (squares[row][col + i].isEmpty())
                 {
                     squares[row][col + i].setTile(frame.removeTile(letters[i]));
-                    scoring(row, col, i);
+                    //scoring(row, col, i);
                 }
             }
         }

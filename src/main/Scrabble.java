@@ -25,32 +25,37 @@ public class Scrabble
 
 
     }
-
+    //TEMP: (Note from Thomas) I replaced some ints with constant names for readability and added a move call for the error case
     public static void move(String[] strings, Player player)
     {
-        if(parseInt(strings[0]) == 0)
+        if(parseInt(strings[0]) == PLACE_WORD)
         {
             int i = board.placeWord(parseInt(strings[2]), parseInt(strings[3]), strings[1], player.getFrame(), parseBoolean(strings[4]));
-            if(i == 5)
+            if(i == Board.SUCCESS)
             {
                 calculateScore(parseInt(strings[2]), parseInt(strings[3]), strings[1], parseBoolean(strings[4]));
             }
             else
             {
                 UI.error(i, player);
+                move(UI.playerMove(player), player);
             }
         }
-        else if(parseInt(strings[0]) == 2)
+        else if(parseInt(strings[0]) == REFILL)
         {
             player.getFrame().refill();
         }
-        else if(parseInt(strings[0]) == 3)
+        else if(parseInt(strings[0]) == QUIT)
         {
-            gameOver = true;
-            //TODO maybe a UI.endGame() function call of sorts that also asks "Are you sure? (Y/N)"
+            //TEMP: (Note from Thomas) I added the UI function for checking endgame.
+            gameOver = UI.endGame();
+            if (gameOver == false) {
+                move(UI.playerMove(player), player);
+            }
         }
     }
 
+    //TEMP: (Note from Thomas) I added the print board call in the game loop. This makes the console log less clogged up and more readable. Can be changed in the future.
     public static void main(String[] args)
     {
         Player player1 = UI.playerInit();
@@ -58,8 +63,10 @@ public class Scrabble
 
         for(int i=0; i<5; i++)
         {
+            UI.printBoard();
             move(UI.playerMove(player1), player1);
             System.out.println(board.score);
+            UI.printBoard();
             move(UI.playerMove(player2), player2);
         }
     }
