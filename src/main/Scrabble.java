@@ -46,13 +46,13 @@ public class Scrabble
         }
     }
 
-    //TEMP: (Note from Thomas) I added the print board call in the game loop. This makes the console log less clogged up and more readable. Can be changed in the future.
     public static void main(String[] args)
     {
         Player player1 = UI.playerInit();
         Player player2 = UI.playerInit();
+        UI.help();
 
-        for(int i=0; i<5; i++)
+        for(int i=0; i<5; i++) //preliminary for loop to test the game
         {
             UI.printBoard();
             move(UI.playerMove(player1), player1);
@@ -62,5 +62,4 @@ public class Scrabble
             System.out.println(board.score);
         }
     }
-
 }
