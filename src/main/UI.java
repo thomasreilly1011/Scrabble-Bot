@@ -1,8 +1,25 @@
 package main;
 
+import javafx.geometry.Pos;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+
 import java.util.Scanner;
 
-public class UI
+import javafx.application.Application;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.Parent;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class UI extends Application
 {
     private static Scanner in = new Scanner(System.in);
 
@@ -195,6 +212,136 @@ public class UI
         System.out.println();
     }
 
-    static void printBoard() {System.out.print(Scrabble.board);}
+    static void printBoard()
+    {
+        System.out.print(Scrabble.board);
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //JAVAFX IMPLEMENTATION TO BE SIMPLIFIED TO INCLUDE 2D SQUARE ARRAY//////////////////////////////////////////////////////////////////////
+
+    private static final int ROWS = 15;
+    private static final int COLS = 15;
+
+    private Parent createContent()
+    {
+        Pane root = new Pane();
+        root.setPrefSize(750, 750);
+
+
+        List<UI.Tile> tiles = new ArrayList<>();
+
+        for (int i=0; i < ROWS; i++)
+        {
+            for (int j = 0; j < COLS; j++)
+            {
+                //TRIPLE WORD & CENTER CONDITIONS
+                if((i == 0 || i == 14 || i == 7) && (j == 0 || j == 14 || j == 7))
+                {
+                    if (i == 7 && j == 7)
+                    {
+                        //border.setFill(Color.RED);
+                        tiles.add(new UI.Tile("* *"));
+                    }
+                    else
+                    {
+                        tiles.add(new UI.Tile("TW"));
+                    }
+                }
+                //DOUBLE WORD CONDITIONS
+                else if ((i == 1 || i == 13) && (j == 1 || j == 13))
+                {
+                    tiles.add(new UI.Tile("DW"));
+                } else if ((i == 2 || i == 12) && (j == 2 || j == 12))
+                {
+                    tiles.add(new UI.Tile("DW"));
+                } else if ((i == 3 || i == 11) && (j == 3 || j == 11))
+                {
+                    tiles.add(new UI.Tile("DW"));
+                } else if ((i == 4 || i == 10) && (j == 4 || j == 10))
+                {
+                    tiles.add(new UI.Tile("DW"));
+                }
+                //TRIPLE LETTER CONDITIONS
+                else if ((i == 1 || i == 13) && (j == 5 || j == 9))
+                {
+                    tiles.add(new UI.Tile("TL"));
+                } else if ((i == 5 || i == 9) && (j == 1 || j == 5 || j == 9 || j == 13))
+                {
+                    tiles.add(new UI.Tile("TL"));
+                }
+                //DOUBLE LETTER CONDITIONS
+                else if ((i == 0 || i == 14) && (j == 3 || j == 11))
+                {
+                    tiles.add(new UI.Tile("DL"));
+                }
+                else if ((i == 3 || i == 11) && (j == 0 || j == 14))
+                {
+                    tiles.add(new UI.Tile("DL"));
+                }
+                else if ((i == 2 || i == 12) && (j == 6 || j == 8))
+                {
+                    tiles.add(new UI.Tile("DL"));
+                }
+                else if ((i == 6 || i == 8) && (j == 2 || j == 12))
+                {
+                    tiles.add(new UI.Tile("DL"));
+                }
+                else if ((i == 3 && j == 7) || (i == 7 && (j == 3 || j == 11)) || (i == 11 && j == 7))
+                {
+                    tiles.add(new UI.Tile("DL"));
+                }
+                else if ((i == 6 || i == 8) && (j == 6 || j == 8))
+                {
+                    tiles.add(new UI.Tile("DL"));
+                }
+                else
+                {
+                    tiles.add(new UI.Tile("  "));
+                }
+            }
+        }
+
+        for(int k=0; k<tiles.size(); k++)
+        {
+            UI.Tile tile = tiles.get(k);
+            tile.setTranslateX(50 * (k / ROWS));
+            tile.setTranslateY(50 * (k % ROWS));
+            root.getChildren().add(tile);
+
+        }
+        return root;
+    }
+
+    private class Tile extends StackPane
+    {
+        public Tile(String value)
+        {
+            /*JavaFX Construction*/
+            Rectangle border = new Rectangle(50, 50);
+            border.setFill(null);
+            border.setStroke(Color.BLACK);
+
+            Text text = new Text(String.valueOf(value));
+            text.setFont(Font.font(20));
+
+            setAlignment(Pos.CENTER);
+            getChildren().addAll(border, text);
+        }
+    }
+
+    @Override
+    public void start(Stage scrabbleBoard) throws Exception
+    {
+        scrabbleBoard.setScene(new Scene(createContent()));
+        scrabbleBoard.setTitle("Scrabble Board");
+        scrabbleBoard.show();
+    }
+
+
+    public static void main(String[] args)
+    {
+        launch(args);
+    }
 
 }
