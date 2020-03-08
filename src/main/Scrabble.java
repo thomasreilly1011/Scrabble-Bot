@@ -19,23 +19,13 @@ public class Scrabble
 
     public static boolean gameOver = false;
 
-    public static void calculateScore(int row, int column, String word, Boolean vertical)
-    {
-        int length = word.length();
-
-
-    }
     //TEMP: (Note from Thomas) I replaced some ints with constant names for readability and added a move call for the error case
     public static void move(String[] strings, Player player)
     {
         if(parseInt(strings[0]) == PLACE_WORD)
         {
             int i = board.placeWord(parseInt(strings[2]), parseInt(strings[3]), strings[1], player.getFrame(), parseBoolean(strings[4]));
-            if(i == Board.SUCCESS)
-            {
-                calculateScore(parseInt(strings[2]), parseInt(strings[3]), strings[1], parseBoolean(strings[4]));
-            }
-            else
+            if(i != Board.SUCCESS)
             {
                 UI.error(i, player);
                 move(UI.playerMove(player), player);
@@ -49,7 +39,8 @@ public class Scrabble
         {
             //TEMP: (Note from Thomas) I added the UI function for checking endgame.
             gameOver = UI.endGame();
-            if (gameOver == false) {
+            if (gameOver == false)
+            {
                 move(UI.playerMove(player), player);
             }
         }
@@ -68,6 +59,7 @@ public class Scrabble
             System.out.println(board.score);
             UI.printBoard();
             move(UI.playerMove(player2), player2);
+            System.out.println(board.score);
         }
     }
 

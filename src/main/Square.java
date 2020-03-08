@@ -17,6 +17,10 @@ public class Square
     {
         return e;
     }
+    void setType(SquareType e)
+    {
+        this.e = e;
+    }
 
     public void setTile(Tile t)
     {
