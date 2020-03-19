@@ -1,16 +1,15 @@
-package main;
+package Game;
 
 public class Board
 {
+    public static final int ROWS = 15;
+    public static final int COLS = 15;
     //Error codes:
-    static final int OUT_OF_BOUNDS = 0;
-    static final int NO_CONNECTION = 1;
-    static final int INSUFFICIENT_TILES = 2;
-    static final int SUCCESS = 5;
+    public static final int OUT_OF_BOUNDS = 0;
+    public static final int NO_CONNECTION = 1;
+    public static final int INSUFFICIENT_TILES = 2;
+    public static final int SUCCESS = 5;
 
-    //Board dimensions:
-    private static final int ROWS = 15;
-    private static final int COLS = 15;
 
     public Square[][] squares = new Square[ROWS][COLS];
 
@@ -94,7 +93,7 @@ public class Board
         }
     }
 
-    int score = 0;
+    public int score = 0;
     int wordMultiplier = 1;
 
     public void scoring(int row, int col, int i, int j)
