@@ -58,7 +58,8 @@ public class Scrabble extends Application
         Thread cliThread = new Thread(new Runnable()
         {
             @Override
-            public void run() {
+            public void run()
+            {
                 gameLoop(board, player1, player2);
             }
         });
@@ -77,8 +78,10 @@ public class Scrabble extends Application
         timer.schedule(task, 1000, 1000);
     }
 
-    public void gameLoop(Board board, Player player1, Player player2) {
-        while (!Scrabble.gameOver) {
+    public void gameLoop(Board board, Player player1, Player player2)
+    {
+        while (!Scrabble.gameOver)
+        {
             Scrabble.move(cli.playerMove(player1), player1);
             //Thread.currentThread().notify();
             System.out.println(board.score);
