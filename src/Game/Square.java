@@ -1,4 +1,4 @@
-package main;
+package Game;
 
 public class Square
 {
@@ -13,7 +13,7 @@ public class Square
     }
 
     //type getter
-    SquareType getType()
+    public SquareType getType()
     {
         return e;
     }
