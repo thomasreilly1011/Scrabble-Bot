@@ -1,31 +1,16 @@
-package main;
+package IO;
 
-import javafx.geometry.Pos;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import Game.Board;
+import Game.Player;
+import Game.Scrabble;
 
 import java.util.Scanner;
 
-import javafx.application.Application;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.Parent;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+public class CLI {
 
-import java.util.ArrayList;
-import java.util.List;
+    private Scanner in = new Scanner(System.in);
 
-import main.Board;
-
-public class UI extends Application
-{
-    private static Scanner in = new Scanner(System.in);
-
-    static Player playerInit()
+    public Player playerInit()
     {
 
         System.out.println("Enter a player's name:");
@@ -47,7 +32,7 @@ public class UI extends Application
     args[3] = internal column coordinate
     args[4] = vertical boolean
      */
-    static String[] playerMove(Player player)
+    public String[] playerMove(Player player)
     {
         String[] args = new String[5];
         String input;
@@ -125,7 +110,7 @@ public class UI extends Application
                     args[0] = "0";
                     args[1] = word;
                     if(row < 8) {
-                        row+= (8-row)*2;
+                        row += (8-row)*2;
                     } else if (row > 8) {
                         row -= (row-8)*2;
                     }
@@ -164,7 +149,7 @@ public class UI extends Application
     /*
     Notifies the user of an error in placing a word and prompts them to try again.
      */
-    public static void error(int error, Player player)
+    public void error(int error, Player player)
     {
         if (error == Board.OUT_OF_BOUNDS) {
             System.out.println("That word falls out of the boards bounds. Please try again.");
@@ -181,7 +166,7 @@ public class UI extends Application
         }
     }
 
-    static boolean endGame() {
+    public boolean endGame() {
         System.out.println("Are you sure you want to end the game? (Y/N)");
         String input;
         while (true) {
@@ -200,7 +185,7 @@ public class UI extends Application
     /*
     Prints instructions to the screen on how the user is to make their move.
      */
-    static void help()
+    public void help()
     {
         System.out.println("                            ---------- INSTRUCTIONS FOR PLAYING ----------                  ");
         System.out.println("To place a word type 'PLACE' followed by the following (space separated) options:");
@@ -214,108 +199,9 @@ public class UI extends Application
         System.out.println();
     }
 
-    static void printBoard()
+    public void printBoard()
     {
         System.out.print(Scrabble.board);
-    }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //JAVAFX IMPLEMENTATION TO BE SIMPLIFIED TO INCLUDE 2D SQUARE ARRAY//////////////////////////////////////////////////////////////////////
-
-    private static final int ROWS = 15;
-    private static final int COLS = 15;
-    public Square[][] squares = new Square[ROWS][COLS];
-
-    private Parent createContent()
-    {
-        Pane root = new Pane();
-        root.setPrefSize(750, 750);
-
-
-        List<UI.Tile> board = new ArrayList<>();
-
-        //board.add(new UI.Tile("  "));
-
-        for (int i = 0; i < ROWS; i++)
-        {
-            for (int j = 0; j < COLS; j++)
-            {
-                if(squares[i][j].getTile() != null)
-                {
-                    board.add(new UI.Tile(squares[i][j].getTile().toString()));
-                }
-                else if (squares[i][j].getType() == SquareType.CENTRE)
-                {
-                    board.add(new UI.Tile("* *"));
-                }
-                else if (squares[i][j].getType() == SquareType.DL)
-                {
-                    board.add(new UI.Tile("DL"));
-                }
-                else if (squares[i][j].getType() == SquareType.TL)
-                {
-                    board.add(new UI.Tile("TL"));
-                }
-                else if (squares[i][j].getType() == SquareType.DW)
-                {
-                    board.add(new UI.Tile("DW"));
-                }
-                else if (squares[i][j].getType() == SquareType.TW)
-                {
-                    board.add(new UI.Tile("TW"));
-                }
-                else
-                {
-                    board.add(new UI.Tile("  "));
-                }
-            }
-        }
-
-
-        //Only issue I can see with simplifying this code is using add() to add to the 2D array squares
-        //instead of the ArrayList<Tile> I created.
-
-        for(int k=0; k<board.size(); k++)
-        {
-            UI.Tile tile = board.get(k);
-            tile.setTranslateX(50 * (k / ROWS));
-            tile.setTranslateY(50 * (k % ROWS));
-            root.getChildren().add(tile);
-
-        }
-        return root;
-    }
-
-
-    private class Tile extends StackPane
-    {
-        public Tile(String value)
-        {
-            /*JavaFX Construction*/
-            Rectangle border = new Rectangle(50, 50);
-            border.setFill(null);
-            border.setStroke(Color.BLACK);
-
-            Text text = new Text(String.valueOf(value));
-            text.setFont(Font.font(20));
-
-            setAlignment(Pos.CENTER);
-            getChildren().addAll(border, text);
-        }
-    }
-
-    @Override
-    public void start(Stage scrabbleBoard) throws Exception
-    {
-        scrabbleBoard.setScene(new Scene(createContent()));
-        scrabbleBoard.setTitle("Scrabble Board");
-        scrabbleBoard.show();
-    }
-
-
-    public static void main(String[] args)
-    {
-        launch(args);
     }
 
 }

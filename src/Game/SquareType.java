@@ -1,4 +1,4 @@
-package main;
+package Game;
 
 public enum SquareType
 {

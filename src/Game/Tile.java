@@ -1,4 +1,4 @@
-package main;
+package Game;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
