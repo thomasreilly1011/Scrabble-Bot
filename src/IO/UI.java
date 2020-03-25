@@ -10,6 +10,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import Game.Board;
 import Game.SquareType;
+import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,31 +34,31 @@ public class UI
             {
                 if(b.squares[i][j].getTile() != null)
                 {
-                    tiles.add(new Tile(b.squares[i][j].getTile().toString()));
+                    tiles.add(new Tile(b.squares[i][j].getTile().toString(), Color.LIGHTGOLDENRODYELLOW, Font.font(20)));
                 }
                 else if (b.squares[i][j].getType() == SquareType.CENTRE)
                 {
-                    tiles.add(new Tile("**"));
+                    tiles.add(new Tile("✸", Color.SALMON, Font.font(38)));
                 }
                 else if (b.squares[i][j].getType() == SquareType.DL)
                 {
-                    tiles.add(new Tile ("DL"));
+                    tiles.add(new Tile ("Double\nletter", Color.LIGHTBLUE, Font.font(10)));
                 }
                 else if (b.squares[i][j].getType() == SquareType.TL)
                 {
-                    tiles.add(new Tile("TL"));
+                    tiles.add(new Tile("Triple\nletter", Color.DODGERBLUE, Font.font(10)));
                 }
                 else if (b.squares[i][j].getType() == SquareType.DW)
                 {
-                    tiles.add(new Tile("DW"));
+                    tiles.add(new Tile("Double\nword", Color.SALMON, Font.font(10)));
                 }
                 else if (b.squares[i][j].getType() == SquareType.TW)
                 {
-                    tiles.add(new Tile("TW"));
+                    tiles.add(new Tile("Triple\nword", Color.RED, Font.font(10)));
                 }
                 else
                 {
-                    tiles.add(new Tile("  "));
+                    tiles.add(new Tile("  ", Color.MEDIUMSEAGREEN, Font.font(10)));
                 }
 
             }
@@ -67,8 +68,8 @@ public class UI
         for(int k=0; k<tiles.size(); k++)
         {
             UI.Tile tile = tiles.get(k);
-            tile.setTranslateX(50 * (k / Board.ROWS));
-            tile.setTranslateY(50 * (k % Board.ROWS));
+            tile.setTranslateX(50 * (k % Board.ROWS));
+            tile.setTranslateY(50 * (k / Board.ROWS));
             root.getChildren().add(tile);
 
         }
@@ -80,15 +81,17 @@ public class UI
      */
     private class Tile extends StackPane
     {
-        public Tile(String value)
+        public Tile(String value, Color colour, Font fontsize)
         {
             /*JavaFX Construction*/
             Rectangle border = new Rectangle(50, 50);
-            border.setFill(null);
-            border.setStroke(Color.BLACK);
+            border.setFill(colour);
+            border.setStroke(Color.WHITE);
+            border.setStrokeWidth(3);
 
             Text text = new Text(String.valueOf(value));
-            text.setFont(Font.font(20));
+            text.setFont(fontsize);
+            text.setTextAlignment(TextAlignment.CENTER);
 
             setAlignment(Pos.CENTER);
             getChildren().addAll(border, text);
