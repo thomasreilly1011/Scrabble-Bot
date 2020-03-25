@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.Board;
+
 public class UI extends Application
 {
     private static Scanner in = new Scanner(System.in);
@@ -222,6 +224,7 @@ public class UI extends Application
 
     private static final int ROWS = 15;
     private static final int COLS = 15;
+    public Square[][] squares = new Square[ROWS][COLS];
 
     private Parent createContent()
     {
@@ -229,82 +232,52 @@ public class UI extends Application
         root.setPrefSize(750, 750);
 
 
-        List<UI.Tile> tiles = new ArrayList<>();
+        List<UI.Tile> board = new ArrayList<>();
 
-        for (int i=0; i < ROWS; i++)
+        //board.add(new UI.Tile("  "));
+
+        for (int i = 0; i < ROWS; i++)
         {
             for (int j = 0; j < COLS; j++)
             {
-                //TRIPLE WORD & CENTER CONDITIONS
-                if((i == 0 || i == 14 || i == 7) && (j == 0 || j == 14 || j == 7))
+                if(squares[i][j].getTile() != null)
                 {
-                    if (i == 7 && j == 7)
-                    {
-                        //border.setFill(Color.RED);
-                        tiles.add(new UI.Tile("* *"));
-                    }
-                    else
-                    {
-                        tiles.add(new UI.Tile("TW"));
-                    }
+                    board.add(new UI.Tile(squares[i][j].getTile().toString()));
                 }
-                //DOUBLE WORD CONDITIONS
-                else if ((i == 1 || i == 13) && (j == 1 || j == 13))
+                else if (squares[i][j].getType() == SquareType.CENTRE)
                 {
-                    tiles.add(new UI.Tile("DW"));
-                } else if ((i == 2 || i == 12) && (j == 2 || j == 12))
-                {
-                    tiles.add(new UI.Tile("DW"));
-                } else if ((i == 3 || i == 11) && (j == 3 || j == 11))
-                {
-                    tiles.add(new UI.Tile("DW"));
-                } else if ((i == 4 || i == 10) && (j == 4 || j == 10))
-                {
-                    tiles.add(new UI.Tile("DW"));
+                    board.add(new UI.Tile("* *"));
                 }
-                //TRIPLE LETTER CONDITIONS
-                else if ((i == 1 || i == 13) && (j == 5 || j == 9))
+                else if (squares[i][j].getType() == SquareType.DL)
                 {
-                    tiles.add(new UI.Tile("TL"));
-                } else if ((i == 5 || i == 9) && (j == 1 || j == 5 || j == 9 || j == 13))
-                {
-                    tiles.add(new UI.Tile("TL"));
+                    board.add(new UI.Tile("DL"));
                 }
-                //DOUBLE LETTER CONDITIONS
-                else if ((i == 0 || i == 14) && (j == 3 || j == 11))
+                else if (squares[i][j].getType() == SquareType.TL)
                 {
-                    tiles.add(new UI.Tile("DL"));
+                    board.add(new UI.Tile("TL"));
                 }
-                else if ((i == 3 || i == 11) && (j == 0 || j == 14))
+                else if (squares[i][j].getType() == SquareType.DW)
                 {
-                    tiles.add(new UI.Tile("DL"));
+                    board.add(new UI.Tile("DW"));
                 }
-                else if ((i == 2 || i == 12) && (j == 6 || j == 8))
+                else if (squares[i][j].getType() == SquareType.TW)
                 {
-                    tiles.add(new UI.Tile("DL"));
-                }
-                else if ((i == 6 || i == 8) && (j == 2 || j == 12))
-                {
-                    tiles.add(new UI.Tile("DL"));
-                }
-                else if ((i == 3 && j == 7) || (i == 7 && (j == 3 || j == 11)) || (i == 11 && j == 7))
-                {
-                    tiles.add(new UI.Tile("DL"));
-                }
-                else if ((i == 6 || i == 8) && (j == 6 || j == 8))
-                {
-                    tiles.add(new UI.Tile("DL"));
+                    board.add(new UI.Tile("TW"));
                 }
                 else
                 {
-                    tiles.add(new UI.Tile("  "));
+                    board.add(new UI.Tile("  "));
                 }
             }
         }
 
-        for(int k=0; k<tiles.size(); k++)
+
+        //Only issue I can see with simplifying this code is using add() to add to the 2D array squares
+        //instead of the ArrayList<Tile> I created.
+
+        for(int k=0; k<board.size(); k++)
         {
-            UI.Tile tile = tiles.get(k);
+            UI.Tile tile = board.get(k);
             tile.setTranslateX(50 * (k / ROWS));
             tile.setTranslateY(50 * (k % ROWS));
             root.getChildren().add(tile);
@@ -312,6 +285,7 @@ public class UI extends Application
         }
         return root;
     }
+
 
     private class Tile extends StackPane
     {
