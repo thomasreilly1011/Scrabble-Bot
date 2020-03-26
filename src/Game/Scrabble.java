@@ -78,10 +78,6 @@ public class Scrabble extends Application
         timer.schedule(task, 1000, 1000);
     }
 
-    public void calculateScore() {
-
-    }
-
     public void gameLoop(Board board, Player player1, Player player2)
     {
         while (!Scrabble.gameOver)
