@@ -64,7 +64,6 @@ public class UI
             }
         }
 
-        //TODO: Fix this loop. Tiles aren't generating in the right order.
         for(int k=0; k<tiles.size(); k++)
         {
             UI.Tile tile = tiles.get(k);
