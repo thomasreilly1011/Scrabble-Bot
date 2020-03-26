@@ -1,6 +1,15 @@
 package Game;
 
-public class Tile
+import javafx.geometry.Pos;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
+
+
+
+public class Tile extends StackPane
 {
     private char letter;
     private int value;
