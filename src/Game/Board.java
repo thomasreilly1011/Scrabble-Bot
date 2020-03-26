@@ -117,6 +117,7 @@ public class Board
 
     public int placeWord(int row, int col, String word, Frame frame, boolean verticle)
     {
+        score = 0;
         word = word.toUpperCase();
 
         //First perform all tests to make sure this is a valid move.
@@ -147,12 +148,13 @@ public class Board
         {
             for (int i = 0; i < word.length(); i++)
             {
+
                 if(squares[row + i][col].isEmpty())
                 {
                     squares[row + i][col].setTile(frame.removeTile(letters[i]));
-                    scoring(row, col, i, 0);
-                    squares[row + i][col].setType(SquareType.BLANK);
                 }
+                scoring(row, col, i, 0);
+                squares[row + i][col].setType(SquareType.BLANK);
             }
         }
         else
@@ -162,9 +164,9 @@ public class Board
                 if (squares[row][col + i].isEmpty())
                 {
                     squares[row][col + i].setTile(frame.removeTile(letters[i]));
-                    scoring(row, col, 0, i);
-                    squares[row + i][col].setType(SquareType.BLANK);
                 }
+                scoring(row, col, 0, i);
+                squares[row + i][col].setType(SquareType.BLANK);
             }
         }
 

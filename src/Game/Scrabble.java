@@ -78,16 +78,23 @@ public class Scrabble extends Application
         timer.schedule(task, 1000, 1000);
     }
 
+    public void calculateScore() {
+
+    }
+
     public void gameLoop(Board board, Player player1, Player player2)
     {
         while (!Scrabble.gameOver)
         {
             Scrabble.move(cli.playerMove(player1), player1);
-            //Thread.currentThread().notify();
-            System.out.println(board.score);
+            player1.incScore(board.score);
+            cli.announceScore(player1, board.score);
+            System.out.println();
+
             Scrabble.move(cli.playerMove(player2), player2);
-            //Thread.currentThread().notify();
-            System.out.println(board.score);
+            player2.incScore(board.score);
+            cli.announceScore(player2, board.score);
+            System.out.println();
         }
     }
 

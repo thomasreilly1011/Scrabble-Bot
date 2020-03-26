@@ -204,4 +204,8 @@ public class CLI {
         System.out.print(Scrabble.board);
     }
 
+    public void announceScore(Player player, int score) {
+        System.out.println("That word scored you " + score + " points!");
+        System.out.println(player.getPlayerName() + "'s score is now: " + player.getPlayerScore());
+    }
 }
