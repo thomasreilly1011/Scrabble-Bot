@@ -8,8 +8,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import Game.Board;
-import Game.SquareType;
+import main.Board;
+import main.SquareType;
 import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
@@ -64,7 +64,6 @@ public class UI
             }
         }
 
-        //TODO: Fix this loop. Tiles aren't generating in the right order.
         for(int k=0; k<tiles.size(); k++)
         {
             UI.Tile tile = tiles.get(k);

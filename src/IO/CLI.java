@@ -1,14 +1,14 @@
 package IO;
 
-import Game.Board;
-import Game.Player;
-import Game.Scrabble;
+import main.Board;
+import main.Player;
+import main.Scrabble;
 
 import java.util.Scanner;
 
 public class CLI {
 
-    private Scanner in = new Scanner(System.in);
+    private final Scanner in = new Scanner(System.in);
 
     public Player playerInit()
     {
@@ -44,15 +44,15 @@ public class CLI {
         System.out.println("Type 'HELP' to see instructions again.");
         while (true)
         {
-            while (true)
-            {
-                input = in.nextLine();
-                String[] inputArr= input.split(" ");
+            input = in.nextLine();
+            String[] inputArr= input.split(" ");
 
-                if (inputArr[0].equals("PLACE"))
-                {
+            switch (inputArr[0])
+            {
+                case "PLACE":
                     //First, check that the input is valid.
                     //Are sufficient inputs given?
+                    //First check no. of inputs.
                     if (inputArr.length > 5)
                     {
                         System.out.println("To many options given for 'PLACE'. Please try again.");
@@ -63,7 +63,8 @@ public class CLI {
                         System.out.println("Not enough options given for 'PLACE'. Please try again.");
                         continue;
                     }
-                    if (inputArr[1].isEmpty() || inputArr[2].isEmpty() || inputArr[3].isEmpty() || inputArr[4].isEmpty()) {
+                    if (inputArr[1].isEmpty() || inputArr[2].isEmpty() || inputArr[3].isEmpty() || inputArr[4].isEmpty())
+                    {
                         System.out.println("Not enough options given for 'PLACE'. Please try again.");
                         continue;
                     }
@@ -72,7 +73,7 @@ public class CLI {
                     String word = inputArr[1];
                     word = word.toUpperCase();
                     boolean invalid = false;
-                    for (int i=0; i<word.length(); i++)
+                    for (int i = 0; i < word.length(); i++)
                     {
                         if (!Character.isLetter(word.charAt(i)) && word.charAt(i) != '_')
                         {
@@ -81,7 +82,8 @@ public class CLI {
                             break;
                         }
                     }
-                    if (invalid) {
+                    if (invalid)
+                    {
                         continue;
                     }
 
@@ -107,41 +109,87 @@ public class CLI {
                     }
 
                     //All inputs have been checked. Now parse the inputs into the args array.
-                    args[0] = "0";
+                    args[0] = Integer.toString(Scrabble.PLACE_WORD);
                     args[1] = word;
-                    if(row < 8) {
-                        row += (8-row)*2;
-                    } else if (row > 8) {
-                        row -= (row-8)*2;
+                    //Flip the row coordinate for internal use.
+                    if (row < 8)
+                    {
+                        row += (8 - row) * 2;
                     }
+                    else if (row > 8)
+                    {
+                        row -= (row - 8) * 2;
+                    }
+                    //Decrement the row and column coordinates to the range 0-14 for internal use.
                     args[2] = Integer.toString(--row);
                     args[3] = Integer.toString(--col);
-                    if (inputArr[4].equals("V")) {
+                    if (inputArr[4].equals("V"))
+                    {
                         args[4] = "true";
-                    } else {
+                    }
+                    else
+                        {
                         args[4] = "false";
                     }
                     return args;
 
-                } else if (inputArr[0].equals("PASS"))
-                {
-                    args[0] = "1";
+                case "PASS":
+                    //First check no. of inputs.
+                    if (inputArr.length > 1)
+                    {
+                        System.out.println("Too many arguments for PASS command. Please try again");
+                        continue;
+                    }
+                    args[0] = Integer.toString(Scrabble.PASS);
                     return args;
-                } else if (inputArr[0].equals("REFILL"))
-                {
-                    args[0] = "2";
+                case "REFILL":
+                    //First check no. of inputs.
+                    if (inputArr.length > 1)
+                    {
+                        System.out.println("Too many arguments for REFILL command. Please try again");
+                        continue;
+                    }
+                    args[0] = Integer.toString(Scrabble.REFILL);
                     return args;
-                } else if (inputArr[0].equals("QUIT")) {
-                    args[0] = "3";
+                case "QUIT":
+                    //First check no. of inputs.
+                    if (inputArr.length > 1)
+                    {
+                        System.out.println("Too many arguments for CHALLENGE command. Please try again");
+                        continue;
+                    }
+                    args[0] = Integer.toString(Scrabble.QUIT);
                     return args;
-                } else if (inputArr[0].equals("HELP")) {
+                case "HELP":
                     help();
-                    continue;
-                }
-                else
-                {
+                    break;
+                case "CHALLENGE":
+                    //First check no. of inputs.
+                    if (inputArr.length > 1)
+                    {
+                        System.out.println("Too many arguments for CHALLENGE command. Please try again");
+                        continue;
+                    }
+                    args[0] = Integer.toString(Scrabble.CHALLENGE);
+                    return args;
+                case "NAME":
+                    //First check no. of inputs.
+                    if (inputArr.length < 2)
+                    {
+                        System.out.println("Too few arguments for CHALLENGE command. Please try again");
+                        continue;
+                    }
+                    if (inputArr.length > 2)
+                    {
+                        System.out.println("Too many arguments for CHALLENGE command. Please try again");
+                        continue;
+                    }
+                    args[0] = Integer.toString(Scrabble.NAME);
+                    args[1] = inputArr[1];
+                    return args;
+                default:
                     System.out.println("Invalid input, please try again. Type 'HELP' to see instructions again.");
-                }
+                    break;
             }
         }
     }
@@ -149,16 +197,23 @@ public class CLI {
     /*
     Notifies the user of an error in placing a word and prompts them to try again.
      */
-    public void error(int error, Player player)
+    public void error(int error)
     {
-        if (error == Board.OUT_OF_BOUNDS) {
+        if (error == Board.OUT_OF_BOUNDS)
+        {
             System.out.println("That word falls out of the boards bounds. Please try again.");
         }
-        else if (error == Board.NO_CONNECTION) {
+        else if (error == Board.NO_CONNECTION)
+        {
             System.out.println("That word does not link up with other tiles on the board or the center square. Please try again.");
         }
-        else if (error == Board.INSUFFICIENT_TILES) {
+        else if (error == Board.INSUFFICIENT_TILES)
+        {
             System.out.println("That word cannot be made up using tiles from your frame or tiles already on the board. Please try again.");
+        }
+        else if (error == Board.ONE_LETTER)
+        {
+            System.out.println("Enter a valid word (more than one character).");
         }
         else
         {
@@ -166,16 +221,21 @@ public class CLI {
         }
     }
 
-    public boolean endGame() {
+    public boolean endGame()
+    {
         System.out.println("Are you sure you want to end the game? (Y/N)");
         String input;
-        while (true) {
+        while (true)
+        {
             input = in.nextLine();
-            if (input == "Y") {
+            if (input.equals("Y"))
+            {
                 return true;
-            } else if (input == "N") {
+            } else if (input.equals("N"))
+            {
                 return false;
-            } else {
+            } else
+                {
                 System.out.println("Invalid input.");
                 System.out.println("Are you sure you want to end the game? (Y/N)");
             }
@@ -199,12 +259,8 @@ public class CLI {
         System.out.println();
     }
 
-    public void printBoard()
+    public void announceScore(Player player, int score)
     {
-        System.out.print(Scrabble.board);
-    }
-
-    public void announceScore(Player player, int score) {
         System.out.println("That word scored you " + score + " points!");
         System.out.println(player.getPlayerName() + "'s score is now: " + player.getPlayerScore());
     }
