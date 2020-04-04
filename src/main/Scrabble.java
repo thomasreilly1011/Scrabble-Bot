@@ -96,11 +96,11 @@ public class Scrabble extends Application
         }
     }
 
-    public static void move(String[] strings, Player player)
+    public static void move(String[] commandArgs, Player player)
     {
-        if(parseInt(strings[0]) == PLACE_WORD)
+        if(parseInt(commandArgs[0]) == PLACE_WORD)
         {
-            int i = board.placeWord(parseInt(strings[2]), parseInt(strings[3]), strings[1], player.getFrame(), parseBoolean(strings[4]));
+            int i = board.placeWord(parseInt(commandArgs[2]), parseInt(commandArgs[3]), commandArgs[1], player.getFrame(), parseBoolean(commandArgs[4]));
             if(i != Board.SUCCESS)
             {
                 cli.error(i);
@@ -110,17 +110,21 @@ public class Scrabble extends Application
                 cli.announceScore(player, board.score);
             }
         }
-        else if(parseInt(strings[0]) == REFILL)
+        else if(parseInt(commandArgs[0]) == REFILL)
         {
             player.getFrame().refill();
         }
-        else if(parseInt(strings[0]) == QUIT)
+        else if(parseInt(commandArgs[0]) == QUIT)
         {
             gameOver = cli.endGame();
-            if (gameOver == false)
+            if (!gameOver)
             {
                 move(cli.playerMove(player), player);
             }
+        } else if (parseInt(commandArgs[0]) == CHALLENGE) {
+            //TODO: Handle CHALLENGE move with function from Dictionary class?
+        } else if (parseInt(commandArgs[0]) == NAME) {
+            player.setPlayerName(commandArgs[1]);
         }
     }
 }
