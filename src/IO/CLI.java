@@ -47,20 +47,24 @@ public class CLI {
             input = in.nextLine();
             String[] inputArr= input.split(" ");
 
-            switch (inputArr[0]) {
+            switch (inputArr[0])
+            {
                 case "PLACE":
                     //First, check that the input is valid.
                     //Are sufficient inputs given?
                     //First check no. of inputs.
-                    if (inputArr.length > 5) {
+                    if (inputArr.length > 5)
+                    {
                         System.out.println("To many options given for 'PLACE'. Please try again.");
                         continue;
                     }
-                    if (inputArr.length < 5) {
+                    if (inputArr.length < 5)
+                    {
                         System.out.println("Not enough options given for 'PLACE'. Please try again.");
                         continue;
                     }
-                    if (inputArr[1].isEmpty() || inputArr[2].isEmpty() || inputArr[3].isEmpty() || inputArr[4].isEmpty()) {
+                    if (inputArr[1].isEmpty() || inputArr[2].isEmpty() || inputArr[3].isEmpty() || inputArr[4].isEmpty())
+                    {
                         System.out.println("Not enough options given for 'PLACE'. Please try again.");
                         continue;
                     }
@@ -69,31 +73,37 @@ public class CLI {
                     String word = inputArr[1];
                     word = word.toUpperCase();
                     boolean invalid = false;
-                    for (int i = 0; i < word.length(); i++) {
-                        if (!Character.isLetter(word.charAt(i)) && word.charAt(i) != '_') {
+                    for (int i = 0; i < word.length(); i++)
+                    {
+                        if (!Character.isLetter(word.charAt(i)) && word.charAt(i) != '_')
+                        {
                             System.out.println("Word contains invalid characters. Please try again.");
                             invalid = true;
                             break;
                         }
                     }
-                    if (invalid) {
+                    if (invalid)
+                    {
                         continue;
                     }
 
                     //Are the row and column options within the valid range (0-15)?
                     int row = Integer.parseInt(inputArr[2]);
                     int col = Integer.parseInt(inputArr[3]);
-                    if (row > 15 || row < 1) {
+                    if (row > 15 || row < 1)
+                    {
                         System.out.println("Given row coordinate does not fall between 1-15. Please try again.");
                         continue;
                     }
-                    if (col > 15 || col < 1) {
+                    if (col > 15 || col < 1)
+                    {
                         System.out.println("Given column coordinate does not fall between 1-15. Please try again.");
                         continue;
                     }
 
                     //Is the V/H option valid
-                    if (!inputArr[4].equals("V") && !inputArr[4].equals("H")) {
+                    if (!inputArr[4].equals("V") && !inputArr[4].equals("H"))
+                    {
                         System.out.println("Invalid vertical or horizontal option given. Must be 'V' or 'H'.");
                         continue;
                     }
@@ -102,24 +112,31 @@ public class CLI {
                     args[0] = Integer.toString(Scrabble.PLACE_WORD);
                     args[1] = word;
                     //Flip the row coordinate for internal use.
-                    if (row < 8) {
+                    if (row < 8)
+                    {
                         row += (8 - row) * 2;
-                    } else if (row > 8) {
+                    }
+                    else if (row > 8)
+                    {
                         row -= (row - 8) * 2;
                     }
                     //Decrement the row and column coordinates to the range 0-14 for internal use.
                     args[2] = Integer.toString(--row);
                     args[3] = Integer.toString(--col);
-                    if (inputArr[4].equals("V")) {
+                    if (inputArr[4].equals("V"))
+                    {
                         args[4] = "true";
-                    } else {
+                    }
+                    else
+                        {
                         args[4] = "false";
                     }
                     return args;
 
                 case "PASS":
                     //First check no. of inputs.
-                    if (inputArr.length > 1) {
+                    if (inputArr.length > 1)
+                    {
                         System.out.println("Too many arguments for PASS command. Please try again");
                         continue;
                     }
@@ -127,7 +144,8 @@ public class CLI {
                     return args;
                 case "REFILL":
                     //First check no. of inputs.
-                    if (inputArr.length > 1) {
+                    if (inputArr.length > 1)
+                    {
                         System.out.println("Too many arguments for REFILL command. Please try again");
                         continue;
                     }
@@ -135,7 +153,8 @@ public class CLI {
                     return args;
                 case "QUIT":
                     //First check no. of inputs.
-                    if (inputArr.length > 1) {
+                    if (inputArr.length > 1)
+                    {
                         System.out.println("Too many arguments for CHALLENGE command. Please try again");
                         continue;
                     }
@@ -146,7 +165,8 @@ public class CLI {
                     break;
                 case "CHALLENGE":
                     //First check no. of inputs.
-                    if (inputArr.length > 1) {
+                    if (inputArr.length > 1)
+                    {
                         System.out.println("Too many arguments for CHALLENGE command. Please try again");
                         continue;
                     }
@@ -154,11 +174,13 @@ public class CLI {
                     return args;
                 case "NAME":
                     //First check no. of inputs.
-                    if (inputArr.length < 2) {
+                    if (inputArr.length < 2)
+                    {
                         System.out.println("Too few arguments for CHALLENGE command. Please try again");
                         continue;
                     }
-                    if (inputArr.length > 2) {
+                    if (inputArr.length > 2)
+                    {
                         System.out.println("Too many arguments for CHALLENGE command. Please try again");
                         continue;
                     }
@@ -199,16 +221,21 @@ public class CLI {
         }
     }
 
-    public boolean endGame() {
+    public boolean endGame()
+    {
         System.out.println("Are you sure you want to end the game? (Y/N)");
         String input;
-        while (true) {
+        while (true)
+        {
             input = in.nextLine();
-            if (input.equals("Y")) {
+            if (input.equals("Y"))
+            {
                 return true;
-            } else if (input.equals("N")) {
+            } else if (input.equals("N"))
+            {
                 return false;
-            } else {
+            } else
+                {
                 System.out.println("Invalid input.");
                 System.out.println("Are you sure you want to end the game? (Y/N)");
             }
@@ -232,7 +259,8 @@ public class CLI {
         System.out.println();
     }
 
-    public void announceScore(Player player, int score) {
+    public void announceScore(Player player, int score)
+    {
         System.out.println("That word scored you " + score + " points!");
         System.out.println(player.getPlayerName() + "'s score is now: " + player.getPlayerScore());
     }
