@@ -1,7 +1,7 @@
 package Testing;
 
-import Game.Player;
-import Game.Pool;
+import main.Player;
+import main.Pool;
 
 public class PlayerTest {
     public static void main(String[] args) {

@@ -1,8 +1,8 @@
 package Testing;
 
-import Game.Board;
-import Game.Frame;
-import Game.Pool;
+import main.Board;
+import main.Frame;
+import main.Pool;
 
 public class BoardTest
 {

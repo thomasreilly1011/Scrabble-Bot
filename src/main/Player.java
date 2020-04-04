@@ -1,11 +1,11 @@
-package Game;
+package main;
 
 
 public class Player 
 {
 	private String playerName;
 	private int playerScore;
-	private Frame frame;
+	private final Frame frame;
 	
 	public Player(String playerName) //Constructor
 	{
@@ -37,6 +37,10 @@ public class Player
 	public String getPlayerName() //PlayerName getter
 	{
 		return this.playerName;
+	}
+
+	public void setPlayerName(String name) {
+		this.playerName = name;
 	}
 	
 	public int getPlayerScore() //PlayerScore getter

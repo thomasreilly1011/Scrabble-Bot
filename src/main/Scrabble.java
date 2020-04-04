@@ -1,4 +1,4 @@
-package Game;
+package main;
 
 import IO.CLI;
 import IO.UI;
@@ -21,14 +21,20 @@ public class Scrabble extends Application
     //Game Objects
     public static Pool pool;
     public static Board board;
+    public static Dictionary dictionary;
 
     //Move Type Constants:
     public static final int PLACE_WORD = 0;
     public static final int PASS = 1;
     public static final int REFILL = 2;
     public static final int QUIT = 3;
+    public static final int CHALLENGE = 4;
+    public static final int NAME = 5;
 
     public static boolean gameOver = false;
+
+    //Holds the word placed in the last PLACE_WORD move. (For use in CHALLENGE move)
+    private static String wordBuffer;
 
     /*
     Main function (Launches the JavaFX application calling start())
@@ -44,6 +50,7 @@ public class Scrabble extends Application
         //Initialise all game objects
         pool = new Pool();
         board = new Board();
+        dictionary = new Dictionary("../Files/sowpods.txt");
         Player player1 = cli.playerInit();
         Player player2 = cli.playerInit();
         cli.help();
@@ -83,39 +90,43 @@ public class Scrabble extends Application
         while (!Scrabble.gameOver)
         {
             Scrabble.move(cli.playerMove(player1), player1);
-            player1.incScore(board.score);
-            cli.announceScore(player1, board.score);
             System.out.println();
 
             Scrabble.move(cli.playerMove(player2), player2);
-            player2.incScore(board.score);
-            cli.announceScore(player2, board.score);
             System.out.println();
         }
     }
 
-    public static void move(String[] strings, Player player)
+    public static void move(String[] commandArgs, Player player)
     {
-        if(parseInt(strings[0]) == PLACE_WORD)
+        if(parseInt(commandArgs[0]) == PLACE_WORD)
         {
-            int i = board.placeWord(parseInt(strings[2]), parseInt(strings[3]), strings[1], player.getFrame(), parseBoolean(strings[4]));
+            int i = board.placeWord(parseInt(commandArgs[2]), parseInt(commandArgs[3]), commandArgs[1], player.getFrame(), parseBoolean(commandArgs[4]));
             if(i != Board.SUCCESS)
             {
-                cli.error(i, player);
+                cli.error(i);
                 move(cli.playerMove(player), player);
+            } else {
+                wordBuffer = commandArgs[1];
+                player.incScore(board.score);
+                cli.announceScore(player, board.score);
             }
         }
-        else if(parseInt(strings[0]) == REFILL)
+        else if(parseInt(commandArgs[0]) == REFILL)
         {
             player.getFrame().refill();
         }
-        else if(parseInt(strings[0]) == QUIT)
+        else if(parseInt(commandArgs[0]) == QUIT)
         {
             gameOver = cli.endGame();
-            if (gameOver == false)
+            if (!gameOver)
             {
                 move(cli.playerMove(player), player);
             }
+        } else if (parseInt(commandArgs[0]) == CHALLENGE) {
+            Dictionary.challenge(wordBuffer);
+        } else if (parseInt(commandArgs[0]) == NAME) {
+            player.setPlayerName(commandArgs[1]);
         }
     }
 }
