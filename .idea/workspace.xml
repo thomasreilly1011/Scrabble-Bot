@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3a97ce7e-447e-4b17-a4a2-3dc2d3461891" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="C:\Users\danie\Desktop\Straight Outta CompSci\2nd Stage\2nd Semester\Software Enginneering\SE2\.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1YGieF9Npyb9olMM52MyeIDxMV9" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="foldersAlwaysOnTop" value="false" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="Downloaded.Files.Path.Enabled" value="true" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\danie\Desktop\Straight Outta CompSci\2nd Stage\2nd Semester\Software Enginneering\SE2\src" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Scrabble">
+    <configuration name="FXtest" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="IO.UI" />
+      <module name="SE2" />
+      <option name="VM_PARAMETERS" value="--module-path C:\Users\danie\Downloads\openjfx-11.0.2_windows-x64_bin-sdk\javafx-sdk-11.0.2\lib --add-modules javafx.controls,javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="Testing.BoardTest" />
+      <module name="SE2" />
+      <option name="VM_PARAMETERS" value="--module-path C:\Users\danie\Downloads\openjfx-11.0.2_windows-x64_bin-sdk\javafx-sdk-11.0.2\lib --add-modules javafx.controls,javafx.fxml" />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Scrabble" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Game.Scrabble" />
+      <module name="SE2" />
+      <option name="VM_PARAMETERS" value="--module-path C:\Users\danie\Downloads\openjfx-11.0.2_windows-x64_bin-sdk\javafx-sdk-11.0.2\lib --add-modules javafx.controls,javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="boardunittest" type="JUnit" factoryName="JUnit">
+      <module name="SE2" />
+      <useClassPathOnly />
+      <option name="PACKAGE_NAME" value="Testing" />
+      <option name="MAIN_CLASS_NAME" value="Testing.BoardUnitTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="PARAMETERS" value="" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.FXtest" />
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Scrabble" />
+      <item itemvalue="JUnit.boardunittest" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3a97ce7e-447e-4b17-a4a2-3dc2d3461891" name="Default Changelist" comment="" />
+      <created>1582575424992</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1582575424992</updated>
+    </task>
+    <task id="LOCAL-00001" summary="JavaFX implemented with board printing out in full. Conditionals and arrays used to print the board need to be simplified to use the 2D board array and square class.">
+      <created>1583705678055</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1583705678055</updated>
+    </task>
+    <task id="LOCAL-00002" summary="JavaFX implemented with board printing out in full. Conditionals and arrays used to print the board need to be simplified to use the 2D board array and square class.">
+      <created>1585162515964</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1585162515964</updated>
+    </task>
+    <task id="LOCAL-00003" summary="JavaFX implemented with board printing out in full. Conditionals and arrays used to print the board need to be simplified to use the 2D board array and square class.">
+      <created>1585162588556</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1585162588556</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Vertical and Horizontal printing issues have been fixed and tiles are printing correctly now. Board has been fully colourised to look exactly like the original Scrabble board with the symbol replica in the centre too.">
+      <created>1585171016765</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1585171016765</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="JavaFX implemented with board printing out in full. Conditionals and arrays used to print the board need to be simplified to use the 2D board array and square class." />
+    <MESSAGE value="Vertical and Horizontal printing issues have been fixed and tiles are printing correctly now. Board has been fully colourised to look exactly like the original Scrabble board with the symbol replica in the centre too." />
+    <option name="LAST_COMMIT_MESSAGE" value="Vertical and Horizontal printing issues have been fixed and tiles are printing correctly now. Board has been fully colourised to look exactly like the original Scrabble board with the symbol replica in the centre too." />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="455" y="135" width="927" height="689" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585163535592">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="455" y="135" width="927" height="689" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1585163535592" />
+    <state x="498" y="196" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1583608100286">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="498" y="196" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1583608100286" />
+    <state x="0" y="7" key="CommitChangelistDialog2" timestamp="1586018472955">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="0" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1586018472955" />
+    <state x="722" y="154" key="FileChooserDialogImpl" timestamp="1585502683060">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="722" y="154" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1585502683060" />
+    <state width="725" height="659" key="GridCell.Tab.0.bottom" timestamp="1585175435135">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="725" height="659" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1585175435135" />
+    <state width="725" height="659" key="GridCell.Tab.0.center" timestamp="1585175435134">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="725" height="659" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1585175435134" />
+    <state width="725" height="659" key="GridCell.Tab.0.left" timestamp="1585175435134">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="725" height="659" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1585175435134" />
+    <state width="725" height="659" key="GridCell.Tab.0.right" timestamp="1585175435135">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="725" height="659" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1585175435135" />
+    <state x="481" y="128" key="MultipleFileMergeDialog" timestamp="1585163131852">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="481" y="128" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1585163131852" />
+    <state x="185" y="0" width="802" height="824" key="SettingsEditor" timestamp="1583788273180">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="185" y="0" width="802" height="824" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1583788273180" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1585171035049">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1585171035049" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1586018082141">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1586018082141" />
+    <state x="498" y="306" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1582644244624">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="498" y="306" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1536.824@0.0.1536.824" timestamp="1582644244624" />
+    <state x="400" y="204" key="git4idea.merge.GitPullDialog" timestamp="1586018390634">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="400" y="204" key="git4idea.merge.GitPullDialog/0.0.1536.824@0.0.1536.824" timestamp="1586018390634" />
+    <state x="418" y="66" key="new project wizard" timestamp="1585502690879">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="418" y="66" key="new project wizard/0.0.1536.824@0.0.1536.824" timestamp="1585502690879" />
+    <state x="26" y="142" width="700" height="530" key="recent.locations.popup" timestamp="1585164072301">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="26" y="142" width="700" height="530" key="recent.locations.popup/0.0.1536.824@0.0.1536.824" timestamp="1585164072301" />
+  </component>
+</project>
