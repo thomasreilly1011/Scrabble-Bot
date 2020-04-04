@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class CLI {
 
-    private Scanner in = new Scanner(System.in);
+    private final Scanner in = new Scanner(System.in);
 
     public Player playerInit()
     {
@@ -44,23 +44,19 @@ public class CLI {
         System.out.println("Type 'HELP' to see instructions again.");
         while (true)
         {
-            while (true)
-            {
-                input = in.nextLine();
-                String[] inputArr= input.split(" ");
+            input = in.nextLine();
+            String[] inputArr= input.split(" ");
 
-                if (inputArr[0].equals("PLACE"))
-                {
+            switch (inputArr[0]) {
+                case "PLACE":
                     //First, check that the input is valid.
                     //Are sufficient inputs given?
                     //First check no. of inputs.
-                    if (inputArr.length > 5)
-                    {
+                    if (inputArr.length > 5) {
                         System.out.println("To many options given for 'PLACE'. Please try again.");
                         continue;
                     }
-                    if (inputArr.length < 5)
-                    {
+                    if (inputArr.length < 5) {
                         System.out.println("Not enough options given for 'PLACE'. Please try again.");
                         continue;
                     }
@@ -73,10 +69,8 @@ public class CLI {
                     String word = inputArr[1];
                     word = word.toUpperCase();
                     boolean invalid = false;
-                    for (int i=0; i<word.length(); i++)
-                    {
-                        if (!Character.isLetter(word.charAt(i)) && word.charAt(i) != '_')
-                        {
+                    for (int i = 0; i < word.length(); i++) {
+                        if (!Character.isLetter(word.charAt(i)) && word.charAt(i) != '_') {
                             System.out.println("Word contains invalid characters. Please try again.");
                             invalid = true;
                             break;
@@ -89,20 +83,17 @@ public class CLI {
                     //Are the row and column options within the valid range (0-15)?
                     int row = Integer.parseInt(inputArr[2]);
                     int col = Integer.parseInt(inputArr[3]);
-                    if (row > 15 || row < 1)
-                    {
+                    if (row > 15 || row < 1) {
                         System.out.println("Given row coordinate does not fall between 1-15. Please try again.");
                         continue;
                     }
-                    if (col > 15 || col < 1)
-                    {
+                    if (col > 15 || col < 1) {
                         System.out.println("Given column coordinate does not fall between 1-15. Please try again.");
                         continue;
                     }
 
                     //Is the V/H option valid
-                    if (!inputArr[4].equals("V") && !inputArr[4].equals("H"))
-                    {
+                    if (!inputArr[4].equals("V") && !inputArr[4].equals("H")) {
                         System.out.println("Invalid vertical or horizontal option given. Must be 'V' or 'H'.");
                         continue;
                     }
@@ -111,10 +102,10 @@ public class CLI {
                     args[0] = Integer.toString(Scrabble.PLACE_WORD);
                     args[1] = word;
                     //Flip the row coordinate for internal use.
-                    if(row < 8) {
-                        row += (8-row)*2;
+                    if (row < 8) {
+                        row += (8 - row) * 2;
                     } else if (row > 8) {
-                        row -= (row-8)*2;
+                        row -= (row - 8) * 2;
                     }
                     //Decrement the row and column coordinates to the range 0-14 for internal use.
                     args[2] = Integer.toString(--row);
@@ -126,8 +117,7 @@ public class CLI {
                     }
                     return args;
 
-                } else if (inputArr[0].equals("PASS"))
-                {
+                case "PASS":
                     //First check no. of inputs.
                     if (inputArr.length > 1) {
                         System.out.println("Too many arguments for PASS command. Please try again");
@@ -135,8 +125,7 @@ public class CLI {
                     }
                     args[0] = Integer.toString(Scrabble.PASS);
                     return args;
-                } else if (inputArr[0].equals("REFILL"))
-                {
+                case "REFILL":
                     //First check no. of inputs.
                     if (inputArr.length > 1) {
                         System.out.println("Too many arguments for REFILL command. Please try again");
@@ -144,8 +133,7 @@ public class CLI {
                     }
                     args[0] = Integer.toString(Scrabble.REFILL);
                     return args;
-                } else if (inputArr[0].equals("QUIT"))
-                {
+                case "QUIT":
                     //First check no. of inputs.
                     if (inputArr.length > 1) {
                         System.out.println("Too many arguments for CHALLENGE command. Please try again");
@@ -153,11 +141,10 @@ public class CLI {
                     }
                     args[0] = Integer.toString(Scrabble.QUIT);
                     return args;
-                } else if (inputArr[0].equals("HELP"))
-                {
+                case "HELP":
                     help();
-                } else if (inputArr[0].equals("CHALLENGE"))
-                {
+                    break;
+                case "CHALLENGE":
                     //First check no. of inputs.
                     if (inputArr.length > 1) {
                         System.out.println("Too many arguments for CHALLENGE command. Please try again");
@@ -165,8 +152,7 @@ public class CLI {
                     }
                     args[0] = Integer.toString(Scrabble.CHALLENGE);
                     return args;
-                } else if (inputArr[0].equals("NAME"))
-                {
+                case "NAME":
                     //First check no. of inputs.
                     if (inputArr.length < 2) {
                         System.out.println("Too few arguments for CHALLENGE command. Please try again");
@@ -179,11 +165,9 @@ public class CLI {
                     args[0] = Integer.toString(Scrabble.NAME);
                     args[1] = inputArr[1];
                     return args;
-                }
-                else
-                {
+                default:
                     System.out.println("Invalid input, please try again. Type 'HELP' to see instructions again.");
-                }
+                    break;
             }
         }
     }
@@ -191,7 +175,7 @@ public class CLI {
     /*
     Notifies the user of an error in placing a word and prompts them to try again.
      */
-    public void error(int error, Player player)
+    public void error(int error)
     {
         if (error == Board.OUT_OF_BOUNDS) {
             System.out.println("That word falls out of the boards bounds. Please try again.");
@@ -213,9 +197,9 @@ public class CLI {
         String input;
         while (true) {
             input = in.nextLine();
-            if (input == "Y") {
+            if (input.equals("Y")) {
                 return true;
-            } else if (input == "N") {
+            } else if (input.equals("N")) {
                 return false;
             } else {
                 System.out.println("Invalid input.");
@@ -239,11 +223,6 @@ public class CLI {
         System.out.println("To refill your board type 'REFILL'");
         System.out.println("To forfeit your game type 'QUIT'");
         System.out.println();
-    }
-
-    public void printBoard()
-    {
-        System.out.print(Scrabble.board);
     }
 
     public void announceScore(Player player, int score) {

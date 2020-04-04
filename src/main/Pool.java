@@ -10,7 +10,7 @@ public final class Pool
 
     //Key: 9A_1 implies there are 9 A tiles and each is of value 1
 
-    private static ArrayList<Tile> pool = new ArrayList<>();
+    private static final ArrayList<Tile> pool = new ArrayList<>();
 
     public Pool() //constructor
     {

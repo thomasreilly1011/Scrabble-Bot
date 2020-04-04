@@ -6,7 +6,7 @@ public class Frame
 {
     private static final int NUM_TILES = 7;
 
-    private ArrayList<Tile> tiles = new ArrayList<>();
+    private final ArrayList<Tile> tiles = new ArrayList<>();
 
     public Frame()
     {

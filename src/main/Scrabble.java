@@ -103,7 +103,7 @@ public class Scrabble extends Application
             int i = board.placeWord(parseInt(strings[2]), parseInt(strings[3]), strings[1], player.getFrame(), parseBoolean(strings[4]));
             if(i != Board.SUCCESS)
             {
-                cli.error(i, player);
+                cli.error(i);
                 move(cli.playerMove(player), player);
             } else {
                 player.incScore(board.score);

@@ -5,8 +5,8 @@ import javafx.scene.layout.StackPane;
 
 public class Tile extends StackPane
 {
-    private char letter;
-    private int value;
+    private final char letter;
+    private final int value;
 
     public Tile(char letter, int value)
     {

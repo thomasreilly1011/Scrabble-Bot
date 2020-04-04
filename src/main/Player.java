@@ -5,7 +5,7 @@ public class Player
 {
 	private String playerName;
 	private int playerScore;
-	private Frame frame;
+	private final Frame frame;
 	
 	public Player(String playerName) //Constructor
 	{
