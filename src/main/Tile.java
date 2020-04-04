@@ -1,12 +1,6 @@
-package Game;
+package main;
 
-import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.scene.text.Font;
-
 
 
 public class Tile extends StackPane

@@ -8,8 +8,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import Game.Board;
-import Game.SquareType;
+import main.Board;
+import main.SquareType;
 import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;

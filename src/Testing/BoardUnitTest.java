@@ -1,9 +1,9 @@
 package Testing;
 
-import Game.Board;
-import Game.Pool;
-import Game.Tile;
-import Game.Frame;
+import main.Board;
+import main.Pool;
+import main.Tile;
+import main.Frame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

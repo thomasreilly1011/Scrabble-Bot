@@ -1,8 +1,8 @@
 package IO;
 
-import Game.Board;
-import Game.Player;
-import Game.Scrabble;
+import main.Board;
+import main.Player;
+import main.Scrabble;
 
 import java.util.Scanner;
 

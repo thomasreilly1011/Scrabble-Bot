@@ -1,4 +1,4 @@
-package Game;
+package main;
 
 import IO.CLI;
 import IO.UI;
