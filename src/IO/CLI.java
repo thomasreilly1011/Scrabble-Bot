@@ -53,6 +53,7 @@ public class CLI {
                 {
                     //First, check that the input is valid.
                     //Are sufficient inputs given?
+                    //First check no. of inputs.
                     if (inputArr.length > 5)
                     {
                         System.out.println("To many options given for 'PLACE'. Please try again.");
@@ -107,13 +108,15 @@ public class CLI {
                     }
 
                     //All inputs have been checked. Now parse the inputs into the args array.
-                    args[0] = "0";
+                    args[0] = Integer.toString(Scrabble.PLACE_WORD);
                     args[1] = word;
+                    //Flip the row coordinate for internal use.
                     if(row < 8) {
                         row += (8-row)*2;
                     } else if (row > 8) {
                         row -= (row-8)*2;
                     }
+                    //Decrement the row and column coordinates to the range 0-14 for internal use.
                     args[2] = Integer.toString(--row);
                     args[3] = Integer.toString(--col);
                     if (inputArr[4].equals("V")) {
@@ -125,18 +128,57 @@ public class CLI {
 
                 } else if (inputArr[0].equals("PASS"))
                 {
-                    args[0] = "1";
+                    //First check no. of inputs.
+                    if (inputArr.length > 1) {
+                        System.out.println("Too many arguments for PASS command. Please try again");
+                        continue;
+                    }
+                    args[0] = Integer.toString(Scrabble.PASS);
                     return args;
                 } else if (inputArr[0].equals("REFILL"))
                 {
-                    args[0] = "2";
+                    //First check no. of inputs.
+                    if (inputArr.length > 1) {
+                        System.out.println("Too many arguments for REFILL command. Please try again");
+                        continue;
+                    }
+                    args[0] = Integer.toString(Scrabble.REFILL);
                     return args;
-                } else if (inputArr[0].equals("QUIT")) {
-                    args[0] = "3";
+                } else if (inputArr[0].equals("QUIT"))
+                {
+                    //First check no. of inputs.
+                    if (inputArr.length > 1) {
+                        System.out.println("Too many arguments for CHALLENGE command. Please try again");
+                        continue;
+                    }
+                    args[0] = Integer.toString(Scrabble.QUIT);
                     return args;
-                } else if (inputArr[0].equals("HELP")) {
+                } else if (inputArr[0].equals("HELP"))
+                {
                     help();
-                    continue;
+                } else if (inputArr[0].equals("CHALLENGE"))
+                {
+                    //First check no. of inputs.
+                    if (inputArr.length > 1) {
+                        System.out.println("Too many arguments for CHALLENGE command. Please try again");
+                        continue;
+                    }
+                    args[0] = Integer.toString(Scrabble.CHALLENGE);
+                    return args;
+                } else if (inputArr[0].equals("NAME"))
+                {
+                    //First check no. of inputs.
+                    if (inputArr.length < 2) {
+                        System.out.println("Too few arguments for CHALLENGE command. Please try again");
+                        continue;
+                    }
+                    if (inputArr.length > 2) {
+                        System.out.println("Too many arguments for CHALLENGE command. Please try again");
+                        continue;
+                    }
+                    args[0] = Integer.toString(Scrabble.NAME);
+                    args[1] = inputArr[1];
+                    return args;
                 }
                 else
                 {

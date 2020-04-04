@@ -27,6 +27,8 @@ public class Scrabble extends Application
     public static final int PASS = 1;
     public static final int REFILL = 2;
     public static final int QUIT = 3;
+    public static final int CHALLENGE = 4;
+    public static final int NAME = 5;
 
     public static boolean gameOver = false;
 
@@ -87,13 +89,9 @@ public class Scrabble extends Application
         while (!Scrabble.gameOver)
         {
             Scrabble.move(cli.playerMove(player1), player1);
-            player1.incScore(board.score);
-            cli.announceScore(player1, board.score);
             System.out.println();
 
             Scrabble.move(cli.playerMove(player2), player2);
-            player2.incScore(board.score);
-            cli.announceScore(player2, board.score);
             System.out.println();
         }
     }
@@ -107,6 +105,9 @@ public class Scrabble extends Application
             {
                 cli.error(i, player);
                 move(cli.playerMove(player), player);
+            } else {
+                player.incScore(board.score);
+                cli.announceScore(player, board.score);
             }
         }
         else if(parseInt(strings[0]) == REFILL)
