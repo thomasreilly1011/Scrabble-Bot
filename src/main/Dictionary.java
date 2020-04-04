@@ -22,9 +22,22 @@ public class Dictionary {
      @param word The word to be checked.
      @return true if given word is valid, false if given word is invalid.
      */
-    public static boolean challenge(String word) {
-        //TODO Implement me.
-        return true;
+    public boolean challenge(String word)
+    {
+        //Dictionary run = new Dictionary();
+        boolean valid = false;
+        while(dictionaryReader.hasNextLine())
+        {
+            if(dictionaryReader.nextLine() == word)
+            {
+                valid = true;
+            }
+            else
+            {
+                valid = false;
+            }
+        }
+        return valid;
     }
 
     /*
