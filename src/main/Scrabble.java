@@ -76,9 +76,11 @@ public class Scrabble extends Application
         //Update the UI every second
         //TODO Maybe make this more efficient? Implement a wait() on the cliThread?
         Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
+        TimerTask task = new TimerTask()
+        {
             @Override
-            public void run() {
+            public void run()
+            {
                 scrabbleBoard.setRoot(ui.createContent(board));
             }
         };
@@ -123,9 +125,13 @@ public class Scrabble extends Application
             {
                 move(cli.playerMove(player), player);
             }
-        } else if (parseInt(commandArgs[0]) == CHALLENGE) {
+        }
+        else if (parseInt(commandArgs[0]) == CHALLENGE)
+        {
             Dictionary.challenge(wordBuffer);
-        } else if (parseInt(commandArgs[0]) == NAME) {
+        }
+        else if (parseInt(commandArgs[0]) == NAME)
+        {
             player.setPlayerName(commandArgs[1]);
         }
     }

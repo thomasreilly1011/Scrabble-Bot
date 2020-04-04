@@ -39,7 +39,8 @@ public class Player
 		return this.playerName;
 	}
 
-	public void setPlayerName(String name) {
+	public void setPlayerName(String name)
+	{
 		this.playerName = name;
 	}
 	

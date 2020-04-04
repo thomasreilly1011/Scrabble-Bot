@@ -39,15 +39,21 @@ public class Tile extends StackPane
             return false;
         }
 
-        try {
+        try
+        {
             t = (Tile) obj;
-        } catch (ClassCastException e) {
+        }
+        catch (ClassCastException e)
+        {
             throw new IllegalArgumentException("Given object is not a tile");
         }
 
-        if (t.getLetter() == letter && t.getValue() == value) {
+        if (t.getLetter() == letter && t.getValue() == value)
+        {
             return true;
-        } else {
+        }
+        else
+            {
             return false;
         }
     }
