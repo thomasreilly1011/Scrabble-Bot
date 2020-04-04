@@ -21,6 +21,7 @@ public class Scrabble extends Application
     //Game Objects
     public static Pool pool;
     public static Board board;
+    public static Dictionary dictionary;
 
     //Move Type Constants:
     public static final int PLACE_WORD = 0;
@@ -31,6 +32,9 @@ public class Scrabble extends Application
     public static final int NAME = 5;
 
     public static boolean gameOver = false;
+
+    //Holds the word placed in the last PLACE_WORD move. (For use in CHALLENGE move)
+    private static String wordBuffer;
 
     /*
     Main function (Launches the JavaFX application calling start())
@@ -46,6 +50,7 @@ public class Scrabble extends Application
         //Initialise all game objects
         pool = new Pool();
         board = new Board();
+        dictionary = new Dictionary("../Files/sowpods.txt");
         Player player1 = cli.playerInit();
         Player player2 = cli.playerInit();
         cli.help();
@@ -106,6 +111,7 @@ public class Scrabble extends Application
                 cli.error(i);
                 move(cli.playerMove(player), player);
             } else {
+                wordBuffer = commandArgs[1];
                 player.incScore(board.score);
                 cli.announceScore(player, board.score);
             }
@@ -122,7 +128,7 @@ public class Scrabble extends Application
                 move(cli.playerMove(player), player);
             }
         } else if (parseInt(commandArgs[0]) == CHALLENGE) {
-            //TODO: Handle CHALLENGE move with function from Dictionary class?
+            Dictionary.challenge(wordBuffer);
         } else if (parseInt(commandArgs[0]) == NAME) {
             player.setPlayerName(commandArgs[1]);
         }
