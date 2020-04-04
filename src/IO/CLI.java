@@ -151,14 +151,21 @@ public class CLI {
      */
     public void error(int error, Player player)
     {
-        if (error == Board.OUT_OF_BOUNDS) {
+        if (error == Board.OUT_OF_BOUNDS)
+        {
             System.out.println("That word falls out of the boards bounds. Please try again.");
         }
-        else if (error == Board.NO_CONNECTION) {
+        else if (error == Board.NO_CONNECTION)
+        {
             System.out.println("That word does not link up with other tiles on the board or the center square. Please try again.");
         }
-        else if (error == Board.INSUFFICIENT_TILES) {
+        else if (error == Board.INSUFFICIENT_TILES)
+        {
             System.out.println("That word cannot be made up using tiles from your frame or tiles already on the board. Please try again.");
+        }
+        else if (error == Board.ONE_LETTER)
+        {
+            System.out.println("Enter a valid word (more than one character).");
         }
         else
         {

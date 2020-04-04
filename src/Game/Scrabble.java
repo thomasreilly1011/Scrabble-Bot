@@ -112,7 +112,7 @@ public class Scrabble extends Application
         else if(parseInt(strings[0]) == QUIT)
         {
             gameOver = cli.endGame();
-            if (gameOver == false)
+            if (!gameOver)
             {
                 move(cli.playerMove(player), player);
             }

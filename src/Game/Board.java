@@ -8,6 +8,7 @@ public class Board
     public static final int OUT_OF_BOUNDS = 0;
     public static final int NO_CONNECTION = 1;
     public static final int INSUFFICIENT_TILES = 2;
+    public static final int ONE_LETTER = 3;
     public static final int SUCCESS = 5;
 
 
@@ -117,6 +118,11 @@ public class Board
 
     public int placeWord(int row, int col, String word, Frame frame, boolean verticle)
     {
+        if(word.length() <= 1)
+        {
+            return ONE_LETTER;
+        }
+
         score = 0;
         word = word.toUpperCase();
 
@@ -171,6 +177,11 @@ public class Board
         }
 
         score = score*wordMultiplier;
+
+        if(frame.isEmpty())
+        {
+            score += 50; //bingo achieved: the player used 7 tiles at once!
+        }
 
         return SUCCESS;
     }
