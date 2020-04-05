@@ -156,6 +156,7 @@ public class Scrabble extends Application
         else if (parseInt(commandArgs[0]) == NAME)
         {
             player.setPlayerName(commandArgs[1]);
+            move(cli.playerMove(player), player);
         }
     }
 
