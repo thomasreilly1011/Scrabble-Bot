@@ -62,17 +62,15 @@ public class Player implements Cloneable
 
 	@Override
 	protected Player clone() throws CloneNotSupportedException {
-		Player clone = new Player(this.playerName, new Pool());
-		clone.playerScore = this.playerScore;
-		clone.frame = this.frame.clone();
-		return clone;
+		try {
+			return (Player) super.clone();
+		} catch (CloneNotSupportedException e) {
+			Player clone = new Player(this.playerName, new Pool());
+			clone.playerScore = this.playerScore;
+			clone.frame = this.frame.clone();
+			return clone;
+		}
 	}
-
-
-//	@Override
-//	protected Object clone() throws CloneNotSupportedException {
-//		return super.clone();
-//	}
 
 	@Override
 	public String toString() //Prints string PlayerName

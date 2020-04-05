@@ -165,16 +165,15 @@ public class Frame implements Cloneable
 
     @Override
     protected Frame clone() throws CloneNotSupportedException {
-        Frame clone = new Frame(new Pool());
-        clone.tiles = (ArrayList<Tile>) this.tiles.clone();
-        return clone;
+        try {
+            return (Frame) super.clone();
+        } catch (CloneNotSupportedException e) {
+            Frame clone = new Frame(new Pool());
+            clone.tiles = (ArrayList<Tile>) this.tiles.clone();
+            return clone;
+        }
     }
 
-
-//    @Override
-//    protected Object clone() throws CloneNotSupportedException {
-//        return super.clone();
-//    }
 
     /*
             Used to display the letters of a frame. (and the value of each letter)
