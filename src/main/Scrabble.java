@@ -160,5 +160,33 @@ public class Scrabble extends Application
         }
     }
 
+//    public static void updateBuffers() {
+//        System.out.println("Updating Buffers");
+//        try {
+//            poolBuffer = (Pool) pool.clone();
+//            boardBuffer = (Board) board.clone();
+//            System.out.println("Board Buffer:\n" + boardBuffer);
+//            player1Buffer = (Player) player1.clone();
+//            System.out.println("player1 Buffer's Frame: " + player1Buffer.getFrame());
+//            player2Buffer = (Player) player2.clone();
+//        } catch (CloneNotSupportedException e) {
+//            System.out.println(e);
+//        }
+//    }
+
+//    /**
+//     * Function that reverts the game to its previous state by storing a backup of all key Game variables.
+//     */
+//    public static void revertGame(Player player) {
+//        try {
+//            pool = (Pool) poolBuffer.clone();
+//            board = (Board) boardBuffer.clone();
+//            player1 = (Player) player1Buffer.clone();
+//            player2 = (Player) player2Buffer.clone();
+//        } catch (CloneNotSupportedException e) {
+//            System.out.println(e);
+//        }
+//    }
+
 
 }
