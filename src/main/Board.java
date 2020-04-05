@@ -303,13 +303,14 @@ public class Board implements Cloneable
 
     @Override
     protected Board clone() throws CloneNotSupportedException {
-        try {
-            return (Board) super.clone();
-        } catch (CloneNotSupportedException e) {
-            Board clone = new Board();
-            clone.squares = this.squares.clone();
-            return clone;
+        //Perform a Deep copy of squares on the Board
+        Board clone = new Board();
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                clone.squares[i][j] = (Square) this.squares[i][j].clone();
+            }
         }
+        return clone;
     }
 
     @Override

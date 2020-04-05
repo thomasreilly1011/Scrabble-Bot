@@ -165,13 +165,12 @@ public class Frame implements Cloneable
 
     @Override
     protected Frame clone() throws CloneNotSupportedException {
-        try {
-            return (Frame) super.clone();
-        } catch (CloneNotSupportedException e) {
-            Frame clone = new Frame(new Pool());
-            clone.tiles = (ArrayList<Tile>) this.tiles.clone();
-            return clone;
+        //Perform a Deep copy of the tiles in the frame
+        Frame clone = new Frame(new Pool());
+        for (Tile tile:tiles) {
+            clone.tiles.add((Tile) tile.clone());
         }
+        return clone;
     }
 
 
