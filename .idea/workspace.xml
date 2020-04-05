@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3a97ce7e-447e-4b17-a4a2-3dc2d3461891" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/Christian-Coders.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="3a97ce7e-447e-4b17-a4a2-3dc2d3461891" name="Default Changelist" comment="-">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game/Scrabble.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/Scrabble.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/IO/CLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/IO/CLI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +17,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IgnoredFileRootStore">
@@ -102,8 +96,8 @@
     </configuration>
     <list>
       <item itemvalue="Application.FXtest" />
-      <item itemvalue="Application.Main" />
       <item itemvalue="Application.Scrabble" />
+      <item itemvalue="Application.Main" />
       <item itemvalue="JUnit.boardunittest" />
     </list>
     <recent_temporary>
@@ -180,10 +174,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="498" y="196" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1583608100286" />
-    <state x="0" y="7" key="CommitChangelistDialog2" timestamp="1586019639672">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="1366" y="27" width="700" height="831" key="CommitChangelistDialog2" timestamp="1586090902197">
+      <screen x="1366" y="0" width="1920" height="1080" />
     </state>
     <state x="0" y="7" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1586019639672" />
+    <state x="1366" y="27" width="700" height="831" key="CommitChangelistDialog2/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1586090902197" />
     <state x="722" y="154" key="FileChooserDialogImpl" timestamp="1585502683060">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -216,10 +211,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="185" y="0" width="802" height="824" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1583788273180" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1585171035049">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="1646" y="190" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1586090911531">
+      <screen x="1366" y="0" width="1920" height="1080" />
     </state>
     <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1585171035049" />
+    <state x="1646" y="190" width="800" height="535" key="Vcs.Push.Dialog.v2/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1586090911531" />
     <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1586019355084">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -232,10 +228,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="400" y="204" key="git4idea.merge.GitMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1586019102210" />
-    <state x="400" y="204" key="git4idea.merge.GitPullDialog" timestamp="1586019703954">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="1773" y="267" width="673" height="426" key="git4idea.merge.GitPullDialog" timestamp="1586090539398">
+      <screen x="1366" y="0" width="1920" height="1080" />
     </state>
     <state x="400" y="204" key="git4idea.merge.GitPullDialog/0.0.1536.824@0.0.1536.824" timestamp="1586019703954" />
+    <state x="1773" y="267" width="673" height="426" key="git4idea.merge.GitPullDialog/1366.0.1920.1080/0.312.1366.768@1366.0.1920.1080" timestamp="1586090539398" />
     <state x="418" y="66" key="new project wizard" timestamp="1585502690879">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
