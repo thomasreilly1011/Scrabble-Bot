@@ -196,7 +196,7 @@ public class Scrabble extends Application
                positions.add(i);
            }
        }
-       StringBuilder sb = new StringBuilder();
+       StringBuilder sb = new StringBuilder(commandArg);
        for(Integer index : positions)
        {
            sb.deleteCharAt(index);
