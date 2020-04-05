@@ -200,6 +200,7 @@ public class Scrabble extends Application
        for(Integer index : positions)
        {
            sb.deleteCharAt(index);
+           index--;
        }
        return sb.toString();
     }
@@ -214,6 +215,7 @@ public class Scrabble extends Application
         StringBuilder sb = new StringBuilder(commandArg);
         for (Integer index:indices) {
             sb.deleteCharAt(index);
+            index--;
         }
         return sb.toString();
     }
