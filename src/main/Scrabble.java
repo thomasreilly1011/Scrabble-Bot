@@ -122,11 +122,13 @@ public class Scrabble extends Application
                 System.out.println(wordBuffer + " is an invalid word!");
                 System.out.println("Reverting game to this save: ");
                 System.out.println(boardBuffer);
+                System.out.println("Player 1's score: " + player1Buffer.getPlayerScore());
+                System.out.println("Player 1's frame: " + player1Buffer.getFrame());
                 revertGame();
                 move(cli.playerMove(player), player);
             }
         } else {
-            //updateBuffers();
+            updateBuffers();
         }
         if(parseInt(commandArgs[0]) == PLACE_WORD)
         {
