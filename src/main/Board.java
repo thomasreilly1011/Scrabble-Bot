@@ -116,7 +116,38 @@ public class Board
         score += letterMultiplier * squares[row + i][col + j].getTile().getValue();
     }
 
-    public int placeWord(int row, int col, String word, Frame frame, boolean verticle)
+    public boolean tileIntersects(Tile tile, Tile[] intersectingTiles)
+    {
+        for(int i=0; i<intersectingTiles.length; i++)
+        {
+            if(intersectingTiles[i].equals(tile))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void adjacentWord(Square square, Tile[] intersectingTiles, Boolean vertical)
+    {
+        if(tileIntersects(square.getTile(), intersectingTiles))
+        {
+
+        }
+        else if(vertical) //word is vertical
+        {
+            //check existing words coming from the left
+        }
+        else //word is horizontal
+        {
+            //check existing words coming from the top
+        }
+
+        //always check existing words
+
+    }
+
+    public int placeWord(int row, int col, String word, Frame frame, boolean vertical)
     {
         if(word.length() <= 1)
         {
@@ -127,15 +158,15 @@ public class Board
         word = word.toUpperCase();
 
         //First perform all tests to make sure this is a valid move.
-        if(!checkBounds(row, col, verticle, word))
+        if(!checkBounds(row, col, vertical, word))
         {
             return OUT_OF_BOUNDS;
         }
 
-        Tile[] intersectingTiles = checkIntersection(row, col, word, verticle);
+        Tile[] intersectingTiles = checkIntersection(row, col, word, vertical);
 
         //Check that a tile is either being placed at the origin (the first play of the game) or being placed adjacent with another tile (the only other legal play)
-        if(!intersectsCenter(row, col, word, verticle) && intersectingTiles[0] == null)
+        if(!intersectsCenter(row, col, word, vertical) && intersectingTiles[0] == null)
         {
             //The word isn't being placed at the origin and it does not connect with other words on the board.
             return NO_CONNECTION;
@@ -150,13 +181,14 @@ public class Board
 
         char[] letters = word.toCharArray();
 
-        if (verticle)
+        if (vertical)
         {
             for (int i = 0; i < word.length(); i++)
             {
 
                 if(squares[row + i][col].isEmpty())
                 {
+                    adjacentWord(squares[row][col+i], intersectingTiles, vertical); //TODO AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
                     squares[row + i][col].setTile(frame.removeTile(letters[i]));
                 }
                 scoring(row, col, i, 0);
@@ -169,6 +201,7 @@ public class Board
             {
                 if (squares[row][col + i].isEmpty())
                 {
+                    adjacentWord(squares[row][col+i], intersectingTiles, vertical); //TODO AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
                     squares[row][col + i].setTile(frame.removeTile(letters[i]));
                 }
                 scoring(row, col, 0, i);
@@ -191,9 +224,9 @@ public class Board
     If it fits, returns true.
     If it overlaps the edge of the board it returns false.
      */
-    protected boolean checkBounds(int row, int col, boolean verticle, String word)
+    protected boolean checkBounds(int row, int col, boolean vertical, String word)
     {
-        if(verticle)
+        if(vertical)
         {
             return word.length() + row <= ROWS;
         }
@@ -208,11 +241,11 @@ public class Board
     If it does not, it returns null
     If it does, it returns an array of tiles containing that it intersects.
      */
-    public Tile[] checkIntersection(int row, int col, String word, boolean verticle) {
+    public Tile[] checkIntersection(int row, int col, String word, boolean vertical) {
         Tile[] intersectTiles = new Tile[word.length()];
         int j = 0;
 
-        if (verticle)
+        if (vertical)
         {
             for (int i = 0; i < word.length() ; i++)
             {
@@ -237,9 +270,9 @@ public class Board
         return intersectTiles;
     }
 
-    protected boolean intersectsCenter(int row, int col, String word, boolean verticle) {
+    protected boolean intersectsCenter(int row, int col, String word, boolean vertical) {
         if (row == 7 || col == 7) {
-            if (verticle) {
+            if (vertical) {
                 for (int i = 0; i < word.length(); i++)
                 {
                     if (row+i == 7 && col == 7) {
