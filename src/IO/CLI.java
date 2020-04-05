@@ -159,14 +159,18 @@ public class CLI {
                     help();
                     break;
                 case "CHALLENGE":
-                    //First check no. of inputs.
-                    if (inputArr.length > 1)
-                    {
-                        System.out.println("Too many arguments for CHALLENGE command. Please try again");
-                        continue;
+                    if (Scrabble.allowChallenge) {
+                        //First check no. of inputs.
+                        if (inputArr.length > 1)
+                        {
+                            System.out.println("Too many arguments for CHALLENGE command. Please try again");
+                            continue;
+                        }
+                        args[0] = Integer.toString(Scrabble.CHALLENGE);
+                        return args;
+                    } else {
+                        System.out.println("There is no moves to challenge at this point. Please try another command.");
                     }
-                    args[0] = Integer.toString(Scrabble.CHALLENGE);
-                    return args;
                 case "NAME":
                     //First check no. of inputs.
                     if (inputArr.length < 2)
@@ -258,5 +262,15 @@ public class CLI {
     {
         System.out.println("That word scored you " + score + " points!");
         System.out.println(player.getPlayerName() + "'s score is now: " + player.getPlayerScore());
+    }
+
+    public void announceValid(Player player) {
+        System.out.println(Scrabble.wordBuffer + " is a valid Scrabble word!");
+        System.out.println(player.getPlayerName() + " looses their go!");
+    }
+
+    public void announceInvalid(Player player) {
+        System.out.println(Scrabble.wordBuffer + " is not a valid Scrabble word!");
+        System.out.println("That word will now be removed and the points taken back!");
     }
 }

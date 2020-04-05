@@ -40,12 +40,10 @@ public class Scrabble extends Application
     private static Player player2Buffer;
 
     //Backup of previous word played (for use in Dictionary.challenge() call)
-    private static String wordBuffer;
-    public static Tile[] newTiles;
-    public static int scoreBuffer;
+    public static String wordBuffer;
 
     public static boolean gameOver = false;
-
+    public static boolean allowChallenge = false;
     /*
     Main function (Launches the JavaFX application calling start())
      */
@@ -115,13 +113,15 @@ public class Scrabble extends Application
             boolean positive = dictionary.challenge(wordBuffer);
             if (positive)
             {
-                System.out.println(wordBuffer + " is a valid Scrabble word!");
-                System.out.println(player.getPlayerName() + " looses their go!");
+                cli.announceValid(player);
+
+                allowChallenge = false;
                 return;
             } else {
-                System.out.println(wordBuffer + " is not a valid Scrabble word!");
-                System.out.println("That word will now be removed and the points taken back!");
+                cli.announceInvalid(player);
+
                 revertGame();
+                allowChallenge = false;
                 move(cli.playerMove(player), player);
             }
         } else {
@@ -129,15 +129,15 @@ public class Scrabble extends Application
         }
         if(parseInt(commandArgs[0]) == PLACE_WORD)
         {
-            int i = board.placeWord(parseInt(commandArgs[2]), parseInt(commandArgs[3]), commandArgs[1], player.getFrame(), parseBoolean(commandArgs[4]));
-            if(i != Board.SUCCESS)
+            int errorNumber = board.placeWord(parseInt(commandArgs[2]), parseInt(commandArgs[3]), commandArgs[1], player.getFrame(), parseBoolean(commandArgs[4]));
+            if(errorNumber != Board.SUCCESS)
             {
-                cli.error(i);
+                cli.error(errorNumber);
                 move(cli.playerMove(player), player);
             } else {
                 wordBuffer = commandArgs[1];
                 player.incScore(board.score);
-                scoreBuffer = board.score;
+                allowChallenge = true;
                 cli.announceScore(player, board.score);
             }
         }
@@ -160,6 +160,9 @@ public class Scrabble extends Application
         }
     }
 
+    /**
+     * FUnction that updates the buffers of the game with the latest game data from Game objects.
+     */
     public static void updateBuffers() {
         try {
             poolBuffer = pool.clone();

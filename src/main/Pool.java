@@ -7,14 +7,9 @@ import java.util.Random;
 
 public class Pool implements Cloneable
 {
-    //9A_1, 2B_3, 2C_3, 4D_2, 12E_1, 2F_4, 3G_2, 2H_4, 9I_1, 1J_8, 1K_5, 4L_1, 2M_3, 6N_1
-    //8O_1, 2P_3, 1Q_10, 6R_1, 4S_1, 6T_1, 4U_1, 2V_4, 2W_4, 1X_8, 2Y_4, 1Z_10, 2BLANK_0
-
-    //Key: 9A_1 implies there are 9 A tiles and each is of value 1
-
     public ArrayList<Tile> pool = new ArrayList<>();
 
-    public Pool() //constructor
+    public Pool()
     {
         set();
     }
