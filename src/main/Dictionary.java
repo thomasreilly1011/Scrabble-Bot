@@ -25,16 +25,18 @@ public class Dictionary {
     public boolean challenge(String word)
     {
         //Dictionary run = new Dictionary();
-        boolean valid = false;
         while(dictionaryReader.hasNextLine())
         {
-            if(dictionaryReader.nextLine() == word)
+            String in = dictionaryReader.nextLine();
+            in = in.toUpperCase();
+            if(in.equals(word))
             {
-                valid = true;
+                return true;
             }
         }
-        return valid;
+        return false;
     }
+
 
     /*
     TEMP NOTE FOR DANYUL:

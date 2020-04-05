@@ -9,7 +9,7 @@ public class BoardTest
 
     public static void main(String[] args)
     {
-        Pool.set();
+        Pool pool = new Pool();
 
         //Testing the creation and display of Board.
         Board board = new Board();
@@ -18,7 +18,7 @@ public class BoardTest
 
         //Testing the ability to place a word with all necessary checks included.
         //Involves the creation of a special testing frame (below)
-        Frame frame = new Frame();
+        Frame frame = new Frame(pool);
         frame.createTestableFrame();
         System.out.println("A special frame is created for testing purposes: " + frame);
 

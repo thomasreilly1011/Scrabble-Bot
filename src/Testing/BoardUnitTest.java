@@ -20,10 +20,10 @@ class BoardUnitTest extends Board
     @BeforeEach
     void init()
     {
-        Pool.set();
+        Pool pool = new Pool();
 
         board = new Board();
-        frame = new Frame();
+        frame = new Frame(pool);
         frame.createTestableFrame();
     }
 

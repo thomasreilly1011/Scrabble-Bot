@@ -14,15 +14,6 @@ import static java.lang.Boolean.parseBoolean;
 
 public class Scrabble extends Application
 {
-    //IO Objects
-    static final IO.CLI cli = new CLI();
-    static final IO.UI ui = new UI();
-
-    //Game Objects
-    public static Pool pool;
-    public static Board board;
-    public static Dictionary dictionary;
-
     //Move Type Constants:
     public static final int PLACE_WORD = 0;
     public static final int PASS = 1;
@@ -31,10 +22,29 @@ public class Scrabble extends Application
     public static final int CHALLENGE = 4;
     public static final int NAME = 5;
 
-    public static boolean gameOver = false;
+    //IO Objects
+    static final IO.CLI cli = new CLI();
+    static final IO.UI ui = new UI();
 
-    //Holds the word placed in the last PLACE_WORD move. (For use in CHALLENGE move)
+    //Game Objects
+    public static Pool pool;
+    public static Board board;
+    public static Player player1;
+    public static Player player2;
+    public static Dictionary dictionary;
+
+    //Backup of game objects from previous move (for use in revertGame).
+//    private static Pool poolBuffer;
+//    private static Board boardBuffer;
+//    private static Player player1Buffer;
+//    private static Player player2Buffer;
+
+    //Backup of previous word played (for use in Dictionary.challenge() call)
     private static String wordBuffer;
+    public static Tile[] newTiles;
+    public static int scoreBuffer;
+
+    public static boolean gameOver = false;
 
     /*
     Main function (Launches the JavaFX application calling start())
@@ -51,8 +61,8 @@ public class Scrabble extends Application
         pool = new Pool();
         board = new Board();
         dictionary = new Dictionary("src/Files/sowpods.txt");
-        Player player1 = cli.playerInit();
-        Player player2 = cli.playerInit();
+        player1 = new Player(cli.playerInit(), pool);
+        player2 = new Player(cli.playerInit(), pool);
         cli.help();
 
         //Start up the UI
@@ -101,6 +111,23 @@ public class Scrabble extends Application
 
     public static void move(String[] commandArgs, Player player)
     {
+        if (parseInt(commandArgs[0]) == CHALLENGE) {
+            boolean positive = dictionary.challenge(wordBuffer);
+            if (positive)
+            {
+                System.out.println(wordBuffer + " is a valid word!");
+                System.out.println(player.getPlayerName() + " looses their go!");
+                return;
+            } else {
+                System.out.println(wordBuffer + " is an invalid word!");
+//                System.out.println("Reverting game to this save: ");
+//                System.out.println(boardBuffer);
+                //revertGame();
+                move(cli.playerMove(player), player);
+            }
+        } else {
+            //updateBuffers();
+        }
         if(parseInt(commandArgs[0]) == PLACE_WORD)
         {
             int i = board.placeWord(parseInt(commandArgs[2]), parseInt(commandArgs[3]), commandArgs[1], player.getFrame(), parseBoolean(commandArgs[4]));
@@ -111,6 +138,7 @@ public class Scrabble extends Application
             } else {
                 wordBuffer = commandArgs[1];
                 player.incScore(board.score);
+                scoreBuffer = board.score;
                 cli.announceScore(player, board.score);
             }
         }
@@ -126,18 +154,11 @@ public class Scrabble extends Application
                 move(cli.playerMove(player), player);
             }
         }
-        else if (parseInt(commandArgs[0]) == CHALLENGE)
-        {
-            boolean challenge = dictionary.challenge(wordBuffer);
-            if (challenge) {
-                System.out.println("That is a valid word!");
-            } else {
-                System.out.println("Thats an invalid word!");
-            }
-        }
         else if (parseInt(commandArgs[0]) == NAME)
         {
             player.setPlayerName(commandArgs[1]);
         }
     }
+
+
 }

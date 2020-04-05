@@ -10,17 +10,13 @@ public class CLI {
 
     private final Scanner in = new Scanner(System.in);
 
-    public Player playerInit()
+    public String playerInit()
     {
 
         System.out.println("Enter a player's name:");
-        String s = in.nextLine();
+        String name = in.nextLine();
 
-        Player player = new Player(s);
-
-        System.out.println(s + "'s Frame:\n" + player.getFrame() + "\n");
-
-        return player;
+        return name;
     }
 
     /*
@@ -37,6 +33,7 @@ public class CLI {
         String[] args = new String[5];
         String input;
 
+        System.out.println(Scrabble.board);
 
         System.out.println("It is " + player.getPlayerName() + "'s turn!");
         System.out.println("Here is your frame: " + player.getFrame());

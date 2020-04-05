@@ -2,14 +2,17 @@ package main;
 
 import java.util.ArrayList;
 
-public class Frame
+public class Frame implements Cloneable
 {
     private static final int NUM_TILES = 7;
 
-    private final ArrayList<Tile> tiles = new ArrayList<>();
+    private ArrayList<Tile> tiles = new ArrayList<>();
 
-    public Frame()
+    private final Pool pool;
+
+    public Frame(Pool pool)
     {
+        this.pool = pool;
         this.refill();
     }
 
@@ -20,18 +23,18 @@ public class Frame
         for (Tile tile : tiles)
         {
             //Send tiles back to pool.
-            Pool.returnTile(tile);
+            pool.returnTile(tile);
         }
         //Then remove them all from the frame.
         tiles.removeAll(tiles);
         //Then, fill it with random tiles from Pool.
         for(int i=0; i<NUM_TILES; i++)
         {
-            tiles.add(Pool.getRandomTile());
+            tiles.add(pool.getRandomTile());
         }
     }
 
-    public void createTestableFrame() //purely for the use of testing placeWord in BoardTest
+    public void createTestableFrame() //for the use of testing placeWord in BoardTest
     {
         tiles.removeAll(tiles);
 
@@ -59,6 +62,7 @@ public class Frame
      */
     public Tile removeTile(char letter)
     {
+        Scrabble.newTiles = null;
         //First, exception handling
         if (!Character.isLetter(letter) && !(letter == '_'))
         {
@@ -72,15 +76,36 @@ public class Frame
         {
             if(tiles.get(i).getLetter() == letter)
             {
-                Pool.returnTile(tiles.get(i));
                 Tile temp = tiles.remove(i);
                 //Then, add a new random tile from the pool.
-                tiles.add(Pool.getRandomTile());
+                Tile newTile = pool.getRandomTile();
+                Scrabble.newTiles[i] = newTile;
+                tiles.add(pool.getRandomTile());
                 return temp;
             }
         }
 
         return null;
+    }
+
+    /*
+    Returns the specified tiles back to the Pool.
+     */
+    public void removeTiles(Tile[] tiles) {
+        for (Tile tile: this.tiles) {
+            for (Tile newTile: tiles) {
+                if (newTile.equals(tile)) {
+                    pool.returnTile(tile);
+                }
+            }
+        }
+    }
+
+    /*
+    Adds given tile to the frame.
+     */
+    public void returnTile(Tile tile) {
+        tiles.add(tile);
     }
 
     public boolean isEmpty()
@@ -138,9 +163,22 @@ public class Frame
         return true;
     }
 
+    @Override
+    protected Frame clone() throws CloneNotSupportedException {
+        Frame clone = new Frame(new Pool());
+        clone.tiles = (ArrayList<Tile>) this.tiles.clone();
+        return clone;
+    }
+
+
+//    @Override
+//    protected Object clone() throws CloneNotSupportedException {
+//        return super.clone();
+//    }
+
     /*
-    Used to display the letters of a frame. (and the value of each letter)
-     */
+            Used to display the letters of a frame. (and the value of each letter)
+             */
     public String toString()
     {
         //Used to display the contents of a Frame.
