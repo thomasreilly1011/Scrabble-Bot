@@ -60,7 +60,11 @@ public class Tile extends StackPane implements Cloneable
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        Tile clone = new Tile(this.letter, this.value);
-        return clone;
+        try {
+            return (Tile) super.clone();
+        } catch (CloneNotSupportedException e){
+            Tile clone = new Tile(this.letter, this.value);
+            return clone;
+        }
     }
 }

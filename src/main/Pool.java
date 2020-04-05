@@ -1,5 +1,7 @@
 package main;
 
+import com.sun.javaws.exceptions.CacheAccessException;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,7 +12,7 @@ public final class Pool implements Cloneable
 
     //Key: 9A_1 implies there are 9 A tiles and each is of value 1
 
-    private ArrayList<Tile> pool = new ArrayList<>();
+    public ArrayList<Tile> pool = new ArrayList<>();
 
     public Pool() //constructor
     {
@@ -137,16 +139,15 @@ public final class Pool implements Cloneable
 
     @Override
     protected Pool clone() throws CloneNotSupportedException {
-        Pool clone = new Pool();
-        clone.pool = (ArrayList<Tile>) this.pool.clone();
-        return clone;
+        try {
+            return (Pool) super.clone();
+        } catch (CloneNotSupportedException e){
+            Pool clone = new Pool();
+            clone.pool = (ArrayList<Tile>) this.pool.clone();
+            return clone;
+        }
     }
 
-
-//    @Override
-//    protected Object clone() throws CloneNotSupportedException {
-//        return super.clone();
-//    }
 
     public int getNumberOfTilesRemaining()
     {

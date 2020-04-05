@@ -1,6 +1,7 @@
 package main;
 
-public class Board {
+public class Board implements Cloneable
+{
     public static final int ROWS = 15;
     public static final int COLS = 15;
     //Error codes:
@@ -302,16 +303,14 @@ public class Board {
 
     @Override
     protected Board clone() throws CloneNotSupportedException {
-        Board clone = new Board();
-        clone.squares = this.squares.clone();
-        return clone;
+        try {
+            return (Board) super.clone();
+        } catch (CloneNotSupportedException e) {
+            Board clone = new Board();
+            clone.squares = this.squares.clone();
+            return clone;
+        }
     }
-
-
-//    @Override
-//    protected Object clone() throws CloneNotSupportedException {
-//        return super.clone();
-//    }
 
     @Override
     public String toString()

@@ -53,10 +53,14 @@ public class Square implements Cloneable
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        Square clone = new Square(this.e);
-        if (!this.isEmpty()) {
-            clone.setTile((Tile) this.t.clone());
+        try {
+            return (Square) super.clone();
+        } catch (CloneNotSupportedException e){
+            Square clone = new Square(this.e);
+            if (!this.isEmpty()) {
+                clone.setTile((Tile) this.t.clone());
+            }
+            return clone;
         }
-        return clone;
     }
 }
