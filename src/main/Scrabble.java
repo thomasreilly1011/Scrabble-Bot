@@ -50,7 +50,7 @@ public class Scrabble extends Application
         //Initialise all game objects
         pool = new Pool();
         board = new Board();
-        dictionary = new Dictionary("../Files/sowpods.txt");
+        dictionary = new Dictionary("src/Files/sowpods.txt");
         Player player1 = cli.playerInit();
         Player player2 = cli.playerInit();
         cli.help();
@@ -128,7 +128,12 @@ public class Scrabble extends Application
         }
         else if (parseInt(commandArgs[0]) == CHALLENGE)
         {
-            Dictionary.challenge(wordBuffer);
+            boolean challenge = dictionary.challenge(wordBuffer);
+            if (challenge) {
+                System.out.println("That is a valid word!");
+            } else {
+                System.out.println("Thats an invalid word!");
+            }
         }
         else if (parseInt(commandArgs[0]) == NAME)
         {

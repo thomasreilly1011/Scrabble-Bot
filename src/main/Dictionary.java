@@ -32,10 +32,6 @@ public class Dictionary {
             {
                 valid = true;
             }
-            else
-            {
-                valid = false;
-            }
         }
         return valid;
     }
