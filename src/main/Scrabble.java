@@ -44,7 +44,7 @@ public class Scrabble extends Application
 
     public static boolean gameOver = false;
     public static boolean allowChallenge = false;
-    /*
+    /**
     Main function (Launches the JavaFX application calling start())
      */
     public static void main(String[] args)
@@ -95,6 +95,12 @@ public class Scrabble extends Application
         timer.schedule(task, 1000, 1000);
     }
 
+    /**
+     * Handles the running of the game loop. Calls a move for given player1 and player2 turn by turn until the game is over.
+     * @param board
+     * @param player1
+     * @param player2
+     */
     public void gameLoop(Board board, Player player1, Player player2)
     {
         while (!Scrabble.gameOver)
@@ -107,6 +113,22 @@ public class Scrabble extends Application
         }
     }
 
+    /**
+     * Handles a range of moves that corresponding to move type constants declared above.
+     * @param commandArgs arguments from the command line parsed as follows:
+     *     commandArgs[0] = The Command Type Constant (an int)
+     *
+     *     If the command is of type PLACE_WORD then,
+     *     commandArgs[1] = desired word
+     *     commandArgs[2] = internal row coordinate
+     *     commandArgs[3] = internal column coordinate
+     *     commandArgs[4] = vertical boolean
+     *
+     *     If the command is of type NAME then,
+     *     commandArgs[1] = the desired name
+     *
+     * @param player The player who is making the move.
+     */
     public static void move(String[] commandArgs, Player player)
     {
         if (parseInt(commandArgs[0]) == CHALLENGE) {

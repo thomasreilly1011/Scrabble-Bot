@@ -255,6 +255,8 @@ public class CLI {
         System.out.println("To skip your go type 'PASS'");
         System.out.println("To refill your board type 'REFILL'");
         System.out.println("To forfeit your game type 'QUIT'");
+        System.out.println("To challenge a the previous players word placement, type 'CHALLENGE'.");
+        System.out.println("To change your name type 'NAME' followed by the desired name.");
         System.out.println();
     }
 
