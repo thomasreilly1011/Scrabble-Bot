@@ -116,17 +116,21 @@ public class Scrabble extends Application
             if (positive)
             {
                 System.out.println(wordBuffer + " is a valid word!");
-                System.out.println(player.getPlayerName() + " looses their go!");
+                System.out.println(player.getPlayerName() + " loses their go!");
                 return;
-            } else {
+            }
+            else
+                {
                 System.out.println(wordBuffer + " is an invalid word!");
                 System.out.println("Reverting game to this save: ");
                 System.out.println(squaresBuffer);
                 revertGame();
                 move(cli.playerMove(player), player);
             }
-        } else {
-            //updateBuffers();
+        }
+        else
+            {
+//            updateBuffers();
         }
         if(parseInt(commandArgs[0]) == PLACE_WORD)
         {
@@ -141,10 +145,12 @@ public class Scrabble extends Application
                 scoreBuffer = board.score;
                 cli.announceScore(player, board.score);
             }
+            updateBuffers();
         }
         else if(parseInt(commandArgs[0]) == REFILL)
         {
             player.getFrame().refill();
+            updateBuffers();
         }
         else if(parseInt(commandArgs[0]) == QUIT)
         {
@@ -153,10 +159,12 @@ public class Scrabble extends Application
             {
                 move(cli.playerMove(player), player);
             }
+            updateBuffers();
         }
         else if (parseInt(commandArgs[0]) == NAME)
         {
             player.setPlayerName(commandArgs[1]);
+            updateBuffers();
         }
     }
 
