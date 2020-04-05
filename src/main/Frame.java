@@ -79,7 +79,7 @@ public class Frame implements Cloneable
                 Tile temp = tiles.remove(i);
                 //Then, add a new random tile from the pool.
                 Tile newTile = pool.getRandomTile();
-                Scrabble.newTiles[i] = newTile;
+                //Scrabble.newTiles[i] = newTile;
                 tiles.add(pool.getRandomTile());
                 return temp;
             }

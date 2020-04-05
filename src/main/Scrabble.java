@@ -34,10 +34,10 @@ public class Scrabble extends Application
     public static Dictionary dictionary;
 
     //Backup of game objects from previous move (for use in revertGame).
-//    private static Pool poolBuffer;
-//    private static Board boardBuffer;
-//    private static Player player1Buffer;
-//    private static Player player2Buffer;
+    private static Pool poolBuffer;
+    private static Square[][] squaresBuffer;
+    private static Player player1Buffer;
+    private static Player player2Buffer;
 
     //Backup of previous word played (for use in Dictionary.challenge() call)
     private static String wordBuffer;
@@ -120,9 +120,9 @@ public class Scrabble extends Application
                 return;
             } else {
                 System.out.println(wordBuffer + " is an invalid word!");
-//                System.out.println("Reverting game to this save: ");
-//                System.out.println(boardBuffer);
-                //revertGame();
+                System.out.println("Reverting game to this save: ");
+                System.out.println(squaresBuffer);
+                revertGame();
                 move(cli.playerMove(player), player);
             }
         } else {
@@ -160,33 +160,33 @@ public class Scrabble extends Application
         }
     }
 
-//    public static void updateBuffers() {
-//        System.out.println("Updating Buffers");
-//        try {
-//            poolBuffer = (Pool) pool.clone();
-//            boardBuffer = (Board) board.clone();
-//            System.out.println("Board Buffer:\n" + boardBuffer);
-//            player1Buffer = (Player) player1.clone();
-//            System.out.println("player1 Buffer's Frame: " + player1Buffer.getFrame());
-//            player2Buffer = (Player) player2.clone();
-//        } catch (CloneNotSupportedException e) {
-//            System.out.println(e);
-//        }
-//    }
+    public static void updateBuffers() {
+        System.out.println("Updating Buffers");
+        try {
+            poolBuffer = (Pool) pool.clone();
+            squaresBuffer = board.squares.clone();
+            System.out.println("Board Buffer:\n" + squaresBuffer);
+            player1Buffer = (Player) player1.clone();
+            System.out.println("player1 Buffer's Frame: " + player1Buffer.getFrame());
+            player2Buffer = (Player) player2.clone();
+        } catch (CloneNotSupportedException e) {
+            System.out.println(e);
+        }
+    }
 
-//    /**
-//     * Function that reverts the game to its previous state by storing a backup of all key Game variables.
-//     */
-//    public static void revertGame(Player player) {
-//        try {
-//            pool = (Pool) poolBuffer.clone();
-//            board = (Board) boardBuffer.clone();
-//            player1 = (Player) player1Buffer.clone();
-//            player2 = (Player) player2Buffer.clone();
-//        } catch (CloneNotSupportedException e) {
-//            System.out.println(e);
-//        }
-//    }
+    /**
+     * Function that reverts the game to its previous state by storing a backup of all key Game variables.
+     */
+    public static void revertGame() {
+        try {
+            pool = (Pool) poolBuffer.clone();
+            board.squares = squaresBuffer.clone();
+            player1 = (Player) player1Buffer.clone();
+            player2 = (Player) player2Buffer.clone();
+        } catch (CloneNotSupportedException e) {
+            System.out.println(e);
+        }
+    }
 
 
 }
