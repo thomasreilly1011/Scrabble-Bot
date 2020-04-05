@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -153,7 +154,7 @@ public class Scrabble extends Application
         if(parseInt(commandArgs[0]) == PLACE_WORD)
         {
             String word = parsePlaceWord(commandArgs[1]);
-            int errorNumber = board.placeWord(parseInt(commandArgs[2]), parseInt(commandArgs[3]), commandArgs[1], player.getFrame(), parseBoolean(commandArgs[4]));
+            int errorNumber = board.placeWord(parseInt(commandArgs[2]), parseInt(commandArgs[3]), word, player.getFrame(), parseBoolean(commandArgs[4]));
             if(errorNumber != Board.SUCCESS)
             {
                 cli.error(errorNumber);
@@ -185,21 +186,17 @@ public class Scrabble extends Application
     }
 
     private static String parsePlaceWord(String commandArg) {
-        ArrayList<Integer> indices = null;
+        ArrayList<Integer> indices = new ArrayList<>();
         for (int i = 0; i < commandArg.length(); i++) {
             if (commandArg.charAt(i) == '_') {
                 indices.add(i+1);
             }
         }
-        if (indices == null) {
-            StringBuilder sb = new StringBuilder(commandArg);
-            for (Integer index:indices) {
-                sb.deleteCharAt(index);
-            }
-            return sb.toString();
-        }else{
-            return commandArg;
+        StringBuilder sb = new StringBuilder(commandArg);
+        for (Integer index:indices) {
+            sb.deleteCharAt(index);
         }
+        return sb.toString();
     }
 
     /**
