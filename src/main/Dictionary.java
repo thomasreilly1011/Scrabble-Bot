@@ -36,11 +36,4 @@ public class Dictionary {
         }
         return false;
     }
-
-
-    /*
-    TEMP NOTE FOR DANYUL:
-    All of the words of the dictionary file are on separate lines. So we should read them line by line rather than having
-    to use any fancy whitespace separating stuff.
-     */
 }

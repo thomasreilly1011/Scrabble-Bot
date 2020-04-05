@@ -62,7 +62,6 @@ public class Frame implements Cloneable
      */
     public Tile removeTile(char letter)
     {
-        Scrabble.newTiles = null;
         //First, exception handling
         if (!Character.isLetter(letter) && !(letter == '_'))
         {
@@ -86,26 +85,6 @@ public class Frame implements Cloneable
         }
 
         return null;
-    }
-
-    /*
-    Returns the specified tiles back to the Pool.
-     */
-    public void removeTiles(Tile[] tiles) {
-        for (Tile tile: this.tiles) {
-            for (Tile newTile: tiles) {
-                if (newTile.equals(tile)) {
-                    pool.returnTile(tile);
-                }
-            }
-        }
-    }
-
-    /*
-    Adds given tile to the frame.
-     */
-    public void returnTile(Tile tile) {
-        tiles.add(tile);
     }
 
     public boolean isEmpty()
