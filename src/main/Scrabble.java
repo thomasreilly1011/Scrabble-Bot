@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -157,7 +158,7 @@ public class Scrabble extends Application
                 cli.error(errorNumber);
                 move(cli.playerMove(player), player);
             } else {
-                wordBuffer = commandArgs[1];
+                wordBuffer = parseChallenge(commandArgs[1]);
                 player.incScore(board.score);
                 allowChallenge = true;
                 cli.announceScore(player, board.score);
@@ -180,6 +181,24 @@ public class Scrabble extends Application
             player.setPlayerName(commandArgs[1]);
             move(cli.playerMove(player), player);
         }
+    }
+
+    private static String parseChallenge(String commandArg)
+    {
+        ArrayList<Integer> positions = new ArrayList<>();
+       for(int i=0; i<commandArg.length(); i++)
+       {
+           if(commandArg.charAt(i) == '_')
+           {
+               positions.add(i);
+           }
+       }
+       StringBuilder sb = new StringBuilder();
+       for(Integer index : positions)
+       {
+           sb.deleteCharAt(index);
+       }
+       return sb.toString();
     }
 
     /**
