@@ -33,8 +33,6 @@ public class CLI {
         String[] args = new String[5];
         String input;
 
-        System.out.println(Scrabble.board);
-
         System.out.println("It is " + player.getPlayerName() + "'s turn!");
         System.out.println("Here is your frame: " + player.getFrame());
 

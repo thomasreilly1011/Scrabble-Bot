@@ -115,15 +115,12 @@ public class Scrabble extends Application
             boolean positive = dictionary.challenge(wordBuffer);
             if (positive)
             {
-                System.out.println(wordBuffer + " is a valid word!");
+                System.out.println(wordBuffer + " is a valid Scrabble word!");
                 System.out.println(player.getPlayerName() + " looses their go!");
                 return;
             } else {
-                System.out.println(wordBuffer + " is an invalid word!");
-                System.out.println("Reverting game to this save: ");
-                System.out.println(boardBuffer);
-                System.out.println("Player 1's score: " + player1Buffer.getPlayerScore());
-                System.out.println("Player 1's frame: " + player1Buffer.getFrame());
+                System.out.println(wordBuffer + " is not a valid Scrabble word!");
+                System.out.println("That word will now be removed and the points taken back!");
                 revertGame();
                 move(cli.playerMove(player), player);
             }
@@ -159,11 +156,11 @@ public class Scrabble extends Application
         else if (parseInt(commandArgs[0]) == NAME)
         {
             player.setPlayerName(commandArgs[1]);
+            move(cli.playerMove(player), player);
         }
     }
 
     public static void updateBuffers() {
-        System.out.println("Updating Buffers");
         try {
             poolBuffer = pool.clone();
             boardBuffer = board.clone();

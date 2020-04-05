@@ -62,5 +62,6 @@ public class Square implements Cloneable
             }
             return clone;
         }
+
     }
 }
