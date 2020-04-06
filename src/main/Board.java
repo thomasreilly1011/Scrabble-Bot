@@ -1,5 +1,8 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board
 {
     public static final int ROWS = 15;
@@ -97,9 +100,8 @@ public class Board
     public int score = 0;
     int wordMultiplier = 1;
 
-    public void scoring(int row, int col, int i, int j)
+    public int scoring(int row, int col, int i, int j)
     {
-
         int letterMultiplier = squares[row + i][col + j].getType().getValue();
 
         if(letterMultiplier == 4) //eg if tile is placed on double word tile
@@ -113,39 +115,98 @@ public class Board
             letterMultiplier = 1;
         }
 
-        score += letterMultiplier * squares[row + i][col + j].getTile().getValue();
+        return letterMultiplier * squares[row + i][col + j].getTile().getValue();
     }
 
     public boolean tileIntersects(Tile tile, Tile[] intersectingTiles)
     {
-        for(int i=0; i<intersectingTiles.length; i++)
+        if (intersectingTiles.length != 0 && tile != null)
         {
-            if(intersectingTiles[i].equals(tile))
+            for (Tile intersectingTile : intersectingTiles)
             {
-                return true;
+                if (intersectingTile == tile)
+                {
+                    return true;
+                }
             }
         }
         return false;
+
     }
 
-    public void adjacentWord(Square square, Tile[] intersectingTiles, Boolean vertical)
+    int crossWordScore = 0;
+
+    //editors note: it was difficult to find a solid basis online for how cross words should be scored. In this implementation if a cross word is made over a double or triple letter, that multiplier will be applied to the
+    //tile once, and then for the other word that tile will be counted again as only it's original value. Double and triple words will double and triple one of the words. This implementation made the most sense to the team. ~ Seán.
+    public void crossWord(int row, int col, Tile[] intersectingTiles, Boolean vertical, Frame frame)
     {
-        if(tileIntersects(square.getTile(), intersectingTiles))
-        {
+        Square square = squares[row][col];
 
-        }
-        else if(vertical) //word is vertical
+        if(square.getType() != SquareType.INTERSECTINGTILE) //square is NOT an intersecting tile, therefore we must investigate adjacent tiles
         {
-            //check existing words coming from the left
-        }
-        else //word is horizontal
-        {
-            //check existing words coming from the top
-        }
+            int crossWordRow=0, crossWordCol=0;
 
-        //always check existing words
+            int temp = wordMultiplier; //store current wordMultiplier to reset after crossWordScore is calculated
+            wordMultiplier = 1;
 
+            StringBuilder crossWord = new StringBuilder();
+            crossWord.append(square.getTile().getLetter());
+            crossWordScore = square.getTile().getValue();
+
+            int i=1;
+            if (vertical) //word is vertical...
+            {
+                //...therefore check existing tiles on the left or right
+                while(!squares[row][col - i].isEmpty())
+                {
+                    //there is a letter to the left of this tile
+                    crossWord.insert(0, squares[row][col-i].getTile().getLetter());
+                    crossWordScore += scoring(row, col, 0, -i);
+                    i++;
+                }
+                crossWordRow = row;
+                crossWordCol = col-i; //setting the co-ords of the first letter of our new crossWord
+
+                i=1;
+                while(!squares[row][col+i].isEmpty())
+                {
+                    //there is a letter to the right of this tile
+                    crossWord.append(squares[row][col+i].getTile().getLetter());
+                    crossWordScore += scoring(row, col, 0, i);
+                    i++; //appending the letters on the right side
+                }
+            }
+            else //word is horizontal...
+            {
+                //... therefore check existing tiles above or below this tile
+                while(!squares[row+i][col].isEmpty())
+                {
+                    //there is a letter above this tile
+                    crossWord.insert(0, squares[row+i][col].getTile().getLetter());
+                    crossWordScore += scoring(row, col, i, 0);
+                    i++;
+                }
+                crossWordRow = row-i;
+                crossWordCol = col;
+
+                i=1;
+                while(!squares[row-i][col].isEmpty())
+                {
+                    //there is a letter below this tile
+                    crossWord.append(squares[row-i][col].getTile().getLetter());
+                    crossWordScore += scoring(row, col, -i, 0);
+                    i++;
+                }
+            }
+
+            crossWordScore *= wordMultiplier;
+            placedWords.add(crossWord.toString());
+
+            wordMultiplier = temp;
+        }
     }
+
+    public List<String> placedWords = new ArrayList<>();
 
     public int placeWord(int row, int col, String word, Frame frame, boolean vertical)
     {
@@ -154,7 +215,6 @@ public class Board
             return ONE_LETTER;
         }
 
-        score = 0;
         word = word.toUpperCase();
 
         //First perform all tests to make sure this is a valid move.
@@ -185,31 +245,60 @@ public class Board
         {
             for (int i = 0; i < word.length(); i++)
             {
+                Square square = squares[row+i][col];
 
-                if(squares[row + i][col].isEmpty())
+                if(square.isEmpty())
                 {
-                    adjacentWord(squares[row][col+i], intersectingTiles, vertical); //TODO AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                    squares[row + i][col].setTile(frame.removeTile(letters[i]));
+                    square.setTile(frame.removeTile(letters[i]));
+                    if(!squares[row+i][col-1].isEmpty() || !squares[row+i][col+1].isEmpty()) //send to crossWord function if tile has other existing tiles next to it
+                    {
+                        crossWord(row+i, col, intersectingTiles, true, frame);
+                    }
                 }
-                scoring(row, col, i, 0);
-                squares[row + i][col].setType(SquareType.BLANK);
+                score += scoring(row, col, i, 0);
+
+                if(tileIntersects(square.getTile(),intersectingTiles))
+                {
+                    square.setType(SquareType.INTERSECTINGTILE);
+                }
+                else
+                {
+                    square.setType(SquareType.BLANK);
+                }
             }
         }
         else
             {
             for (int i = 0; i < word.length(); i++)
             {
-                if (squares[row][col + i].isEmpty())
+                Square square = squares[row][col+i];
+
+                if (square.isEmpty())
                 {
-                    adjacentWord(squares[row][col+i], intersectingTiles, vertical); //TODO AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                    squares[row][col + i].setTile(frame.removeTile(letters[i]));
+                    square.setTile(frame.removeTile(letters[i]));
+                    if(!squares[row-1][col+i].isEmpty() || !squares[row+1][col+i].isEmpty()) //send to crossWord function if tile has other existing tiles next to it
+                    {
+                        crossWord(row, col+i, intersectingTiles, false, frame);
+                    }
                 }
-                scoring(row, col, 0, i);
-                squares[row + i][col].setType(SquareType.BLANK);
+                score += scoring(row, col, 0, i);
+
+                if(tileIntersects(square.getTile(), intersectingTiles))
+                {
+                    square.setType(SquareType.INTERSECTINGTILE);
+                }
+                else
+                {
+                    square.setType(SquareType.BLANK);
+                }
             }
         }
 
+        placedWords.add(word);
+
         score = score*wordMultiplier;
+
+        score += crossWordScore;
 
         if(frame.isEmpty())
         {
