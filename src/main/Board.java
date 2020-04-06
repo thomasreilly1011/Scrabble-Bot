@@ -1,10 +1,9 @@
 package main;
 
-public class Board implements Cloneable
 import java.util.ArrayList;
 import java.util.List;
 
-public class Board
+public class Board implements Cloneable
 {
     public static final int ROWS = 15;
     public static final int COLS = 15;
