@@ -143,7 +143,7 @@ public class Scrabble extends Application
                 allowChallenge = false;
                 return;
             } else {
-                cli.announceInvalid(player);
+                cli.announceInvalid();
 
                 revertGame();
                 allowChallenge = false;
@@ -186,6 +186,11 @@ public class Scrabble extends Application
         }
     }
 
+    /**
+     * Parses the given string into a usable string for the Dictionary.challenge method. (Removing any underscores)
+     * @param commandArg the string to be parsed.
+     * @return the parsed string.
+     */
     private static String parseChallenge(String commandArg)
     {
         ArrayList<Integer> positions = new ArrayList<>();
@@ -204,6 +209,11 @@ public class Scrabble extends Application
        return sb.toString();
     }
 
+    /**
+     * Parses the given string into a usable string for placing on the board. (Removing the letter after any underscores)
+     * @param commandArg the string to be parsed.
+     * @return the parsed string.
+     */
     private static String parsePlaceWord(String commandArg) {
         ArrayList<Integer> indices = new ArrayList<>();
         for (int i = 0; i < commandArg.length(); i++) {
@@ -225,9 +235,7 @@ public class Scrabble extends Application
         try {
             poolBuffer = pool.clone();
             boardBuffer = board.clone();
-            System.out.println("Board Buffer:\n" + boardBuffer);
             player1Buffer = player1.clone();
-            System.out.println("player1 Buffer's Frame: " + player1Buffer.getFrame());
             player2Buffer = player2.clone();
         } catch (CloneNotSupportedException e) {
             System.out.println(e);
