@@ -1,6 +1,6 @@
 package main;
 
-public class Square
+public class Square implements Cloneable
 {
     private SquareType e;
     private Tile t;
@@ -51,4 +51,17 @@ public class Square
         return t == null;
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        try {
+            return (Square) super.clone();
+        } catch (CloneNotSupportedException e){
+            Square clone = new Square(this.e);
+            if (!this.isEmpty()) {
+                clone.setTile((Tile) this.t.clone());
+            }
+            return clone;
+        }
+
+    }
 }

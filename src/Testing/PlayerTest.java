@@ -4,8 +4,9 @@ import main.Player;
 import main.Pool;
 
 public class PlayerTest {
+    static Pool pool;
     public static void main(String[] args) {
-        Pool.set();
+        pool = new Pool();
 
         System.out.println("-------------Player Class Tests-------------");
         testPlayerClass();
@@ -16,8 +17,8 @@ public class PlayerTest {
     private static void testPlayerClass()
     {
         //Testing the construction of a player's name
-        Player p1 = new Player("Daniel Byrne");
-        Player p2 = new Player("Thomas Reilly");
+        Player p1 = new Player("Daniel Byrne", pool);
+        Player p2 = new Player("Thomas Reilly", pool);
         System.out.println("Player 1's name: " + p1.getPlayerName());
         System.out.println("Player 2's name: " + p2.getPlayerName());
         System.out.println();
@@ -25,21 +26,21 @@ public class PlayerTest {
         //Attempts to create player with invalid characters.
         try
         {
-            Player p3 = new Player("Sean Lacey!");
+            Player p3 = new Player("Sean Lacey!", pool);
         } catch (IllegalArgumentException e)
         {
             System.out.println(e);
         }
         try
         {
-            Player p4 = new Player("John Keegan@@@");
+            Player p4 = new Player("John Keegan@@@", pool);
         } catch (IllegalArgumentException e)
         {
             System.out.println(e);
         }
         try
         {
-            Player p5 = new Player("Ciarán Cuddihy");
+            Player p5 = new Player("Ciarán Cuddihy", pool);
         } catch (IllegalArgumentException e)
         {
             System.out.println(e);
@@ -74,8 +75,8 @@ public class PlayerTest {
 
     private static void testPlayerFrame() {
         //Tests the creation and display of a players frame.
-        Player p1 = new Player("Player 1");
-        Player p2 = new Player("Player 2");
+        Player p1 = new Player("Player 1", pool);
+        Player p2 = new Player("Player 2", pool);
         System.out.println("Player 1's frame: " + p1.getFrame());
         System.out.println("Player 2's frame: " + p2.getFrame());
         System.out.println();

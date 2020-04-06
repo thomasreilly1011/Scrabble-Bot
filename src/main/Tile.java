@@ -3,7 +3,7 @@ package main;
 import javafx.scene.layout.StackPane;
 
 
-public class Tile extends StackPane
+public class Tile extends StackPane implements Cloneable
 {
     private final char letter;
     private final int value;
@@ -55,6 +55,16 @@ public class Tile extends StackPane
         else
             {
             return false;
+        }
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        try {
+            return (Tile) super.clone();
+        } catch (CloneNotSupportedException e){
+            Tile clone = new Tile(this.letter, this.value);
+            return clone;
         }
     }
 }

@@ -1,16 +1,16 @@
 package main;
 
 
-public class Player 
+public class Player implements Cloneable
 {
 	private String playerName;
 	private int playerScore;
-	private final Frame frame;
+	private Frame frame;
 	
-	public Player(String playerName) //Constructor
+	public Player(String playerName, Pool pool) //Constructor
 	{
 		this.playerName = playerName;
-		frame = new Frame();
+		frame = new Frame(pool);
 		playerScore = 0;
 
 		//Error handling for illegal characters
@@ -58,6 +58,18 @@ public class Player
 	public Frame getFrame() //Returns frame
 	{
 		return this.frame;
+	}
+
+	@Override
+	protected Player clone() throws CloneNotSupportedException {
+		try {
+			return (Player) super.clone();
+		} catch (CloneNotSupportedException e) {
+			Player clone = new Player(this.playerName, new Pool());
+			clone.playerScore = this.playerScore;
+			clone.frame = this.frame.clone();
+			return clone;
+		}
 	}
 
 	@Override

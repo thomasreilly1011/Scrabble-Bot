@@ -1,6 +1,6 @@
 package main;
 
-public class Board
+public class Board implements Cloneable
 {
     public static final int ROWS = 15;
     public static final int COLS = 15;
@@ -116,37 +116,6 @@ public class Board
         score += letterMultiplier * squares[row + i][col + j].getTile().getValue();
     }
 
-    public boolean tileIntersects(Tile tile, Tile[] intersectingTiles)
-    {
-        for(int i=0; i<intersectingTiles.length; i++)
-        {
-            if(intersectingTiles[i].equals(tile))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void adjacentWord(Square square, Tile[] intersectingTiles, Boolean vertical)
-    {
-        if(tileIntersects(square.getTile(), intersectingTiles))
-        {
-
-        }
-        else if(vertical) //word is vertical
-        {
-            //check existing words coming from the left
-        }
-        else //word is horizontal
-        {
-            //check existing words coming from the top
-        }
-
-        //always check existing words
-
-    }
-
     public int placeWord(int row, int col, String word, Frame frame, boolean vertical)
     {
         if(word.length() <= 1)
@@ -188,7 +157,6 @@ public class Board
 
                 if(squares[row + i][col].isEmpty())
                 {
-                    adjacentWord(squares[row][col+i], intersectingTiles, vertical); //TODO AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
                     squares[row + i][col].setTile(frame.removeTile(letters[i]));
                 }
                 scoring(row, col, i, 0);
@@ -201,7 +169,6 @@ public class Board
             {
                 if (squares[row][col + i].isEmpty())
                 {
-                    adjacentWord(squares[row][col+i], intersectingTiles, vertical); //TODO AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
                     squares[row][col + i].setTile(frame.removeTile(letters[i]));
                 }
                 scoring(row, col, 0, i);
@@ -334,6 +301,17 @@ public class Board
         return frame.hasString(word);
     }
 
+    @Override
+    protected Board clone() throws CloneNotSupportedException {
+        //Perform a Deep copy of squares on the Board
+        Board clone = new Board();
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                clone.squares[i][j] = (Square) this.squares[i][j].clone();
+            }
+        }
+        return clone;
+    }
 
     @Override
     public String toString()

@@ -25,24 +25,15 @@ public class Dictionary {
     public boolean challenge(String word)
     {
         //Dictionary run = new Dictionary();
-        boolean valid = false;
         while(dictionaryReader.hasNextLine())
         {
-            if(dictionaryReader.nextLine() == word)
+            String in = dictionaryReader.nextLine();
+            in = in.toUpperCase();
+            if(in.equals(word))
             {
-                valid = true;
-            }
-            else
-            {
-                valid = false;
+                return true;
             }
         }
-        return valid;
+        return false;
     }
-
-    /*
-    TEMP NOTE FOR DANYUL:
-    All of the words of the dictionary file are on separate lines. So we should read them line by line rather than having
-    to use any fancy whitespace separating stuff.
-     */
 }

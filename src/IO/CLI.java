@@ -10,33 +10,33 @@ public class CLI {
 
     private final Scanner in = new Scanner(System.in);
 
-    public Player playerInit()
+    /**
+     * Simply asks the user for a players name.
+     * @return The player name specified by the user.
+     */
+    public String playerInit()
     {
 
         System.out.println("Enter a player's name:");
-        String s = in.nextLine();
+        String name = in.nextLine();
 
-        Player player = new Player(s);
-
-        System.out.println(s + "'s Frame:\n" + player.getFrame() + "\n");
-
-        return player;
+        return name;
     }
 
-    /*
-    Returns an array where the first element (args[0]) is always the move type.
-    If move type is PASS, QUIT or REFILL, no other arguments are provided.
-    If move type is PLACE_WORD the other arguments are as follows
-    args[1] = desired word
-    args[2] = internal row coordinate
-    args[3] = internal column coordinate
-    args[4] = vertical boolean
+    /**
+     * @param player The player who's move it is.
+     *@return a String array where the first element (args[0]) is always the move type constant represented in Scrabble.
+     *      If move type is PASS, QUIT or REFILL, no other arguments are provided.
+     *      If move type is PLACE_WORD the other arguments are as follows.
+     *      args[1] = desired word
+     *      args[2] = internal row coordinate
+     *      args[3] = internal column coordinate
+     *      args[4] = vertical boolean
      */
     public String[] playerMove(Player player)
     {
         String[] args = new String[5];
         String input;
-
 
         System.out.println("It is " + player.getPlayerName() + "'s turn!");
         System.out.println("Here is your frame: " + player.getFrame());
@@ -164,14 +164,18 @@ public class CLI {
                     help();
                     break;
                 case "CHALLENGE":
-                    //First check no. of inputs.
-                    if (inputArr.length > 1)
-                    {
-                        System.out.println("Too many arguments for CHALLENGE command. Please try again");
-                        continue;
+                    if (Scrabble.allowChallenge) {
+                        //First check no. of inputs.
+                        if (inputArr.length > 1)
+                        {
+                            System.out.println("Too many arguments for CHALLENGE command. Please try again");
+                            continue;
+                        }
+                        args[0] = Integer.toString(Scrabble.CHALLENGE);
+                        return args;
+                    } else {
+                        System.out.println("There is no moves to challenge at this point. Please try another command.");
                     }
-                    args[0] = Integer.toString(Scrabble.CHALLENGE);
-                    return args;
                 case "NAME":
                     //First check no. of inputs.
                     if (inputArr.length < 2)
@@ -194,8 +198,9 @@ public class CLI {
         }
     }
 
-    /*
-    Notifies the user of an error in placing a word and prompts them to try again.
+    /**
+     * Notifies the user of an error in placing a word and prompts them to try again.
+     * @param error This is the error code that corresponds to an error code constant in Board.
      */
     public void error(int error)
     {
@@ -221,6 +226,11 @@ public class CLI {
         }
     }
 
+    /**
+     * Propmpts the user if they would like to end the game.
+     * @return true if they would like to end the game.
+     *          false if they would not like to end the game.
+     */
     public boolean endGame()
     {
         System.out.println("Are you sure you want to end the game? (Y/N)");
@@ -242,26 +252,53 @@ public class CLI {
         }
     }
 
-    /*
-    Prints instructions to the screen on how the user is to make their move.
+    /**
+     * Prints instructions to the screen on how the user is to make their move.
      */
     public void help()
     {
         System.out.println("                            ---------- INSTRUCTIONS FOR PLAYING ----------                  ");
-        System.out.println("To place a word type 'PLACE' followed by the following (space separated) options:");
-        System.out.println("    1) The desired word using letters from your frame and '_' to indicate use of a blank tile.");
+        System.out.println("To place a word, type 'PLACE' followed by the following (space separated) options:");
+        System.out.println("    1) The desired word using letters from your frame.");
+        System.out.println("        If you wish to use a blank tile, type an underscore followed by your desired letter.");
         System.out.println("    2) Your desired row coordinate starting from the bottom-up (1-15)");
         System.out.println("    3) Your desired column coordinate starting from left-right (1-15)");
         System.out.println("    4) Whether you would like the word to be placed 'V' for vertically OR 'H' for horizontally");
-        System.out.println("To skip your go type 'PASS'");
-        System.out.println("To refill your board type 'REFILL'");
-        System.out.println("To forfeit your game type 'QUIT'");
+        System.out.println("        For Example: To place the word 'hello' on the middle tile horizontally with e replaced by a blank tile,your command should be:");
+        System.out.println("        PLACE H_ELLO 8 8 H");
+        System.out.println("To skip your go, type 'PASS'");
+        System.out.println("To refill your board, type 'REFILL'");
+        System.out.println("To forfeit your game, type 'QUIT'");
+        System.out.println("To challenge a the previous players word placement, type 'CHALLENGE'.");
+        System.out.println("To change your name, type 'NAME' followed by the desired name.");
         System.out.println();
     }
 
+    /**
+     * Announces through the command line the points awarded my a move and the given players running score.
+     * @param player The player who is earning the points.
+     * @param score The amount of points earned in that particular move.
+     */
     public void announceScore(Player player, int score)
     {
         System.out.println("That word scored you " + score + " points!");
         System.out.println(player.getPlayerName() + "'s score is now: " + player.getPlayerScore());
+    }
+
+    /**
+     * Announces to the screen the result of a failed CHALLENGE attempt.
+     * @param player The player who looses their go as a result of the failed attempt.
+     */
+    public void announceValid(Player player) {
+        System.out.println(Scrabble.wordBuffer + " is a valid Scrabble word!");
+        System.out.println(player.getPlayerName() + " looses their go!");
+    }
+
+    /**
+     * Announces to the screen the result of a successful CHALLENGE attempt.
+     */
+    public void announceInvalid() {
+        System.out.println(Scrabble.wordBuffer + " is not a valid Scrabble word!");
+        System.out.println("That word will now be removed and the points taken back!");
     }
 }
