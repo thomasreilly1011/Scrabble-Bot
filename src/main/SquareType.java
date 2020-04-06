@@ -7,7 +7,8 @@ public enum SquareType
     TL(3),     //triple letter
     DW(4),     //double word
     TW(5),      //triple word
-    BLANK(1);
+    BLANK(1),
+    INTERSECTINGTILE(1);
 
     private int value = 0;
     private SquareType(int value)
