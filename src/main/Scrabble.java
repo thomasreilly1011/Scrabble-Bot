@@ -58,7 +58,7 @@ public class Scrabble extends Application
         //Initialise all game objects
         pool = new Pool();
         board = new Board();
-        dictionary = new Dictionary("src/Files/sowpods.txt");
+        dictionary = new Dictionary("sowpods.txt");
         player1 = new Player(cli.playerInit(), pool);
         player2 = new Player(cli.playerInit(), pool);
         cli.help();

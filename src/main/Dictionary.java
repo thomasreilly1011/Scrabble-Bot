@@ -2,6 +2,9 @@ package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Scanner;
 
 public class Dictionary {
@@ -10,9 +13,10 @@ public class Dictionary {
     /**
      * Constructor method that sets up the dictionary with the given File.
      */
-    public Dictionary(String fileName) throws FileNotFoundException {
-        File dictionary = new File(fileName);
-        dictionaryReader = new Scanner(dictionary);
+    public Dictionary(String fileName) throws IOException {
+        URL urlToDictionary = this.getClass().getResource("/" + fileName);
+        InputStream in = urlToDictionary.openStream();
+        dictionaryReader = new Scanner(in);
         //TODO Do we want to read the File into a Trie Data Structure for quicker validity checking
         // (possibly create a branch for this)
     }
@@ -24,7 +28,6 @@ public class Dictionary {
      */
     public boolean challenge(String word)
     {
-        //Dictionary run = new Dictionary();
         while(dictionaryReader.hasNextLine())
         {
             String in = dictionaryReader.nextLine();
