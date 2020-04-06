@@ -14,7 +14,6 @@ public class Board implements Cloneable
     public static final int ONE_LETTER = 3;
     public static final int SUCCESS = 5;
 
-
     public Square[][] squares = new Square[ROWS][COLS];
 
     public Board()
@@ -134,6 +133,8 @@ public class Board implements Cloneable
 
     }
 
+    public List<String> placedWords = new ArrayList<>();
+
     int crossWordScore = 0;
 
     //editors note: it was difficult to find a solid basis online for how cross words should be scored. In this implementation if a cross word is made over a double or triple letter, that multiplier will be applied to the
@@ -205,8 +206,6 @@ public class Board implements Cloneable
             wordMultiplier = temp;
         }
     }
-
-    public List<String> placedWords = new ArrayList<>();
 
     public int placeWord(int row, int col, String word, Frame frame, boolean vertical)
     {
