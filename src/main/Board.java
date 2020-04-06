@@ -16,6 +16,8 @@ public class Board implements Cloneable
 
     public Square[][] squares = new Square[ROWS][COLS];
 
+    public List<String> placedWords = new ArrayList<>();
+
     public Board()
     {
         for (int i=0; i < ROWS; i++)
@@ -132,8 +134,6 @@ public class Board implements Cloneable
         return false;
 
     }
-
-    public List<String> placedWords = new ArrayList<>();
 
     int crossWordScore = 0;
 
@@ -293,7 +293,7 @@ public class Board implements Cloneable
             }
         }
 
-        placedWords.add(word);
+        //placedWords.add(word);
 
         score = score*wordMultiplier;
 

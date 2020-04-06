@@ -290,15 +290,18 @@ public class CLI {
      * @param player The player who looses their go as a result of the failed attempt.
      */
     public void announceValid(Player player) {
-        System.out.println(Scrabble.wordBuffer + " is a valid Scrabble word!");
+        for (String word:Scrabble.board.placedWords) {
+            System.out.println(word + " is a valid Scrabble word!");
+        }
         System.out.println(player.getPlayerName() + " looses their go!");
     }
 
     /**
      * Announces to the screen the result of a successful CHALLENGE attempt.
      */
-    public void announceInvalid() {
-        System.out.println(Scrabble.wordBuffer + " is not a valid Scrabble word!");
-        System.out.println("That word will now be removed and the points taken back!");
+    public void announceInvalid(Player player) {
+        System.out.println("Invalid words were placed!");
+        System.out.println(player.getPlayerName() + " looses their go!");
+        System.out.println("Those words will now be removed and the points taken back.");
     }
 }

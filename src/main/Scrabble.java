@@ -42,9 +42,6 @@ public class Scrabble extends Application
     private static Player player1Buffer;
     private static Player player2Buffer;
 
-    //Backup of previous word played (for use in Dictionary.challenge() call)
-    public static String wordBuffer;
-
     public static boolean gameOver = false;
     public static boolean allowChallenge = false;
     /**
@@ -135,7 +132,10 @@ public class Scrabble extends Application
     public static void move(String[] commandArgs, Player player)
     {
         if (parseInt(commandArgs[0]) == CHALLENGE) {
-            boolean positive = dictionary.challenge(wordBuffer);
+            boolean positive = false;
+            for (String wordBuffer:board.placedWords) {
+                positive = dictionary.challenge(wordBuffer);
+            }
             if (positive)
             {
                 cli.announceValid(player);
@@ -143,8 +143,11 @@ public class Scrabble extends Application
                 allowChallenge = false;
                 return;
             } else {
-                cli.announceInvalid();
-
+                if (player.equals(player1)) {
+                    cli.announceInvalid(player2);
+                } else {
+                    cli.announceInvalid(player1);
+                }
                 revertGame();
                 allowChallenge = false;
                 move(cli.playerMove(player), player);
@@ -161,7 +164,8 @@ public class Scrabble extends Application
                 cli.error(errorNumber);
                 move(cli.playerMove(player), player);
             } else {
-                wordBuffer = parseChallenge(commandArgs[1]);
+                board.placedWords.removeAll(board.placedWords);
+                board.placedWords.add(parseChallenge(commandArgs[1]));
                 player.incScore(board.score);
                 allowChallenge = true;
                 cli.announceScore(player, board.score);
