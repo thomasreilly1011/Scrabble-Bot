@@ -6,7 +6,8 @@ public class BotChristianCoders implements BotAPI {
     public String getCommand() {
         /*
                             <--- Algorithm from 'hints' on Brightspace --->
-        1. Search the board for all possible word places soring them in a list in the form H8 A L******
+        1. Search the board for all possible word places soring them in a list in the form H8 A L****** where *'s
+            represent possible letters.
         2. Search through the dictionary word tree using the letters found and replacing the *'s with letter permutations
             from the frame.
         3. Score the word Produced.
@@ -19,15 +20,32 @@ public class BotChristianCoders implements BotAPI {
         //TODO This algorithm only ever places words. It may be better to refill at some stages? It should also pass if there are no possible words?
     }
 
+    /**
+     * 1. Search the board for all possible word places soring them in a list in the form H8 A L****** where *'s
+     * represent possible letters.
+     * @return ArrayList<String> of all possible word placements.
+     */
     private ArrayList<String> findPossibleWords() {
         return null;
     }
 
+    /**
+     * 2. Search through the dictionary word tree using the letters found and replacing the *'s with letter permutations
+     * from the frame.
+     * @param possibleWords ArrayList<String> of possible word placements in the form H8 A L******
+     * @return ArrayList<String> of all legal word word placements in the form H8 A legalword, where legalword is a fully
+     * defined, legal word.
+     */
     private ArrayList<String> findLegalWords(ArrayList<String> possibleWords) {
         return null;
     }
 
-    private String mostValuableWord(ArrayList<String> possibleWords) {
+    /**
+     * 3. Score the word Produced.
+     * @param legalWords ArrayList<String> of legal word placements in the form H8 A legalword
+     * @return A single legal word placement that is the highest scoring option.
+     */
+    private String mostValuableWord(ArrayList<String> legalWords) {
         return null;
     }
 }
