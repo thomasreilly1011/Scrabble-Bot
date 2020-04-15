@@ -46,6 +46,7 @@ public class BotChristianCoders implements BotAPI {
      * @return A single legal word placement that is the highest scoring option.
      */
     private String mostValuableWord(ArrayList<String> legalWords) {
+        //TODO, seems relatively simple, arraylist of the words is given, method must calculate all their scores and play the highest one. Need to delve into his code to figure out how scoring works.
         return null;
     }
 }
