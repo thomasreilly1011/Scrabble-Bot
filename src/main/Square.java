@@ -44,7 +44,6 @@ public class Square implements Cloneable
     {
         return t;
     }
-
     //checks to make sure there is no tile already on the square
     boolean isEmpty()
     {
