@@ -27,9 +27,9 @@ public class BotChristianCoders implements BotAPI {
         4. Place the highest scored word.
          */
         ArrayList<String> possibleWords = findPossibleWords();
-        ArrayList<String> legalWords = findLegalWords(possibleWords);
-        String word = mostValuableWord(legalWords);
-        return "PLACE " + word;
+        ArrayList<Word> legalWords = findLegalWords(possibleWords);
+        Word word = mostValuableWord(legalWords);
+        return "PLACE " + word.toString();
         //TODO This algorithm only ever places words. It may be better to refill at some stages? It should also pass if there are no possible words?
     }
 
