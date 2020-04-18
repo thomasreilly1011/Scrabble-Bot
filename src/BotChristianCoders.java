@@ -28,6 +28,7 @@ public class BotChristianCoders implements BotAPI {
         3. Score the word Produced.
         4. Place the highest scored word.
          */
+        updateTilesRemaining();
         ArrayList<PossibleWord> possibleWords = findPossibleWords();
         ArrayList<Word> legalWords = findLegalWords(possibleWords);
         Word word = mostValuableWord(legalWords);
@@ -36,8 +37,18 @@ public class BotChristianCoders implements BotAPI {
         //TODO This algorithm only ever places words. It may be better to refill at some stages? It should also pass if there are no possible words?
     }
 
-    private void updateTiles() {
-        me.getFrameAsString();
+    private void updateTilesRemaining() {
+        String frame = me.getFrameAsString();
+        char[] frameCharArray= frame.toCharArray();
+        int count = 0;
+        for (char c:frameCharArray)
+        {
+            if (Character.isLetter(c))
+            {
+                count++;
+            }
+        }
+        tilesRemaining = count;
     }
 
     /**
@@ -176,16 +187,20 @@ public class BotChristianCoders implements BotAPI {
             {
                 char letter = '\0';
                 int letterIndex = -1;
-                for (int i = 0; i < wordLength; i++) {
-                    if (board.getSquareCopy(row, i).isOccupied()) {
+                for (int i = 0; i < wordLength; i++)
+                {
+                    if (board.getSquareCopy(row, i).isOccupied())
+                    {
                         letter = board.getSquareCopy(row, i).getTile().getLetter();
                         letterIndex = i;
                         break;
                     }
                 }
                 if (letterIndex != -1) {
+
                     placements.add(new PossibleWord(row, startIndex, true, wordLength, letter, letterIndex));
-                } else {
+                } else
+                    {
                     placements.add(new PossibleWord(row, startIndex, true, wordLength));
                 }
 
@@ -253,14 +268,16 @@ public class BotChristianCoders implements BotAPI {
             {
                 char letter = '\0';
                 int letterIndex = -1;
-                for (int i = 0; i < wordLength; i++) {
+                for (int i = 0; i < wordLength; i++)
+                {
                     if (board.getSquareCopy(i, col).isOccupied()) {
                         letter = board.getSquareCopy(i, col).getTile().getLetter();
                         letterIndex = i;
                         break;
                     }
                 }
-                if (letterIndex != -1) {
+                if (letterIndex != -1)
+                {
                     placements.add(new PossibleWord(startIndex, col, true, wordLength, letter, letterIndex));
                 } else {
                     placements.add(new PossibleWord(startIndex, col, true, wordLength));
