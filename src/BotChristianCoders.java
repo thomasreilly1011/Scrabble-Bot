@@ -318,6 +318,40 @@ public class BotChristianCoders implements BotAPI {
         return null;
     }
 
+    private Square[][] squares;
+    private ArrayList<Coordinates> newLetterCoords;
+
+    private int getWordPoints(Word word)
+    {
+        int wordValue = 0;
+        int wordMultiplier = 1;
+        int r = word.getFirstRow();
+        int c = word.getFirstColumn();
+        for (int i = 0; i<word.length(); i++)
+        {
+            int letterValue = squares[r][c].getTile().getValue();
+            if (newLetterCoords.contains(new Coordinates(r,c)))
+            {
+                wordValue = wordValue + letterValue * squares[r][c].getLetterMuliplier();
+                wordMultiplier = wordMultiplier * squares[r][c].getWordMultiplier();
+            }
+            else
+            {
+                wordValue = wordValue + letterValue;
+            }
+            if (word.isHorizontal())
+            {
+                c++;
+            }
+            else
+            {
+                r++;
+            }
+        }
+        return wordValue * wordMultiplier;
+    }
+
+
     /**
      * 3. Score the word Produced.
      * @param legalWords ArrayList<Word> of legal Word objects.
@@ -335,7 +369,8 @@ public class BotChristianCoders implements BotAPI {
 
         for(Word word: legalWords)
         {
-            score += Board.getWordPoints(word);
+            int wordPoints = getWordPoints(word);
+            score += wordPoints;
             if(score >= highestScore)
             {
                 highestScore = score;
