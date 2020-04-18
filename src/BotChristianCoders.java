@@ -323,8 +323,26 @@ public class BotChristianCoders implements BotAPI {
      * @param legalWords ArrayList<Word> of legal Word objects.
      * @return A single legal Word object that is the highest scoring option.
      */
-    private Word mostValuableWord(ArrayList<Word> legalWords) {
-        //TODO, seems relatively simple, arraylist of the words is given, method must calculate all their scores and play the highest one. Need to delve into his code to figure out how scoring works.
-        return null;
+    private Word mostValuableWord(ArrayList<Word> legalWords)
+    {
+        //TODO, seems relatively simple, arraylist of the words is given,
+        // method must calculate all their scores and play the highest one.
+        // Need to delve into his code to figure out how scoring works.
+        int highestScore = 0;
+        int score = 0;
+        int bestWordIndex = 0;
+        int index = 0;
+
+        for(Word word: legalWords)
+        {
+            score += Board.getWordPoints(word);
+            if(score >= highestScore)
+            {
+                highestScore = score;
+                bestWordIndex = index;
+            }
+            index++;
+        }
+        return legalWords.get(bestWordIndex);
     }
 }
