@@ -1,6 +1,4 @@
-import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.util.*;
 
 public class BotChristianCoders implements BotAPI {
     private PlayerAPI me;
@@ -363,13 +361,6 @@ public class BotChristianCoders implements BotAPI {
             this.length = length;
         }
 
-        public int getRow() { return row; }
-        public int getColumn() { return column; }
-        public boolean isHorizontal() { return isHorizontal; }
-        public int getLength() { return length; }
-        public char getExistingLetter() { return existingLetter; }
-        public int getExistingLetterIndex() { return existingLetterIndex; }
-
         public boolean hasExistingLetter() { return existingLetter != '\0'; }
 
         @Override
@@ -394,15 +385,99 @@ public class BotChristianCoders implements BotAPI {
     }
 
 
-    /**
-     * 2. Search through the dictionary word tree using the letters found and replacing the *'s with letter permutations
-     * from the frame.
-     * @param possibleWords ArrayList<String> of possible word placements in the form H8 A L******
-     * @return ArrayList<Word> of all legal word word objects.
-     * defined, legal word.
+    /*
+     *  2. Search through the dictionary word tree using the letters found and replacing the *'s with letter permutations
+     *  from the frame.
+     *  @param possibleWords ArrayList<String> of possible word placements in the form H8 A L**
+     *  @return ArrayList<Word> of all legal word word objects.
+     *  defined, legal word.
      */
-    private ArrayList<Word> findLegalWords(ArrayList<PossibleWord> possibleWords) {
-        return null;
+
+    static int wordLength = 3;
+    static int count=0;
+
+    public static ArrayList<String> getPermutations(String frame)
+    {
+        // If string is empty
+        if (frame.length() == 0) {
+
+            // Return an empty arraylist
+            ArrayList<String> empty = new ArrayList<>();
+            empty.add("");
+            return empty;
+        }
+
+        char ch = frame.charAt(0); //first char
+
+        String subStr = frame.substring(1); //rest of string
+
+        //recursive call
+        ArrayList<String> prevResult = getPermutations(subStr);
+
+        ArrayList<String> result = new ArrayList<>();
+
+        for (String string : prevResult) {
+            for (int i = 0; i <= string.length(); i++) {
+                result.add(string.substring(0, i) + ch + string.substring(i));
+            }
+        }
+        return result;
+    }
+
+    ArrayList<Word> wordList = new ArrayList<Word>();
+
+    private ArrayList<Word> stringToWord(ArrayList<String> arrList, PossibleWord possibleWord)
+    {
+
+        for(String s : arrList)
+        {
+            Word word = new Word(possibleWord.row, possibleWord.column, possibleWord.isHorizontal, s); //creating a new word object using the
+            wordList.add(word);
+        }
+        return wordList;
+    }
+
+    private ArrayList<Word> findLegalWords(ArrayList<PossibleWord> possibleWords)
+    {
+        for (PossibleWord word : possibleWords) {
+
+            String frame = me.getFrameAsString();
+
+            ArrayList<String> arrayList = getPermutations(frame);
+
+            arrayList.remove("");
+
+            int wordLength = word.length;
+            int index = word.existingLetterIndex;
+            char ch = word.existingLetter;
+
+            Set<String> set = new LinkedHashSet<String>();
+
+            for (String s : arrayList) {
+                StringBuilder stringbuilder = new StringBuilder(s);
+                stringbuilder.insert(index, ch);
+
+                for (int i = 0; i < stringbuilder.length() - wordLength; i++) {
+                    stringbuilder.deleteCharAt(stringbuilder.length() - 1); //trims the strings to only output the permutations that fit in wordLength
+                }
+
+                ArrayList<Word> singleWord = new ArrayList<Word>();
+                Word dictionaryTest = new Word(0, 0, true, stringbuilder.toString());
+                singleWord.add(dictionaryTest);
+
+                if(dictionary.areWords(singleWord)) //if the word is an actual word, add it to the set
+                {
+                    set.add(stringbuilder.toString()); //set does not allow for duplicates therefore gets rid of our dupes (which come from the non-perfect trimming system)
+                }
+
+                //boardAPI.isLegalPlay?
+            }
+
+            ArrayList<String> legalPermutationsForWord = new ArrayList<>(set);
+
+            stringToWord(legalPermutationsForWord, word);
+        }
+        return wordList;
     }
 
 
