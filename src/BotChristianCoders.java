@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class BotChristianCoders implements BotAPI {
@@ -29,6 +31,12 @@ public class BotChristianCoders implements BotAPI {
         4. Place the highest scored word.
          */
         updateTilesRemaining();
+
+        if(callChallenge())
+        {
+            return "CHALLENGE";
+        }
+
         ArrayList<PossibleWord> possibleWords = findPossibleWords();
         ArrayList<Word> legalWords = findLegalWords(possibleWords);
         Word word = mostValuableWord(legalWords);
@@ -397,22 +405,23 @@ public class BotChristianCoders implements BotAPI {
         return null;
     }
 
-    private Square[][] squares;
+
     private ArrayList<Coordinates> newLetterCoords;
 
     private int getWordPoints(Word word)
     {
+        Square[][] squares;
         int wordValue = 0;
         int wordMultiplier = 1;
         int r = word.getFirstRow();
         int c = word.getFirstColumn();
         for (int i = 0; i<word.length(); i++)
         {
-            int letterValue = squares[r][c].getTile().getValue();
+            int letterValue = board.getSquareCopy(r, c).getTile().getValue();
             if (newLetterCoords.contains(new Coordinates(r,c)))
             {
-                wordValue = wordValue + letterValue * squares[r][c].getLetterMuliplier();
-                wordMultiplier = wordMultiplier * squares[r][c].getWordMultiplier();
+                wordValue = wordValue + letterValue * board.getSquareCopy(r, c).getLetterMuliplier();
+                wordMultiplier = wordMultiplier * board.getSquareCopy(r, c).getWordMultiplier();
             }
             else
             {
@@ -432,7 +441,7 @@ public class BotChristianCoders implements BotAPI {
 
 
     /**
-     * 3. Score the word Produced.
+     * 3. Score the words Produced.
      * @param legalWords ArrayList<Word> of legal Word objects.
      * @return A single legal Word object that is the highest scoring option.
      */
@@ -456,4 +465,21 @@ public class BotChristianCoders implements BotAPI {
         }
         return legalWords.get(bestWordIndex);
     }
+
+/*    *//**
+     Function to determine whether the bot should CHALLENGE the last word placed before moving.
+     *//*
+    public boolean callChallenge()
+    {
+        ArrayList<Word> word = new ArrayList<>();
+        word = scrabble.getLatestWords();
+        if (!(dictionary.areWords(word)))
+        {
+           return true;
+        }
+        else
+        {
+            return false;
+        }
+    }*/
 }
