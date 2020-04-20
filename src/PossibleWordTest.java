@@ -1,54 +1,54 @@
-import java.util.*;
+import java.util.ArrayList;
 
-public class BotChristianCoders implements BotAPI {
-    private PlayerAPI me;
-    private OpponentAPI opponent;
-    private BoardAPI board;
-    private UserInterfaceAPI info;
-    private DictionaryAPI dictionary;
+public class PossibleWordTest {
+    private static Board board = new Board();
+    private static int tilesRemaining = 7;
 
-    private int tilesRemaining;
+    /*
+    This Class is used purely for creating a testing environment for the findPossibleWords function.
+    N.B. No other classes should depend on this one.
+     */
+    public static void main(String[] args) {
+        PossibleWordTest t = new PossibleWordTest();
 
-    public BotChristianCoders(Player me, Player opponent, Board board, UserInterface ui, Dictionary dictionary) {
-        this.me = me;
-        this.opponent = opponent;
-        this.board = board;
-        this.info = ui;
-        this.dictionary = dictionary;
-    }
-
-    @Override
-    public String getCommand() {
-        /*
-                            <--- Algorithm from 'hints' on Brightspace --->
-        1. Search the board for all possible word places soring them in a list in the form H8 A L****** where *'s
-            represent possible letters.
-        2. Search through the dictionary word tree using the letters found and replacing the *'s with letter permutations
-            from the frame.
-        3. Score the word Produced.
-        4. Place the highest scored word.
-         */
-        updateTilesRemaining();
-        ArrayList<PossibleWord> possibleWords = findPossibleWords();
-        ArrayList<Word> legalWords = findLegalWords(possibleWords);
-        Word word = mostValuableWord(legalWords);
-        assert word != null;
-        return "PLACE " + word.toString();
-        //TODO This algorithm only ever places words. It may be better to refill at some stages? It should also pass if there are no possible words?
-    }
-
-    private void updateTilesRemaining() {
-        String frame = me.getFrameAsString();
-        char[] frameCharArray= frame.toCharArray();
-        int count = 0;
-        for (char c:frameCharArray)
-        {
-            if (Character.isLetter(c))
-            {
-                count++;
-            }
+        /* TEST 1 - Bot has the first move */
+        System.out.println("-------------Test 1---------------");
+        ArrayList<PossibleWord> possibleWords = t.findPossibleWords();
+        for (PossibleWord possibleWord:possibleWords) {
+            System.out.println(possibleWord);
+            //System.out.println("Row: " + possibleWord.row + ", Col: " + possibleWord.column + ", Length:  " + possibleWord.length + ", Letter: " + Character.toString(possibleWord.existingLetter) + ", Letter Index: " + possibleWord.existingLetterIndex + " , IsHorizontal: " + Boolean.toString(possibleWord.isHorizontal));
         }
-        tilesRemaining = count;
+        System.out.println(possibleWords.size() + " possible word placements generated");
+
+        /* TEST 2 - Word 'Hello' is already on the board */
+        System.out.println("\n-------------Test 2---------------");
+        board.getSquare(7, 7).add(new Tile('H'));
+        board.getSquare(7, 8).add(new Tile('E'));
+        board.getSquare(7, 9).add(new Tile('L'));
+        board.getSquare(7, 10).add(new Tile('L'));
+        board.getSquare(7, 11).add(new Tile('O'));
+        board.numPlays = 1;
+        possibleWords = t.findPossibleWords();
+        for (PossibleWord possibleWord:possibleWords) {
+            System.out.println(possibleWord);
+            //System.out.println("Row: " + possibleWord.row + ", Col: " + possibleWord.column + ", Length: " + possibleWord.length + ", Letter: " + Character.toString(possibleWord.existingLetter) + ", Letter Index: " + possibleWord.existingLetterIndex + ", IsHorizontal: " + Boolean.toString(possibleWord.isHorizontal));
+        }
+        System.out.println(possibleWords.size() + " possible word placements generated");
+
+        /* TEST 2 - Words 'Hello' and 'World' are already on the board */
+        System.out.println("\n-------------Test 3---------------");
+        board.getSquare(6, 11).add(new Tile('W'));
+        board.getSquare(8, 11).add(new Tile('R'));
+        board.getSquare(9, 11).add(new Tile('L'));
+        board.getSquare(10, 11).add(new Tile('D'));
+        board.numPlays = 1;
+        possibleWords = t.findPossibleWords();
+        for (PossibleWord possibleWord:possibleWords) {
+            System.out.println(possibleWord);
+            //System.out.println("Row: " + possibleWord.row + ", Col: " + possibleWord.column + ", Length: " + possibleWord.length + ", Letter: " + Character.toString(possibleWord.existingLetter) + ", Letter Index: " + possibleWord.existingLetterIndex + ", IsHorizontal: " + Boolean.toString(possibleWord.isHorizontal));
+        }
+        System.out.println(possibleWords.size() + " possible word placements generated");
+
     }
 
     /**
@@ -383,93 +383,5 @@ public class BotChristianCoders implements BotAPI {
             }
             return sb.toString();
         }
-    }
-
-
-    /**
-     * 2. Search through the dictionary word tree using the letters found and replacing the *'s with letter permutations
-     * from the frame.
-     * @param possibleStrings ArrayList<String> of possible word placements in the form H8 A L******
-     * @return ArrayList<String> of all legal word word placements in the form H8 A legalword, where legalword is a fully
-     * defined, legal word. //TODO need to change this at some point - Seáááán.
-     */
-
-    static int wordLength = 3;
-    static int count=0;
-
-    public static ArrayList<String> getPermutations(String frame)
-    {
-
-        // If string is empty
-        if (frame.length() == 0) {
-
-            // Return an empty arraylist
-            ArrayList<String> empty = new ArrayList<>();
-            empty.add("");
-            return empty;
-        }
-
-        char ch = frame.charAt(0); //first char
-
-        String subStr = frame.substring(1); //rest of string
-
-        //recursive call
-        ArrayList<String> prevResult = getPermutations(subStr);
-
-        ArrayList<String> result = new ArrayList<>();
-
-        for (String string : prevResult) {
-            for (int i = 0; i <= string.length(); i++) {
-                result.add(string.substring(0, i) + ch + string.substring(i));
-            }
-        }
-        return result;
-    }
-
-    Frame botFrame = new Frame();
-
-    private Set<Word> findLegalWords(ArrayList<String> possibleStrings, Frame botFrame, int[] row, int[] col, boolean[] isHorizontal)
-    {                 //0123456
-        //String frame = "ozflxud"; //theoretical letters of the bots frame
-        String frame = botFrame.toString();
-
-        ArrayList<String> arrL = getPermutations(frame);
-
-        arrL.remove("");
-
-        int wordLength = 6; //rudolf is 6 letters long
-        int wordLengthIndex = wordLength-1; //just for me to easier visualise the wordLength
-        int index = 0; //TODO SET THIS (this example is J9) (0 because r is at the beginning of the possible word to be formed at J9)
-        char ch = 'r'; //TODO SET THIS (this example is J9)
-
-        Set<String> set = new LinkedHashSet<String>();
-
-        for (String s : arrL) {
-            //TODO hoping to find a r udolf. If you run the program and ctrl F, it finds rudolf, one time. Yay. Using example of J9 from google doc (existing R)
-            StringBuilder stringbuilder = new StringBuilder(s);
-            stringbuilder.insert(index, ch);
-
-            for(int i=0; i< stringbuilder.length()-wordLengthIndex; i++) {
-                stringbuilder.deleteCharAt(stringbuilder.length()-1); //trims the strings to only output the permutations that fit in wordLength
-            }
-
-            set.add(stringbuilder.toString()); //set does not allow for duplicates therefore gets rid of our dupes (which come from the non-perfect trimming system)
-        }
-
-        //System.out.println(set);
-
-        for(int i=0; i<set.size(); i++) {
-
-        }
-    }
-
-    /**
-     * 3. Score the word Produced.
-     * @param legalWords ArrayList<Word> of legal Word objects.
-     * @return A single legal Word object that is the highest scoring option.
-     */
-    private Word mostValuableWord(ArrayList<Word> legalWords) {
-        //TODO, seems relatively simple, arraylist of the words is given, method must calculate all their scores and play the highest one. Need to delve into his code to figure out how scoring works.
-        return null;
     }
 }
