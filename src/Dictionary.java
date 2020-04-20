@@ -29,6 +29,7 @@ public class Dictionary implements DictionaryAPI {
         in.close();
     }
 
+    //Note from Sean: this function at first seems to check the dictionary as it's called in challenge, however it seems to only verify a word was placed on the board.
     public boolean areWords (ArrayList<Word> words) {
         boolean found = true;
         for (Word word : words) {
