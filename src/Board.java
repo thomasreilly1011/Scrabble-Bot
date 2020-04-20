@@ -50,7 +50,7 @@ public class Board implements BoardAPI {
 
 	private Square[][] squares;
 	private int errorCode;
-	private int numPlays;
+	public int numPlays;
 	private ArrayList<Coordinates> newLetterCoords;
 
 	Board() {
