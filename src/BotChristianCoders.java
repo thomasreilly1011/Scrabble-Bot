@@ -355,13 +355,6 @@ public class BotChristianCoders implements BotAPI {
             this.length = length;
         }
 
-        public int getRow() { return row; }
-        public int getColumn() { return column; }
-        public boolean isHorizontal() { return isHorizontal; }
-        public int getLength() { return length; }
-        public char getExistingLetter() { return existingLetter; }
-        public int getExistingLetterIndex() { return existingLetterIndex; }
-
         public boolean hasExistingLetter() { return existingLetter != '\0'; }
 
         @Override
@@ -386,12 +379,12 @@ public class BotChristianCoders implements BotAPI {
     }
 
 
-    /**
-     * 2. Search through the dictionary word tree using the letters found and replacing the *'s with letter permutations
-     * from the frame.
-     * @param possibleStrings ArrayList<String> of possible word placements in the form H8 A L******
-     * @return ArrayList<String> of all legal word word placements in the form H8 A legalword, where legalword is a fully
-     * defined, legal word. //TODO need to change this at some point - Seáááán.
+    /*
+     *  2. Search through the dictionary word tree using the letters found and replacing the *'s with letter permutations
+     *  from the frame.
+     *  @param possibleWords ArrayList<String> of possible word placements in the form H8 A L**
+     *  @return ArrayList<Word> of all legal word word objects.
+     *  defined, legal word.
      */
 
     static int wordLength = 3;
@@ -399,7 +392,6 @@ public class BotChristianCoders implements BotAPI {
 
     public static ArrayList<String> getPermutations(String frame)
     {
-
         // If string is empty
         if (frame.length() == 0) {
 
@@ -426,41 +418,60 @@ public class BotChristianCoders implements BotAPI {
         return result;
     }
 
-    Frame botFrame = new Frame();
+    ArrayList<Word> wordList = new ArrayList<Word>();
 
-    private Set<Word> findLegalWords(ArrayList<String> possibleStrings, Frame botFrame, int[] row, int[] col, boolean[] isHorizontal)
-    {                 //0123456
-        //String frame = "ozflxud"; //theoretical letters of the bots frame
-        String frame = botFrame.toString();
+    private ArrayList<Word> stringToWord(ArrayList<String> arrList, PossibleWord possibleWord)
+    {
 
-        ArrayList<String> arrL = getPermutations(frame);
+        for(String s : arrList)
+        {
+            Word word = new Word(possibleWord.row, possibleWord.column, possibleWord.isHorizontal, s); //creating a new word object using the
+            wordList.add(word);
+        }
+        return wordList;
+    }
 
-        arrL.remove("");
+    private ArrayList<Word> findLegalWords(ArrayList<PossibleWord> possibleWords)
+    {
+        for (PossibleWord word : possibleWords) {
 
-        int wordLength = 6; //rudolf is 6 letters long
-        int wordLengthIndex = wordLength-1; //just for me to easier visualise the wordLength
-        int index = 0; //TODO SET THIS (this example is J9) (0 because r is at the beginning of the possible word to be formed at J9)
-        char ch = 'r'; //TODO SET THIS (this example is J9)
+            String frame = me.getFrameAsString();
 
-        Set<String> set = new LinkedHashSet<String>();
+            ArrayList<String> arrayList = getPermutations(frame);
 
-        for (String s : arrL) {
-            //TODO hoping to find a r udolf. If you run the program and ctrl F, it finds rudolf, one time. Yay. Using example of J9 from google doc (existing R)
-            StringBuilder stringbuilder = new StringBuilder(s);
-            stringbuilder.insert(index, ch);
+            arrayList.remove("");
 
-            for(int i=0; i< stringbuilder.length()-wordLengthIndex; i++) {
-                stringbuilder.deleteCharAt(stringbuilder.length()-1); //trims the strings to only output the permutations that fit in wordLength
+            int wordLength = word.length;
+            int index = word.existingLetterIndex;
+            char ch = word.existingLetter;
+
+            Set<String> set = new LinkedHashSet<String>();
+
+            for (String s : arrayList) {
+                StringBuilder stringbuilder = new StringBuilder(s);
+                stringbuilder.insert(index, ch);
+
+                for (int i = 0; i < stringbuilder.length() - wordLength; i++) {
+                    stringbuilder.deleteCharAt(stringbuilder.length() - 1); //trims the strings to only output the permutations that fit in wordLength
+                }
+
+                ArrayList<Word> singleWord = new ArrayList<Word>();
+                Word dictionaryTest = new Word(0, 0, true, stringbuilder.toString());
+                singleWord.add(dictionaryTest);
+
+                if(dictionary.areWords(singleWord)) //if the word is an actual word, add it to the set
+                {
+                    set.add(stringbuilder.toString()); //set does not allow for duplicates therefore gets rid of our dupes (which come from the non-perfect trimming system)
+                }
+
+                //boardAPI.isLegalPlay?
             }
 
-            set.add(stringbuilder.toString()); //set does not allow for duplicates therefore gets rid of our dupes (which come from the non-perfect trimming system)
+            ArrayList<String> legalPermutationsForWord = new ArrayList<>(set);
+
+            stringToWord(legalPermutationsForWord, word);
         }
-
-        //System.out.println(set);
-
-        for(int i=0; i<set.size(); i++) {
-
-        }
+        return wordList;
     }
 
     /**
