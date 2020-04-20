@@ -29,11 +29,11 @@ public class BotChristianCoders implements BotAPI {
         4. Place the highest scored word.
          */
         updateTilesRemaining();
-
-        if(callChallenge())
-        {
-            return "CHALLENGE";
-        }
+//
+//        if(callChallenge())
+//        {
+//            return "CHALLENGE";
+//        }
 
         ArrayList<PossibleWord> possibleWords = findPossibleWords();
         ArrayList<Word> legalWords = findLegalWords(possibleWords);
@@ -485,11 +485,12 @@ public class BotChristianCoders implements BotAPI {
 
     private int getWordPoints(Word word)
     {
-        Square[][] squares;
+        newLetterCoords = new ArrayList<>();
         int wordValue = 0;
         int wordMultiplier = 1;
         int r = word.getFirstRow();
         int c = word.getFirstColumn();
+        newLetterCoords.add(new Coordinates(r,c));
         for (int i = 0; i<word.length(); i++)
         {
             int letterValue = board.getSquareCopy(r, c).getTile().getValue();
