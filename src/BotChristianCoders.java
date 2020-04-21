@@ -570,9 +570,54 @@ public class BotChristianCoders implements BotAPI {
      */
     public boolean callChallenge()
     {
-        ArrayList<Word> word = new ArrayList<>();
-        word = scrabble.getLatestWords();
-        if (!(dictionary.areWords(word)))
+        ArrayList<Word> wordsToCheck = new ArrayList<>();
+        int row = 0;
+        int col = 0;
+        boolean isHorizontal = true;
+        StringBuilder found = new StringBuilder();
+
+        for (int i = 0; i < Board.BOARD_SIZE; i++)
+        {
+            for (int j = 0; j < Board.BOARD_SIZE; j++)
+            {
+                if (board.getSquareCopy(i, j).isOccupied())
+                {
+                    row = i;
+                    col = j;
+                    char letter;
+                    if(board.getSquareCopy(i, j+1).isOccupied())
+                    {
+                        isHorizontal = true;
+                        while(board.getSquareCopy(row, j).isOccupied())
+                        {
+                            letter = board.getSquareCopy(row, j).getTile().getLetter();
+                            found.append(letter);
+                            if(j==Board.BOARD_SIZE)
+                            {
+                                break;
+                            }
+                            j++;
+                        }
+                    }
+                    else
+                    {
+                        isHorizontal = false;
+                        while(board.getSquareCopy(i, col).isOccupied())
+                        {
+                            letter = board.getSquareCopy(i, col).getTile().getLetter();
+                            found.append(letter);
+                            if(i==Board.BOARD_SIZE)
+                            {
+                                break;
+                            }
+                            i++;
+                        }
+                    }
+                    wordsToCheck.add(new Word(row, col, isHorizontal, found.toString()));
+                }
+            }
+        }
+        if (!(dictionary.areWords(wordsToCheck)))
         {
            return true;
         }
