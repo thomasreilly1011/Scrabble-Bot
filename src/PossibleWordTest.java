@@ -1,7 +1,6 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class PossibleWordTest {
@@ -41,6 +40,8 @@ public class PossibleWordTest {
         {
             System.out.println(actualWord.toString() + " " + actualWord.getRow() + " " + actualWord.getColumn() + " " + actualWord.isHorizontal());
         }
+        Word mvw = t.mostValuableWord(actualWords);
+        System.out.println("The Most Valuable word is! ... " + mvw + "\n");
 
         /* TEST 2 - Word 'Hello' is already on the board */
         System.out.println("\n-------------Test 2---------------");
@@ -61,6 +62,8 @@ public class PossibleWordTest {
         {
             System.out.println(actualWord.toString() + " " + actualWord.getRow() + " " + actualWord.getColumn() + " " + actualWord.isHorizontal());
         }
+        mvw = t.mostValuableWord(actualWords);
+        System.out.println("The Most Valuable word is! ... " + mvw + "\n");
 
         /* TEST 3 - Words 'Hello' and 'World' are already on the board */
         System.out.println("\n-------------Test 3---------------");
@@ -79,8 +82,10 @@ public class PossibleWordTest {
         System.out.println(botsFrame.toString());
         for(Word actualWord : actualWords)
         {
-            System.out.println(actualWord.toString() + " " + actualWord.getRow() + " " + actualWord.getColumn() + " " + actualWord.isHorizontal());
+            System.out.println(actualWord.toString() + " " + actualWord.getRow() + " " + actualWord.getColumn() + " " + actualWord.isHorizontal() + " " + board.isLegalPlay(botsFrame, actualWord));
         }
+        mvw = t.mostValuableWord(actualWords);
+        System.out.println("The Most Valuable word is! ... " + mvw + "\n");
     }
 
     /**
@@ -519,9 +524,94 @@ public class PossibleWordTest {
                     }
                 }
             }
-            System.out.println(set);
             stringToWord(set, word, wordList);
         }
         return new ArrayList<Word>(wordList);
     }
+
+    private int getWordPoints(Word word)
+    {
+        final int[] TILE_VALUE = {1,3,3,2,1,4,2,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10};
+        ArrayList<Coordinates> oldLetterCoords = new ArrayList<>();
+        int r = word.getFirstRow();
+        int c = word.getFirstColumn();
+        for (int i = 0; i<word.length(); i++)
+        {
+            if (board.getSquareCopy(r,c).isOccupied())
+            {
+                oldLetterCoords.add(new Coordinates(r,c));
+            }
+            if (word.isHorizontal())
+            {
+                c++;
+            }
+            else
+            {
+                r++;
+            }
+        }
+        int score = 0;
+        int wordValue = 0;
+        int wordMultiplier = 1;
+        int row = word.getFirstRow();
+        int col = word.getFirstColumn();
+
+        for (int i = 0; i<word.length(); i++)
+        {
+            char letter = word.getLetter(i);
+            letter = Character.toUpperCase(letter);
+
+            int letterValue = TILE_VALUE[(int) letter - (int) 'A'];
+
+            if (oldLetterCoords.contains(new Coordinates(row,col)))
+            {
+                wordValue = wordValue + letterValue;
+            }
+            else
+            {
+                wordValue = wordValue + letterValue * board.getSquareCopy(row, col).getLetterMuliplier();
+                wordMultiplier = wordMultiplier * board.getSquareCopy(row, col).getWordMultiplier();
+            }
+            if (word.isHorizontal())
+            {
+                col++;
+            }
+            else
+            {
+                row++;
+            }
+        }
+        score = wordValue * wordMultiplier;
+        return score;
+    }
+
+
+    /**
+     * 3. Score the words Produced.
+     * @param legalWords ArrayList<Word> of legal Word objects.
+     * @return A single legal Word object that is the highest scoring option.
+     */
+    private Word mostValuableWord(ArrayList<Word> legalWords)
+    {
+        int highestScore = 0;
+        int score = 0;
+        int bestWordIndex = 0;
+        int index = 0;
+        Word bestWord;
+
+        for(Word word: legalWords)
+        {
+            int wordPoints = getWordPoints(word);
+            score += wordPoints;
+            if(score >= highestScore)
+            {
+                highestScore = score;
+                bestWordIndex = index;
+            }
+            index++;
+        }
+        bestWord = legalWords.get(bestWordIndex);
+        return bestWord;
+    }
+
 }
