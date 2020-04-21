@@ -29,7 +29,7 @@ public class BotChristianCoders implements BotAPI {
         4. Place the highest scored word.
          */
         updateTilesRemaining();
-
+//
 //        if(callChallenge())
 //        {
 //            return "CHALLENGE";
@@ -485,7 +485,7 @@ public class BotChristianCoders implements BotAPI {
 
     private int getWordPoints(Word word)
     {
-
+        Square[][] squares;
         int wordValue = 0;
         int wordMultiplier = 1;
         int r = word.getFirstRow();
