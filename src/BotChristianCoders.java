@@ -42,6 +42,69 @@ public class BotChristianCoders implements BotAPI {
         return "PLACE " + word.toString();
     }
 
+    /**
+     Function to determine whether the bot should CHALLENGE the last word placed before moving.
+     */
+    public boolean callChallenge()
+    {
+        ArrayList<Word> wordsToCheck = new ArrayList<>();
+        int row = 0;
+        int col = 0;
+        boolean isHorizontal = true;
+        StringBuilder found = new StringBuilder();
+
+        for (int i = 0; i < Board.BOARD_SIZE; i++)
+        {
+            for (int j = 0; j < Board.BOARD_SIZE; j++)
+            {
+                if (board.getSquareCopy(i, j).isOccupied())
+                {
+                    row = i;
+                    col = j;
+                    char letter;
+                    if(board.getSquareCopy(i, j+1).isOccupied())
+                    {
+                        isHorizontal = true;
+                        while(board.getSquareCopy(row, j).isOccupied())
+                        {
+                            letter = board.getSquareCopy(row, j).getTile().getLetter();
+                            found.append(letter);
+                            if(j==Board.BOARD_SIZE)
+                            {
+                                break;
+                            }
+                            j++;
+                        }
+                    }
+                    else
+                    {
+                        isHorizontal = false;
+                        while(board.getSquareCopy(i, col).isOccupied())
+                        {
+                            letter = board.getSquareCopy(i, col).getTile().getLetter();
+                            found.append(letter);
+                            if(i==Board.BOARD_SIZE)
+                            {
+                                break;
+                            }
+                            i++;
+                        }
+                    }
+                    wordsToCheck.add(new Word(row, col, isHorizontal, found.toString()));
+                    found = new StringBuilder();
+                }
+            }
+        }
+        if (!(dictionary.areWords(wordsToCheck)))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     private void updateTilesRemaining() {
         String frame = me.getFrameAsString();
         char[] frameCharArray= frame.toCharArray();
@@ -562,67 +625,5 @@ public class BotChristianCoders implements BotAPI {
         }
         bestWord = legalWords.get(bestWordIndex);
         return bestWord;
-    }
-
-    /**
-     Function to determine whether the bot should CHALLENGE the last word placed before moving.
-     */
-    public boolean callChallenge()
-    {
-        ArrayList<Word> wordsToCheck = new ArrayList<>();
-        int row = 0;
-        int col = 0;
-        boolean isHorizontal = true;
-        StringBuilder found = new StringBuilder();
-
-        for (int i = 0; i < Board.BOARD_SIZE; i++)
-        {
-            for (int j = 0; j < Board.BOARD_SIZE; j++)
-            {
-                if (board.getSquareCopy(i, j).isOccupied())
-                {
-                    row = i;
-                    col = j;
-                    char letter;
-                    if(board.getSquareCopy(i, j+1).isOccupied())
-                    {
-                        isHorizontal = true;
-                        while(board.getSquareCopy(row, j).isOccupied())
-                        {
-                            letter = board.getSquareCopy(row, j).getTile().getLetter();
-                            found.append(letter);
-                            if(j==Board.BOARD_SIZE)
-                            {
-                                break;
-                            }
-                            j++;
-                        }
-                    }
-                    else
-                    {
-                        isHorizontal = false;
-                        while(board.getSquareCopy(i, col).isOccupied())
-                        {
-                            letter = board.getSquareCopy(i, col).getTile().getLetter();
-                            found.append(letter);
-                            if(i==Board.BOARD_SIZE)
-                            {
-                                break;
-                            }
-                            i++;
-                        }
-                    }
-                    wordsToCheck.add(new Word(row, col, isHorizontal, found.toString()));
-                }
-            }
-        }
-        if (!(dictionary.areWords(wordsToCheck)))
-        {
-           return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 }
