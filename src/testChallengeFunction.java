@@ -28,11 +28,27 @@ public class testChallengeFunction
         board.getSquare(7, 10).add(new Tile('L'));
         board.getSquare(7, 11).add(new Tile('O'));
 
+        System.out.println("\n-------------Test 2---------------");
+        board.getSquare(7, 7).add(new Tile('H'));
+        board.getSquare(8, 7).add(new Tile('E'));
+        board.getSquare(9, 7).add(new Tile('L'));
+        board.getSquare(10, 7).add(new Tile('L'));
+        board.getSquare(11, 7).add(new Tile('O'));
+
         System.out.println("\n-------------Test 3---------------");
         board.getSquare(1, 1).add(new Tile('B'));
-        board.getSquare(1, 2).add(new Tile('A'));
+        board.getSquare(1, 2).add(new Tile('I'));
         board.getSquare(1, 3).add(new Tile('N'));
         board.getSquare(1, 4).add(new Tile('G'));
+        board.getSquare(1, 5).add(new Tile('E'));
+
+        System.out.println("\n-------------Test 4---------------");
+        board.getSquare(1, 1).add(new Tile('B'));
+        board.getSquare(2, 1).add(new Tile('A'));
+        board.getSquare(3, 1).add(new Tile('B'));
+        board.getSquare(4, 1).add(new Tile('O'));
+        board.getSquare(5, 1).add(new Tile('O'));
+        board.getSquare(6, 1).add(new Tile('N'));
 
         if(run.callChallenge())
         {
@@ -66,6 +82,37 @@ public class testChallengeFunction
                     col = j;
                     System.out.println("Coordinates for the first letter in this word is ["+row+", "+col+"]");
                     char letter;
+                    if(board.getSquareCopy(i, j+1).isOccupied() && board.getSquareCopy(i+1, j).isOccupied())
+                    {
+                        while(board.getSquareCopy(row, j).isOccupied())
+                        {
+                            isHorizontal = true;
+                            letter = board.getSquareCopy(row, j).getTile().getLetter();
+                            System.out.println("Letter to be added to the word string is: '"+letter+"'");
+                            found.append(letter);
+                            System.out.println("String for word so far contains '"+found+"'");
+                            if(i==Board.BOARD_SIZE)
+                            {
+                                break;
+                            }
+                            j++;
+                        }
+                        wordsToCheck.add(new Word(row, col, isHorizontal, found.toString()));
+                        found = new StringBuilder();
+                        while(board.getSquareCopy(i, col).isOccupied())
+                        {
+                            isHorizontal = false;
+                            letter = board.getSquareCopy(i, col).getTile().getLetter();
+                            System.out.println("Letter to be added to the word string is: '"+letter+"'");
+                            found.append(letter);
+                            System.out.println("String for word so far contains '"+found+"'");
+                            if(i==Board.BOARD_SIZE)
+                            {
+                                break;
+                            }
+                            i++;
+                        }
+                    }
                     if(board.getSquareCopy(i, j+1).isOccupied())
                     {
                         isHorizontal = true;
@@ -82,7 +129,7 @@ public class testChallengeFunction
                             j++;
                         }
                     }
-                    else
+                    if(board.getSquareCopy(i+1, j).isOccupied())
                     {
                         isHorizontal = false;
                         while(board.getSquareCopy(i, col).isOccupied())
@@ -99,21 +146,23 @@ public class testChallengeFunction
                         }
                     }
                     wordsToCheck.add(new Word(row, col, isHorizontal, found.toString()));
-                    for(Word word : wordsToCheck)
+                    System.out.println("\nArrayList of all words currently on the board:");
+                    for(int k=0; k<wordsToCheck.size(); k++)
                     {
-                        System.out.println(word);
+                        System.out.println("\tWordsToCheck["+k+"]: "+wordsToCheck.get(k));
                     }
                     found = new StringBuilder();
+                    System.out.println();
                 }
             }
         }
-        if (!(dictionary.areWords(wordsToCheck)))
+        if ((dictionary.areWords(wordsToCheck)))
         {
-            return true;
+            return false;
         }
         else
         {
-            return false;
+            return true;
         }
     }
 }

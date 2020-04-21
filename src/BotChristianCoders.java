@@ -43,7 +43,8 @@ public class BotChristianCoders implements BotAPI {
     }
 
     /**
-     Function to determine whether the bot should CHALLENGE the last word placed before moving.
+     Function to scan entire board for placed tiles and scan them into an Arraylist<>
+     Determines whether the bot should CHALLENGE the last word placed before moving.
      */
     public boolean callChallenge()
     {
@@ -62,6 +63,33 @@ public class BotChristianCoders implements BotAPI {
                     row = i;
                     col = j;
                     char letter;
+                    if(board.getSquareCopy(i, j+1).isOccupied() && board.getSquareCopy(i+1, j).isOccupied())
+                    {
+                        while(board.getSquareCopy(row, j).isOccupied())
+                        {
+                            isHorizontal = true;
+                            letter = board.getSquareCopy(row, j).getTile().getLetter();
+                            found.append(letter);
+                            if(i==Board.BOARD_SIZE)
+                            {
+                                break;
+                            }
+                            j++;
+                        }
+                        wordsToCheck.add(new Word(row, col, isHorizontal, found.toString()));
+                        found = new StringBuilder();
+                        while(board.getSquareCopy(i, col).isOccupied())
+                        {
+                            isHorizontal = false;
+                            letter = board.getSquareCopy(i, col).getTile().getLetter();
+                            found.append(letter);
+                            if(i==Board.BOARD_SIZE)
+                            {
+                                break;
+                            }
+                            i++;
+                        }
+                    }
                     if(board.getSquareCopy(i, j+1).isOccupied())
                     {
                         isHorizontal = true;
@@ -76,7 +104,7 @@ public class BotChristianCoders implements BotAPI {
                             j++;
                         }
                     }
-                    else
+                    if(board.getSquareCopy(i+1, j).isOccupied())
                     {
                         isHorizontal = false;
                         while(board.getSquareCopy(i, col).isOccupied())
@@ -92,16 +120,17 @@ public class BotChristianCoders implements BotAPI {
                     }
                     wordsToCheck.add(new Word(row, col, isHorizontal, found.toString()));
                     found = new StringBuilder();
+                    System.out.println();
                 }
             }
         }
-        if (!(dictionary.areWords(wordsToCheck)))
+        if ((dictionary.areWords(wordsToCheck)))
         {
-            return true;
+            return false;
         }
         else
         {
-            return false;
+            return true;
         }
     }
 
