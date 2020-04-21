@@ -17,22 +17,22 @@ public class TestFindMostValuableWord {
         System.out.println("\nMost valuable word to place is '"+mvw.toString()+"'");
     }
 
-    private ArrayList<Coordinates> newLetterCoords;
+    private ArrayList<Coordinates> oldLetterCoords;
     private static final int[] TILE_VALUE = {1,3,3,2,1,4,2,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10};
 
     private int getWordPoints(Word word)
     {
         // place precondition: isLegal is true
-        newLetterCoords = new ArrayList<>();
+        oldLetterCoords = new ArrayList<>();
         int r = word.getFirstRow();
         int c = word.getFirstColumn();
         System.out.println();
         for (int i = 0; i<word.length(); i++)
         {
-            if (!board.getSquareCopy(r,c).isOccupied())
+            if (board.getSquareCopy(r,c).isOccupied())
             {
                 System.out.println("This square is not occupied, adding the coords ["+r+", "+c+"] of '"+word.getLetter(i)+"' to the Coord ArrayList");
-                newLetterCoords.add(new Coordinates(r,c));
+                oldLetterCoords.add(new Coordinates(r,c));
             }
             if (word.isHorizontal())
             {
@@ -60,19 +60,19 @@ public class TestFindMostValuableWord {
             int letterValue = TILE_VALUE[(int) letter - (int) 'A'];
             System.out.println("Value of letter at position " + i + " of " + word.toString() + " is '" + letterValue + "'\n");
 
-            if (!newLetterCoords.contains(new Coordinates(row,col)))
+            if (oldLetterCoords.contains(new Coordinates(row,col)))
+            {
+                System.out.println("newLetterCoords does not contain the coordinates: ["+row+", "+col+"]");
+                wordValue = wordValue + letterValue;
+                System.out.println("WordValue at iteration " + i + " is: " + wordValue);
+            }
+            else
             {
                 System.out.println("newLetterCoords contains the coordinates: ["+row+", "+col+"]");
                 wordValue = wordValue + letterValue * board.getSquareCopy(row, col).getLetterMuliplier();
                 wordMultiplier = wordMultiplier * board.getSquareCopy(row, col).getWordMultiplier();
                 System.out.println("WordValue at iteration " + i + " is: " + wordValue);
                 System.out.println("WordMultiplier value at iteration " + i + " is: " + wordMultiplier);
-            }
-            else
-            {
-                System.out.println("newLetterCoords does not contain the coordinates: ["+row+", "+col+"]");
-                wordValue = wordValue + letterValue;
-                System.out.println("WordValue at iteration " + i + " is: " + wordValue);
             }
             if (word.isHorizontal())
             {

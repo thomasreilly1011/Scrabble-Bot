@@ -481,13 +481,10 @@ public class BotChristianCoders implements BotAPI {
     }
 
 
-    private ArrayList<Coordinates> oldLetterCoords;
-    private static final int[] TILE_VALUE = {1,3,3,2,1,4,2,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10};
-
     private int getWordPoints(Word word)
     {
-        // place precondition: isLegal is true
-        oldLetterCoords = new ArrayList<>();
+        final int[] TILE_VALUE = {1,3,3,2,1,4,2,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10};
+        ArrayList<Coordinates> oldLetterCoords = new ArrayList<>();
         int r = word.getFirstRow();
         int c = word.getFirstColumn();
         System.out.println();
