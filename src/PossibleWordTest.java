@@ -1,24 +1,45 @@
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class PossibleWordTest {
     private static Board board = new Board();
     private static int tilesRemaining = 7;
+    private static Pool pool = new Pool();
+    private static Frame botsFrame = new Frame();
+    private static Dictionary dictionary;
+
+    static {
+        try {
+            dictionary = new Dictionary();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     /*
     This Class is used purely for creating a testing environment for the findPossibleWords function.
     N.B. No other classes should depend on this one.
      */
     public static void main(String[] args) {
+        botsFrame.refill(pool);
         PossibleWordTest t = new PossibleWordTest();
 
         /* TEST 1 - Bot has the first move */
         System.out.println("-------------Test 1---------------");
         ArrayList<PossibleWord> possibleWords = t.findPossibleWords();
-        for (PossibleWord possibleWord:possibleWords) {
+        for (PossibleWord possibleWord:possibleWords)
+        {
             System.out.println(possibleWord);
             //System.out.println("Row: " + possibleWord.row + ", Col: " + possibleWord.column + ", Length:  " + possibleWord.length + ", Letter: " + Character.toString(possibleWord.existingLetter) + ", Letter Index: " + possibleWord.existingLetterIndex + " , IsHorizontal: " + Boolean.toString(possibleWord.isHorizontal));
         }
         System.out.println(possibleWords.size() + " possible word placements generated");
+        ArrayList<Word> actualWords = t.findLegalWords(possibleWords);
+        for(Word actualWord : actualWords)
+        {
+            System.out.println(actualWord.toString() + " " + actualWord.getRow() + " " + actualWord.getColumn() + " " + actualWord.isHorizontal());
+        }
 
         /* TEST 2 - Word 'Hello' is already on the board */
         System.out.println("\n-------------Test 2---------------");
@@ -34,8 +55,13 @@ public class PossibleWordTest {
             //System.out.println("Row: " + possibleWord.row + ", Col: " + possibleWord.column + ", Length: " + possibleWord.length + ", Letter: " + Character.toString(possibleWord.existingLetter) + ", Letter Index: " + possibleWord.existingLetterIndex + ", IsHorizontal: " + Boolean.toString(possibleWord.isHorizontal));
         }
         System.out.println(possibleWords.size() + " possible word placements generated");
+        actualWords = t.findLegalWords(possibleWords);
+        for(Word actualWord : actualWords)
+        {
+            System.out.println(actualWord.toString() + " " + actualWord.getRow() + " " + actualWord.getColumn() + " " + actualWord.isHorizontal());
+        }
 
-        /* TEST 2 - Words 'Hello' and 'World' are already on the board */
+        /* TEST 3 - Words 'Hello' and 'World' are already on the board */
         System.out.println("\n-------------Test 3---------------");
         board.getSquare(6, 11).add(new Tile('W'));
         board.getSquare(8, 11).add(new Tile('R'));
@@ -48,7 +74,11 @@ public class PossibleWordTest {
             //System.out.println("Row: " + possibleWord.row + ", Col: " + possibleWord.column + ", Length: " + possibleWord.length + ", Letter: " + Character.toString(possibleWord.existingLetter) + ", Letter Index: " + possibleWord.existingLetterIndex + ", IsHorizontal: " + Boolean.toString(possibleWord.isHorizontal));
         }
         System.out.println(possibleWords.size() + " possible word placements generated");
-
+        actualWords = t.findLegalWords(possibleWords);
+        for(Word actualWord : actualWords)
+        {
+            System.out.println(actualWord.toString() + " " + actualWord.getRow() + " " + actualWord.getColumn() + " " + actualWord.isHorizontal());
+        }
     }
 
     /**
@@ -384,4 +414,119 @@ public class PossibleWordTest {
             return sb.toString();
         }
     }
+
+
+
+    static int wordLength = 3;
+    static int count=0;
+
+    public static ArrayList<String> getPermutations(String frame)
+    {
+        // If string is empty
+        if (frame.length() == 0)
+        {
+
+            // Return an empty arraylist
+            ArrayList<String> empty = new ArrayList<>();
+            empty.add("");
+            return empty;
+        }
+
+        char ch = frame.charAt(0); //first char
+
+        String subStr = frame.substring(1); //rest of string
+
+        //recursive call
+        ArrayList<String> prevResult = getPermutations(subStr);
+
+        ArrayList<String> result = new ArrayList<>();
+
+        for (String string : prevResult)
+        {
+            for (int i = 0; i <= string.length(); i++)
+            {
+                result.add(string.substring(0, i) + ch + string.substring(i));
+            }
+        }
+        return result;
+    }
+
+
+    private ArrayList<Word> stringToWord(ArrayList<String> arrList, PossibleWord possibleWord, ArrayList<Word> wordList)
+    {
+        for(String s : arrList)
+        {
+            Word word = new Word(possibleWord.row, possibleWord.column, possibleWord.isHorizontal, s); //creating a new word object using the
+            wordList.add(word);
+        }
+        return wordList;
+    }
+
+    private String frameToString() {
+        StringBuilder frameLetters = new StringBuilder();
+        String frame = botsFrame.toString();
+        char[] frameCharArray= frame.toCharArray();
+        int count = 0;
+        for (char c:frameCharArray)
+        {
+            if (Character.isLetter(c))
+            {
+                frameLetters.append(c);
+            }
+        }
+        return frameLetters.toString();
+    }
+
+    private ArrayList<Word> findLegalWords(ArrayList<PossibleWord> possibleWords)
+    {
+        ArrayList<Word> wordList = new ArrayList<Word>();
+
+        for (PossibleWord word : possibleWords) {
+            String frame = frameToString();
+
+            ArrayList<String> arrayList = getPermutations(frame);
+
+            arrayList.remove("");
+
+            int wordLength = word.length;
+            int index = word.existingLetterIndex;
+            char ch = word.existingLetter;
+
+
+
+            Set<String> set = new LinkedHashSet<String>();
+
+            for (String s : arrayList) {
+                StringBuilder stringbuilder = new StringBuilder(s);
+                if(index!=-1)
+                {
+                    stringbuilder.insert(index, ch);
+                }
+
+                for (int i = 0; i < stringbuilder.length() - wordLength; i++)
+                {
+                    stringbuilder.deleteCharAt(stringbuilder.length() - 1); //trims the strings to only output the permutations that fit in wordLength
+                }
+
+                ArrayList<Word> singleWord = new ArrayList<Word>();
+                Word dictionaryTest = new Word(0, 0, true, stringbuilder.toString());
+                singleWord.add(dictionaryTest);
+
+                if(dictionary.areWords(singleWord)) //if the word is an actual word, add it to the set
+                {
+                    set.add(stringbuilder.toString()); //set does not allow for duplicates therefore gets rid of our dupes (which come from the non-perfect trimming system)
+                }
+
+                //boardAPI.isLegalPlay?
+            }
+
+            ArrayList<String> legalPermutationsForWord = new ArrayList<>(set);
+
+            stringToWord(legalPermutationsForWord, word, wordList);
+        }
+        return wordList;
+    }
+
+
+
 }
