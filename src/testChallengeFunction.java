@@ -21,28 +21,28 @@ public class testChallengeFunction
     {
         testChallengeFunction run = new testChallengeFunction();
 
-        System.out.println("\n-------------Test 1---------------");
+        ////////////------------Test 1---------------//////////
         board.getSquare(7, 7).add(new Tile('H'));
         board.getSquare(7, 8).add(new Tile('E'));
         board.getSquare(7, 9).add(new Tile('L'));
         board.getSquare(7, 10).add(new Tile('L'));
         board.getSquare(7, 11).add(new Tile('O'));
 
-        System.out.println("\n-------------Test 2---------------");
+        ////////////-------------Test 2---------------//////////
         board.getSquare(7, 7).add(new Tile('H'));
         board.getSquare(8, 7).add(new Tile('E'));
         board.getSquare(9, 7).add(new Tile('L'));
         board.getSquare(10, 7).add(new Tile('L'));
         board.getSquare(11, 7).add(new Tile('O'));
 
-        System.out.println("\n-------------Test 3---------------");
+        ////////////-------------Test 3---------------//////////
         board.getSquare(1, 1).add(new Tile('B'));
         board.getSquare(1, 2).add(new Tile('I'));
         board.getSquare(1, 3).add(new Tile('N'));
         board.getSquare(1, 4).add(new Tile('G'));
         board.getSquare(1, 5).add(new Tile('E'));
 
-        System.out.println("\n-------------Test 4---------------");
+        ////////////-------------Test 4---------------//////////
         board.getSquare(1, 1).add(new Tile('B'));
         board.getSquare(2, 1).add(new Tile('A'));
         board.getSquare(3, 1).add(new Tile('B'));
