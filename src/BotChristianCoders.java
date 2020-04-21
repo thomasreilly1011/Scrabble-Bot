@@ -492,7 +492,6 @@ public class BotChristianCoders implements BotAPI {
         {
             if (board.getSquareCopy(r,c).isOccupied())
             {
-                System.out.println("This square is not occupied, adding the coords ["+r+", "+c+"] of '"+word.getLetter(i)+"' to the Coord ArrayList");
                 oldLetterCoords.add(new Coordinates(r,c));
             }
             if (word.isHorizontal())
@@ -510,30 +509,19 @@ public class BotChristianCoders implements BotAPI {
         int row = word.getFirstRow();
         int col = word.getFirstColumn();
 
-        System.out.println("\nWord is: " + word.toString());
-        System.out.println("Length of word is " + word.length());
         for (int i = 0; i<word.length(); i++)
         {
             char letter = word.getLetter(i);
             letter = Character.toUpperCase(letter);
-            System.out.println("\nLetter at position [" + i + "] of " + word.toString() + " is '" + letter + "'");
-
             int letterValue = TILE_VALUE[(int) letter - (int) 'A'];
-            System.out.println("Value of letter at position " + i + " of " + word.toString() + " is '" + letterValue + "'\n");
-
             if (oldLetterCoords.contains(new Coordinates(row,col)))
             {
-                System.out.println("newLetterCoords does not contain the coordinates: ["+row+", "+col+"]");
                 wordValue = wordValue + letterValue;
-                System.out.println("WordValue at iteration " + i + " is: " + wordValue);
             }
             else
             {
-                System.out.println("newLetterCoords contains the coordinates: ["+row+", "+col+"]");
                 wordValue = wordValue + letterValue * board.getSquareCopy(row, col).getLetterMuliplier();
                 wordMultiplier = wordMultiplier * board.getSquareCopy(row, col).getWordMultiplier();
-                System.out.println("WordValue at iteration " + i + " is: " + wordValue);
-                System.out.println("WordMultiplier value at iteration " + i + " is: " + wordMultiplier);
             }
             if (word.isHorizontal())
             {
@@ -545,7 +533,6 @@ public class BotChristianCoders implements BotAPI {
             }
         }
         score = wordValue * wordMultiplier;
-        System.out.println("Score for word '"+word.toString()+"' is : "+score);
         return score;
     }
 
@@ -578,10 +565,9 @@ public class BotChristianCoders implements BotAPI {
         return bestWord;
     }
 
-    /*
+    /**
      Function to determine whether the bot should CHALLENGE the last word placed before moving.
      */
-    /*
     public boolean callChallenge()
     {
         ArrayList<Word> word = new ArrayList<>();
@@ -595,5 +581,4 @@ public class BotChristianCoders implements BotAPI {
             return false;
         }
     }
-    */
 }
