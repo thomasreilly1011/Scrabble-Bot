@@ -495,29 +495,29 @@ public class PossibleWordTest {
 
 
             Set<String> set = new LinkedHashSet<String>();
-
-            for (String s : arrayList) {
+            for (String s : arrayList)
+            {
                 StringBuilder stringbuilder = new StringBuilder(s);
                 if(index!=-1)
                 {
                     stringbuilder.insert(index, ch);
                 }
-
-                for (int i = 0; i < stringbuilder.length() - wordLength; i++)
+                if(!(index<s.length()))
                 {
-                    stringbuilder.deleteCharAt(stringbuilder.length() - 1); //trims the strings to only output the permutations that fit in wordLength
+                    for (int i = 0; i < stringbuilder.length() - wordLength; i++)
+                    {
+                        stringbuilder.deleteCharAt(stringbuilder.length() - 1); //trims the strings to only output the permutations that fit in wordLength
+                    }
+
+                    ArrayList<Word> singleWord = new ArrayList<Word>();
+                    Word dictionaryTest = new Word(0, 0, true, stringbuilder.toString());
+                    singleWord.add(dictionaryTest);
+
+                    if(dictionary.areWords(singleWord)) //if the word is an actual word, add it to the set
+                    {
+                        set.add(stringbuilder.toString()); //set does not allow for duplicates therefore gets rid of our dupes (which come from the non-perfect trimming system)
+                    }
                 }
-
-                ArrayList<Word> singleWord = new ArrayList<Word>();
-                Word dictionaryTest = new Word(0, 0, true, stringbuilder.toString());
-                singleWord.add(dictionaryTest);
-
-                if(dictionary.areWords(singleWord)) //if the word is an actual word, add it to the set
-                {
-                    set.add(stringbuilder.toString()); //set does not allow for duplicates therefore gets rid of our dupes (which come from the non-perfect trimming system)
-                }
-
-                //boardAPI.isLegalPlay?
             }
 
             ArrayList<String> legalPermutationsForWord = new ArrayList<>(set);
