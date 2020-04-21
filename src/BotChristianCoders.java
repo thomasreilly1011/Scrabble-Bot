@@ -2,44 +2,61 @@ import java.util.*;
 
 public class BotChristianCoders implements BotAPI {
     private final PlayerAPI me;
-    private final OpponentAPI opponent;
     private final BoardAPI board;
-    private final UserInterfaceAPI info;
     private final DictionaryAPI dictionary;
 
     private int tilesRemaining;
 
-    public BotChristianCoders(Player me, Player opponent, Board board, UserInterface ui, Dictionary dictionary) {
+    public BotChristianCoders(PlayerAPI me, OpponentAPI opponent, BoardAPI board, UserInterfaceAPI ui, DictionaryAPI dictionary) {
         this.me = me;
-        this.opponent = opponent;
         this.board = board;
-        this.info = ui;
         this.dictionary = dictionary;
     }
 
-    int challengeCounter = 0;
 
     @Override
     public String getCommand() {
         // First, See if the last world should be challenged
-        if(callChallenge() && challengeCounter == 0)
+        System.out.println("\nChallenge??");
+        if(callChallenge())
         {
-            challengeCounter++;
             return "CHALLENGE";
         }
-        challengeCounter = 0;
 
+        System.out.println("\nFinding Words");
         // Otherwise, See what words we can place...
         updateTilesRemaining();
+        System.out.println("Tiles updated");
         ArrayList<PossibleWord> possibleWords = findPossibleWords();
+        System.out.println("Possible Words Found");
         ArrayList<Word> legalWords = findLegalWords(possibleWords);
+        System.out.println("Tiles Updated");
 
         // If we have no legal words, we should refill our FRAME
+        if (legalWords.isEmpty()) {
+            return "REFILL";
+        }
 
         // Otherwise, find the best possible word and place that.
         Word word = mostValuableWord(legalWords);
-        assert word != null;
-        return "PLACE " + word.toString();
+
+        System.out.println("\nWord found!");
+        return createPlaceCommand(word);
+    }
+
+    private String createPlaceCommand(Word word) {
+        char col = (char) (((int ) 'A') + word.getFirstColumn());
+        StringBuilder command = new StringBuilder();
+        command.append("PLACE ");
+        command.append(col);
+        command.append(word.getFirstRow());
+        if (word.isHorizontal()) {
+            command.append(" A ");
+        } else {
+            command.append(" D ");
+        }
+        command.append(word.getLetters());
+        return command.toString();
     }
 
     /**
@@ -49,8 +66,8 @@ public class BotChristianCoders implements BotAPI {
     public boolean callChallenge()
     {
         ArrayList<Word> wordsToCheck = new ArrayList<>();
-        int row = 0;
-        int col = 0;
+        int row;
+        int col;
         boolean isHorizontal = true;
         StringBuilder found = new StringBuilder();
 
@@ -120,18 +137,10 @@ public class BotChristianCoders implements BotAPI {
                     }
                     wordsToCheck.add(new Word(row, col, isHorizontal, found.toString()));
                     found = new StringBuilder();
-                    System.out.println();
                 }
             }
         }
-        if ((dictionary.areWords(wordsToCheck)))
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        return !(dictionary.areWords(wordsToCheck));
     }
 
     private void updateTilesRemaining() {
@@ -451,8 +460,6 @@ public class BotChristianCoders implements BotAPI {
             this.isHorizontal = isHorizontal;
             this.length = length;
         }
-
-        public boolean hasExistingLetter() { return existingLetter != '\0'; }
 
         @Override
         public String toString() {
