@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -75,6 +76,7 @@ public class PossibleWordTest {
         }
         System.out.println(possibleWords.size() + " possible word placements generated");
         actualWords = t.findLegalWords(possibleWords);
+        System.out.println(botsFrame.toString());
         for(Word actualWord : actualWords)
         {
             System.out.println(actualWord.toString() + " " + actualWord.getRow() + " " + actualWord.getColumn() + " " + actualWord.isHorizontal());
@@ -452,9 +454,9 @@ public class PossibleWordTest {
     }
 
 
-    private ArrayList<Word> stringToWord(ArrayList<String> arrList, PossibleWord possibleWord, ArrayList<Word> wordList)
+    private Set<Word> stringToWord(Set<String> set, PossibleWord possibleWord, Set<Word> wordList)
     {
-        for(String s : arrList)
+        for(String s : set)
         {
             Word word = new Word(possibleWord.row, possibleWord.column, possibleWord.isHorizontal, s); //creating a new word object using the
             wordList.add(word);
@@ -479,7 +481,7 @@ public class PossibleWordTest {
 
     private ArrayList<Word> findLegalWords(ArrayList<PossibleWord> possibleWords)
     {
-        ArrayList<Word> wordList = new ArrayList<Word>();
+        Set<Word> wordList = new HashSet<Word>();
 
         for (PossibleWord word : possibleWords) {
             String frame = frameToString();
@@ -492,17 +494,15 @@ public class PossibleWordTest {
             int index = word.existingLetterIndex;
             char ch = word.existingLetter;
 
-
-
-            Set<String> set = new LinkedHashSet<String>();
+            Set<String> set = new HashSet<String>();
             for (String s : arrayList)
             {
                 StringBuilder stringbuilder = new StringBuilder(s);
-                if(index!=-1)
+                if(index!=-1 && !(index>stringbuilder.length()))
                 {
                     stringbuilder.insert(index, ch);
                 }
-                if(!(index<s.length()))
+                if(!(index>stringbuilder.length()))
                 {
                     for (int i = 0; i < stringbuilder.length() - wordLength; i++)
                     {
@@ -519,14 +519,9 @@ public class PossibleWordTest {
                     }
                 }
             }
-
-            ArrayList<String> legalPermutationsForWord = new ArrayList<>(set);
-
-            stringToWord(legalPermutationsForWord, word, wordList);
+            System.out.println(set);
+            stringToWord(set, word, wordList);
         }
-        return wordList;
+        return new ArrayList<Word>(wordList);
     }
-
-
-
 }
