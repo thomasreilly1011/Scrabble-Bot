@@ -14,9 +14,14 @@ public class BotChristianCoders implements BotAPI {
         this.board = board;
         this.dictionary = dictionary;
 
-        frame = me.getFrame();
+        String frameLetters = frameToString();
+        ArrayList<Tile> tileArrayList = new ArrayList<Tile>(7);
+        for(int i=0; i<frameLetters.length(); i++)
+        {
+            tileArrayList.add(new Tile(frameLetters.charAt(i)));
+        }
+        frame.addTiles(tileArrayList);
     }
-
 
     @Override
     public String getCommand() {
@@ -524,6 +529,10 @@ public class BotChristianCoders implements BotAPI {
         for(String s : set)
         {
             Word word = new Word(possibleWord.row, possibleWord.column, possibleWord.isHorizontal, s); //creating a new word object using the
+
+            ///////////////////////////////////hereeeeeeeeeeee frameeeeeeeeeeeee
+
+
 
             if(board.isLegalPlay(frame, word)) //catch any illegal words that are passed (such as words that would not fit on the board)
             {
