@@ -417,11 +417,6 @@ public class PossibleWordTest {
         }
     }
 
-
-
-    static int wordLength = 3;
-    static int count=0;
-
     public static ArrayList<String> getPermutations(String frame)
     {
         // If string is empty
@@ -459,7 +454,11 @@ public class PossibleWordTest {
         for(String s : set)
         {
             Word word = new Word(possibleWord.row, possibleWord.column, possibleWord.isHorizontal, s); //creating a new word object using the
-            wordList.add(word);
+
+            if(board.isLegalPlay(botsFrame, word)) //catch any illegal words that are passed (such as words that would not fit on the board)
+            {
+                wordList.add(word);
+            }
         }
         return wordList;
     }
@@ -519,7 +518,6 @@ public class PossibleWordTest {
                     }
                 }
             }
-            System.out.println(set);
             stringToWord(set, word, wordList);
         }
         return new ArrayList<Word>(wordList);
