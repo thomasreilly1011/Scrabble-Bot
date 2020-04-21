@@ -1,11 +1,11 @@
 import java.util.*;
 
 public class BotChristianCoders implements BotAPI {
-    private PlayerAPI me;
-    private OpponentAPI opponent;
-    private BoardAPI board;
-    private UserInterfaceAPI info;
-    private DictionaryAPI dictionary;
+    private final PlayerAPI me;
+    private final OpponentAPI opponent;
+    private final BoardAPI board;
+    private final UserInterfaceAPI info;
+    private final DictionaryAPI dictionary;
 
     private int tilesRemaining;
 
@@ -385,12 +385,12 @@ public class BotChristianCoders implements BotAPI {
     }
 
 
-    /*
-     *  2. Search through the dictionary word tree using the letters found and replacing the *'s with letter permutations
-     *  from the frame.
-     *  @param possibleWords ArrayList<String> of possible word placements in the form H8 A L**
-     *  @return ArrayList<Word> of all legal word word objects.
-     *  defined, legal word.
+    /**
+     * 2. Search through the dictionary word tree using the letters found and replacing the *'s with letter permutations
+     * from the frame.
+     * @param possibleWords ArrayList<String> of possible word placements in the form H8 A L******
+     * @return ArrayList<Word> of all legal word word objects.
+     * defined, legal word.
      */
 
     static int wordLength = 3;
@@ -485,12 +485,11 @@ public class BotChristianCoders implements BotAPI {
 
     private int getWordPoints(Word word)
     {
-        newLetterCoords = new ArrayList<>();
+        Square[][] squares;
         int wordValue = 0;
         int wordMultiplier = 1;
         int r = word.getFirstRow();
         int c = word.getFirstColumn();
-        newLetterCoords.add(new Coordinates(r,c));
         for (int i = 0; i<word.length(); i++)
         {
             int letterValue = board.getSquareCopy(r, c).getTile().getValue();
@@ -542,9 +541,10 @@ public class BotChristianCoders implements BotAPI {
         return legalWords.get(bestWordIndex);
     }
 
-/*    *//**
+    /*
      Function to determine whether the bot should CHALLENGE the last word placed before moving.
-     *//*
+     */
+    /*
     public boolean callChallenge()
     {
         ArrayList<Word> word = new ArrayList<>();
@@ -557,5 +557,6 @@ public class BotChristianCoders implements BotAPI {
         {
             return false;
         }
-    }*/
+    }
+    */
 }
