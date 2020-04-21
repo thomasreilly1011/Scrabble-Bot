@@ -2,49 +2,149 @@ import java.util.*;
 
 public class BotChristianCoders implements BotAPI {
     private final PlayerAPI me;
-    private final OpponentAPI opponent;
     private final BoardAPI board;
-    private final UserInterfaceAPI info;
     private final DictionaryAPI dictionary;
 
     private int tilesRemaining;
 
     Frame frame = new Frame();
 
-    public BotChristianCoders(Player me, Player opponent, Board board, UserInterface ui, Dictionary dictionary) {
+    public BotChristianCoders(PlayerAPI me, OpponentAPI opponent, BoardAPI board, UserInterfaceAPI ui, DictionaryAPI dictionary) {
         this.me = me;
-        this.opponent = opponent;
         this.board = board;
-        this.info = ui;
         this.dictionary = dictionary;
 
         frame = me.getFrame();
     }
 
+
     @Override
     public String getCommand() {
-        /*
-                            <--- Algorithm from 'hints' on Brightspace --->
-        1. Search the board for all possible word places soring them in a list in the form H8 A L****** where *'s
-            represent possible letters.
-        2. Search through the dictionary word tree using the letters found and replacing the *'s with letter permutations
-            from the frame.
-        3. Score the word Produced.
-        4. Place the highest scored word.
-         */
-        updateTilesRemaining();
-//
-//        if(callChallenge())
-//        {
-//            return "CHALLENGE";
-//        }
+        // First, See if the last world should be challenged
+        System.out.println("\nChallenge??");
+        if(callChallenge())
+        {
+            return "CHALLENGE";
+        }
 
+        System.out.println("\nFinding Words");
+        // Otherwise, See what words we can place...
+        updateTilesRemaining();
+        System.out.println("Tiles updated");
         ArrayList<PossibleWord> possibleWords = findPossibleWords();
+        System.out.println("Possible Words Found");
         ArrayList<Word> legalWords = findLegalWords(possibleWords);
+        System.out.println("Tiles Updated");
+
+        // If we have no legal words, we should refill our FRAME
+        if (legalWords.isEmpty()) {
+            return "REFILL";
+        }
+
+        // Otherwise, find the best possible word and place that.
         Word word = mostValuableWord(legalWords);
-        assert word != null;
-        return "PLACE " + word.toString();
-        //TODO This algorithm only ever places words. It may be better to refill at some stages? It should also pass if there are no possible words?
+
+        System.out.println("\nWord found!");
+        return createPlaceCommand(word);
+    }
+
+    private String createPlaceCommand(Word word) {
+        char col = (char) (((int ) 'A') + word.getFirstColumn());
+        StringBuilder command = new StringBuilder();
+        command.append("PLACE ");
+        command.append(col);
+        command.append(word.getFirstRow());
+        if (word.isHorizontal()) {
+            command.append(" A ");
+        } else {
+            command.append(" D ");
+        }
+        command.append(word.getLetters());
+        return command.toString();
+    }
+
+    /**
+     Function to scan entire board for placed tiles and scan them into an Arraylist<>
+     Determines whether the bot should CHALLENGE the last word placed before moving.
+     */
+    public boolean callChallenge()
+    {
+        ArrayList<Word> wordsToCheck = new ArrayList<>();
+        int row;
+        int col;
+        boolean isHorizontal = true;
+        StringBuilder found = new StringBuilder();
+
+        for (int i = 0; i < Board.BOARD_SIZE; i++)
+        {
+            for (int j = 0; j < Board.BOARD_SIZE; j++)
+            {
+                if (board.getSquareCopy(i, j).isOccupied())
+                {
+                    row = i;
+                    col = j;
+                    char letter;
+                    if(board.getSquareCopy(i, j+1).isOccupied() && board.getSquareCopy(i+1, j).isOccupied())
+                    {
+                        while(board.getSquareCopy(row, j).isOccupied())
+                        {
+                            isHorizontal = true;
+                            letter = board.getSquareCopy(row, j).getTile().getLetter();
+                            found.append(letter);
+                            if(i==Board.BOARD_SIZE)
+                            {
+                                break;
+                            }
+                            j++;
+                        }
+                        wordsToCheck.add(new Word(row, col, isHorizontal, found.toString()));
+                        found = new StringBuilder();
+                        while(board.getSquareCopy(i, col).isOccupied())
+                        {
+                            isHorizontal = false;
+                            letter = board.getSquareCopy(i, col).getTile().getLetter();
+                            found.append(letter);
+                            if(i==Board.BOARD_SIZE)
+                            {
+                                break;
+                            }
+                            i++;
+                        }
+                    }
+                    if(board.getSquareCopy(i, j+1).isOccupied())
+                    {
+                        isHorizontal = true;
+                        while(board.getSquareCopy(row, j).isOccupied())
+                        {
+                            letter = board.getSquareCopy(row, j).getTile().getLetter();
+                            found.append(letter);
+                            if(j==Board.BOARD_SIZE)
+                            {
+                                break;
+                            }
+                            j++;
+                        }
+                    }
+                    if(board.getSquareCopy(i+1, j).isOccupied())
+                    {
+                        isHorizontal = false;
+                        while(board.getSquareCopy(i, col).isOccupied())
+                        {
+                            letter = board.getSquareCopy(i, col).getTile().getLetter();
+                            found.append(letter);
+                            if(i==Board.BOARD_SIZE)
+                            {
+                                break;
+                            }
+                            i++;
+                        }
+                    }
+                    wordsToCheck.add(new Word(row, col, isHorizontal, found.toString()));
+                    found = new StringBuilder();
+                }
+            }
+        }
+        return !(dictionary.areWords(wordsToCheck));
     }
 
     private void updateTilesRemaining() {
@@ -501,26 +601,18 @@ public class BotChristianCoders implements BotAPI {
         return new ArrayList<Word>(wordList);
     }
 
-    private ArrayList<Coordinates> newLetterCoords;
-
     private int getWordPoints(Word word)
     {
-        Square[][] squares;
-        int wordValue = 0;
-        int wordMultiplier = 1;
+        final int[] TILE_VALUE = {1,3,3,2,1,4,2,4,1,8,5,1,3,1,1,3,10,1,1,1,1,4,4,8,4,10};
+        ArrayList<Coordinates> oldLetterCoords = new ArrayList<>();
         int r = word.getFirstRow();
         int c = word.getFirstColumn();
+        System.out.println();
         for (int i = 0; i<word.length(); i++)
         {
-            int letterValue = board.getSquareCopy(r, c).getTile().getValue();
-            if (newLetterCoords.contains(new Coordinates(r,c)))
+            if (board.getSquareCopy(r,c).isOccupied())
             {
-                wordValue = wordValue + letterValue * board.getSquareCopy(r, c).getLetterMuliplier();
-                wordMultiplier = wordMultiplier * board.getSquareCopy(r, c).getWordMultiplier();
-            }
-            else
-            {
-                wordValue = wordValue + letterValue;
+                oldLetterCoords.add(new Coordinates(r,c));
             }
             if (word.isHorizontal())
             {
@@ -531,7 +623,37 @@ public class BotChristianCoders implements BotAPI {
                 r++;
             }
         }
-        return wordValue * wordMultiplier;
+        int score = 0;
+        int wordValue = 0;
+        int wordMultiplier = 1;
+        int row = word.getFirstRow();
+        int col = word.getFirstColumn();
+
+        for (int i = 0; i<word.length(); i++)
+        {
+            char letter = word.getLetter(i);
+            letter = Character.toUpperCase(letter);
+            int letterValue = TILE_VALUE[(int) letter - (int) 'A'];
+            if (oldLetterCoords.contains(new Coordinates(row,col)))
+            {
+                wordValue = wordValue + letterValue;
+            }
+            else
+            {
+                wordValue = wordValue + letterValue * board.getSquareCopy(row, col).getLetterMuliplier();
+                wordMultiplier = wordMultiplier * board.getSquareCopy(row, col).getWordMultiplier();
+            }
+            if (word.isHorizontal())
+            {
+                col++;
+            }
+            else
+            {
+                row++;
+            }
+        }
+        score = wordValue * wordMultiplier;
+        return score;
     }
 
 
@@ -546,6 +668,7 @@ public class BotChristianCoders implements BotAPI {
         int score = 0;
         int bestWordIndex = 0;
         int index = 0;
+        Word bestWord;
 
         for(Word word: legalWords)
         {
@@ -558,25 +681,7 @@ public class BotChristianCoders implements BotAPI {
             }
             index++;
         }
-        return legalWords.get(bestWordIndex);
+        bestWord = legalWords.get(bestWordIndex);
+        return bestWord;
     }
-
-    /*
-     Function to determine whether the bot should CHALLENGE the last word placed before moving.
-     */
-    /*
-    public boolean callChallenge()
-    {
-        ArrayList<Word> word = new ArrayList<>();
-        word = scrabble.getLatestWords();
-        if (!(dictionary.areWords(word)))
-        {
-           return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    */
 }

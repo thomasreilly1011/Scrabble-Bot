@@ -6,14 +6,14 @@ import java.util.List;
 
 public class Bots {
 
-    private static final String[] ALL_BOT_NAMES = {"Bot0","Bot1"};
+    private static final String[] ALL_BOT_NAMES = {"BotChristianCoders","Bot1"};
     private BotAPI[] bots = new BotAPI[Scrabble.NUM_PLAYERS];
 
     Bots(Scrabble scrabble, UserInterface ui, Application.Parameters parameters) {
         List<String> params = parameters.getRaw();
         String[] botNames = new String[Scrabble.NUM_PLAYERS];
 //        if (params.size() < Scrabble.NUM_PLAYERS) {
-            botNames[0] = "Bot0";
+            botNames[0] = "BotChristianCoders";
             botNames[1] = "Bot1";
 //        } else {
 //            for (int i = 0; i < Scrabble.NUM_PLAYERS; i++) {
