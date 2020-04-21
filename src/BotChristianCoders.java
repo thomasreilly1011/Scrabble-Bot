@@ -17,30 +17,29 @@ public class BotChristianCoders implements BotAPI {
         this.dictionary = dictionary;
     }
 
+    int challengeCounter = 0;
+
     @Override
     public String getCommand() {
-        /*
-                            <--- Algorithm from 'hints' on Brightspace --->
-        1. Search the board for all possible word places soring them in a list in the form H8 A L****** where *'s
-            represent possible letters.
-        2. Search through the dictionary word tree using the letters found and replacing the *'s with letter permutations
-            from the frame.
-        3. Score the word Produced.
-        4. Place the highest scored word.
-         */
-        updateTilesRemaining();
-//
-//        if(callChallenge())
-//        {
-//            return "CHALLENGE";
-//        }
+        // First, See if the last world should be challenged
+        if(callChallenge() && challengeCounter == 0)
+        {
+            challengeCounter++;
+            return "CHALLENGE";
+        }
+        challengeCounter = 0;
 
+        // Otherwise, See what words we can place...
+        updateTilesRemaining();
         ArrayList<PossibleWord> possibleWords = findPossibleWords();
         ArrayList<Word> legalWords = findLegalWords(possibleWords);
+
+        // If we have no legal words, we should refill our FRAME
+
+        // Otherwise, find the best possible word and place that.
         Word word = mostValuableWord(legalWords);
         assert word != null;
         return "PLACE " + word.toString();
-        //TODO This algorithm only ever places words. It may be better to refill at some stages? It should also pass if there are no possible words?
     }
 
     private void updateTilesRemaining() {

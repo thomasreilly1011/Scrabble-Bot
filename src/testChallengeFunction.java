@@ -29,7 +29,7 @@ public class testChallengeFunction
         board.getSquare(7, 11).add(new Tile('O'));
 
         System.out.println("\n-------------Test 3---------------");
-        board.getSquare(1, 1).add(new Tile('W'));
+        board.getSquare(1, 1).add(new Tile('B'));
         board.getSquare(1, 2).add(new Tile('A'));
         board.getSquare(1, 3).add(new Tile('N'));
         board.getSquare(1, 4).add(new Tile('G'));
@@ -103,6 +103,7 @@ public class testChallengeFunction
                     {
                         System.out.println(word);
                     }
+                    found = new StringBuilder();
                 }
             }
         }
