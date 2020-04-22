@@ -16,18 +16,18 @@ public class BotChristianCoders implements BotAPI {
 
     @Override
     public String getCommand() {
-        // First, See if the last world should be challenged
-//        System.out.println("\nChecking for Challenge");
-//        try {
-//            if(callChallenge() && challengeCount == 0)
-//            {
-//                challengeCount++;
-//                return "CHALLENGE";
-//            }
-//            challengeCount = 0;
-//        } catch (ArrayIndexOutOfBoundsException e) {
-//            System.out.println("No Challenge");
-//        }
+//         First, See if the last world should be challenged
+        System.out.println("\nChecking for Challenge");
+        try {
+            if(callChallenge() && challengeCount == 0)
+            {
+                challengeCount++;
+                return "CHALLENGE";
+            }
+            challengeCount = 0;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("No Challenge");
+        }
 
         System.out.println("Frame is: " + me.getFrameAsString());
         System.out.println("\nFinding Words");
@@ -84,8 +84,8 @@ public class BotChristianCoders implements BotAPI {
     public boolean callChallenge()
     {
         ArrayList<Word> wordsToCheck = new ArrayList<>();
-        int row;
-        int col;
+        int row = 0;
+        int col = 0;
         boolean isHorizontal = true;
         StringBuilder found = new StringBuilder();
 
@@ -98,60 +98,122 @@ public class BotChristianCoders implements BotAPI {
                     row = i;
                     col = j;
                     char letter;
-                    if(board.getSquareCopy(i, j+1).isOccupied() && board.getSquareCopy(i+1, j).isOccupied())
-                    { //Two words
-                        while(board.getSquareCopy(row, j).isOccupied())
+                    if(j+1 != Board.BOARD_SIZE-1 && i+1 != Board.BOARD_SIZE-1)
+                    {
+                        if(board.getSquareCopy(i, j+1).isOccupied() && board.getSquareCopy(i+1, j).isOccupied())
+                        {
+                            while(board.getSquareCopy(row, j).isOccupied())
+                            {
+                                isHorizontal = true;
+                                letter = board.getSquareCopy(row, j).getTile().getLetter();
+                                found.append(letter);
+                                if(j==Board.BOARD_SIZE-1)
+                                {
+                                    break;
+                                }
+                                j++;
+                            }
+                            wordsToCheck.add(new Word(row, col, isHorizontal, found.toString()));
+                            found = new StringBuilder();
+                            while(board.getSquareCopy(i, col).isOccupied())
+                            {
+                                isHorizontal = false;
+                                letter = board.getSquareCopy(i, col).getTile().getLetter();
+                                found.append(letter);
+                                if(i==Board.BOARD_SIZE-1)
+                                {
+                                    break;
+                                }
+                                i++;
+                            }
+                        }
+                        if(board.getSquareCopy(i, j+1).isOccupied())
                         {
                             isHorizontal = true;
-                            letter = board.getSquareCopy(row, j).getTile().getLetter();
-                            found.append(letter);
-                            if(i==Board.BOARD_SIZE)
+                            while(board.getSquareCopy(row, j).isOccupied())
                             {
-                                break;
+                                letter = board.getSquareCopy(row, j).getTile().getLetter();
+                                found.append(letter);
+                                if(j==Board.BOARD_SIZE-1)
+                                {
+                                    break;
+                                }
+                                j++;
                             }
-                            j++;
                         }
-                        wordsToCheck.add(new Word(row, col, isHorizontal, found.toString()));
-                        found = new StringBuilder();
-                        while(board.getSquareCopy(i, col).isOccupied())
+                        if(board.getSquareCopy(i+1, j).isOccupied())
                         {
                             isHorizontal = false;
-                            letter = board.getSquareCopy(i, col).getTile().getLetter();
-                            found.append(letter);
-                            if(i==Board.BOARD_SIZE)
+                            while(board.getSquareCopy(i, col).isOccupied())
                             {
-                                break;
+                                letter = board.getSquareCopy(i, col).getTile().getLetter();
+                                found.append(letter);
+                                if(i==Board.BOARD_SIZE-1)
+                                {
+                                    break;
+                                }
+                                i++;
                             }
-                            i++;
                         }
                     }
-                    if(board.getSquareCopy(i, j+1).isOccupied())
+                    else
                     {
-                        isHorizontal = true;
-                        while(board.getSquareCopy(row, j).isOccupied())
+                        if(board.getSquareCopy(i, j).isOccupied() && board.getSquareCopy(i, j).isOccupied())
                         {
-                            letter = board.getSquareCopy(row, j).getTile().getLetter();
-                            found.append(letter);
-                            if(j==Board.BOARD_SIZE)
+                            while(board.getSquareCopy(row, j).isOccupied())
                             {
-                                break;
+                                isHorizontal = true;
+                                letter = board.getSquareCopy(row, j).getTile().getLetter();
+                                found.append(letter);
+                                if(j==Board.BOARD_SIZE-1)
+                                {
+                                    break;
+                                }
+                                j++;
                             }
-                            j++;
+                            wordsToCheck.add(new Word(row, col, isHorizontal, found.toString()));
+                            found = new StringBuilder();
+                            while(board.getSquareCopy(i, col).isOccupied())
+                            {
+                                isHorizontal = false;
+                                letter = board.getSquareCopy(i, col).getTile().getLetter();
+                                found.append(letter);
+                                if(i==Board.BOARD_SIZE-1)
+                                {
+                                    break;
+                                }
+                                i++;
+                            }
                         }
-                    }
-                    if(board.getSquareCopy(i+1, j).isOccupied())
-                    {
-                        isHorizontal = false;
-                        while(board.getSquareCopy(i, col).isOccupied())
+                        if(board.getSquareCopy(i, j).isOccupied())
                         {
-                            letter = board.getSquareCopy(i, col).getTile().getLetter();
-                            found.append(letter);
-                            if(i==Board.BOARD_SIZE)
+                            isHorizontal = true;
+                            while(board.getSquareCopy(row, j).isOccupied())
                             {
-                                break;
+                                letter = board.getSquareCopy(row, j).getTile().getLetter();
+                                found.append(letter);
+                                if(j==Board.BOARD_SIZE-1)
+                                {
+                                    break;
+                                }
+                                j++;
                             }
-                            i++;
                         }
+                        if(board.getSquareCopy(i+1, j).isOccupied())
+                        {
+                            isHorizontal = false;
+                            while(board.getSquareCopy(i, col).isOccupied())
+                            {
+                                letter = board.getSquareCopy(i, col).getTile().getLetter();
+                                found.append(letter);
+                                if(i==Board.BOARD_SIZE-1)
+                                {
+                                    break;
+                                }
+                                i++;
+                            }
+                        }
+
                     }
                     wordsToCheck.add(new Word(row, col, isHorizontal, found.toString()));
                     found = new StringBuilder();
