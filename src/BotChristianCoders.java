@@ -6,6 +6,7 @@ public class BotChristianCoders implements BotAPI {
     private final DictionaryAPI dictionary;
 
     private int tilesRemaining;
+    private int challengeCount;
 
     Frame frame = new Frame();
 
@@ -27,10 +28,12 @@ public class BotChristianCoders implements BotAPI {
     public String getCommand() {
         // First, See if the last world should be challenged
         System.out.println("\nChallenge??");
-        if(callChallenge())
+        if(callChallenge() && challengeCount == 0)
         {
+            challengeCount++;
             return "CHALLENGE";
         }
+        challengeCount = 0;
 
         System.out.println("\nFinding Words");
         // Otherwise, See what words we can place...
