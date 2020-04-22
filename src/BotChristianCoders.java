@@ -524,25 +524,50 @@ public class BotChristianCoders implements BotAPI {
         return result;
     }
 
+    private boolean fitsOnBoard(Word word)
+    {
+        if(word.isHorizontal())
+        {
+            if(word.getRow()+word.length()-1 > 14)
+            {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        else {
+
+            if(word.getColumn()+word.length()-1 > 14)
+            {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
     private Set<Word> stringToWord(Set<String> set, PossibleWord possibleWord, Set<Word> wordList)
     {
         for(String s : set)
         {
             Word word = new Word(possibleWord.row, possibleWord.column, possibleWord.isHorizontal, s); //creating a new word object using the
 
-            ///////////////////////////////////hereeeeeeeeeeee frameeeeeeeeeeeee
-
-
-
-            if(board.isLegalPlay(frame, word)) //catch any illegal words that are passed (such as words that would not fit on the board)
+            if(fitsOnBoard(word)) //catch any words that may not fit on the board.
             {
                 wordList.add(word);
             }
+
+            //TODO delete usage of isLegalPlay here if the new fitsOnBoard function sorts the problem, also delete the frame created as we no longer need it.
+            /*if(board.isLegalPlay(frame, word)) //catch any illegal words that are passed (such as words that would not fit on the board)
+            {
+                wordList.add(word);
+            }*/
         }
         return wordList;
     }
 
-    private String frameToString() {
+    private String frameToString()
+    {
         StringBuilder frameLetters = new StringBuilder();
         String frame = me.getFrameAsString();
         char[] frameCharArray= frame.toCharArray();
@@ -569,7 +594,8 @@ public class BotChristianCoders implements BotAPI {
     {
         Set<Word> wordList = new HashSet<Word>();
 
-        for (PossibleWord word : possibleWords) {
+        for (PossibleWord word : possibleWords)
+        {
             String frame = frameToString();
 
             ArrayList<String> arrayList = getPermutations(frame);

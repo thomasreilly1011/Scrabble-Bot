@@ -454,16 +454,34 @@ public class PossibleWordTest {
     }
 
 
+    private boolean fitsOnBoard(Word word)
+    {
+        if(word.isHorizontal())
+        {
+            return word.getRow() + word.length() - 1 <= 14;
+        }
+        else {
+
+            return word.getColumn() + word.length() - 1 <= 14;
+        }
+    }
+
     private Set<Word> stringToWord(Set<String> set, PossibleWord possibleWord, Set<Word> wordList)
     {
         for(String s : set)
         {
             Word word = new Word(possibleWord.row, possibleWord.column, possibleWord.isHorizontal, s); //creating a new word object using the
 
-            if(board.isLegalPlay(botsFrame, word)) //catch any illegal words that are passed (such as words that would not fit on the board)
+            if(fitsOnBoard(word)) //catch any words that may not fit on the board.
             {
                 wordList.add(word);
             }
+
+            //TODO delete usage of isLegalPlay here if the new fitsOnBoard function sorts the problem, also delete the frame created as we no longer need it.
+            /*if(board.isLegalPlay(frame, word)) //catch any illegal words that are passed (such as words that would not fit on the board)
+            {
+                wordList.add(word);
+            }*/
         }
         return wordList;
     }
