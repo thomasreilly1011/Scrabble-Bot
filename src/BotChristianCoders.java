@@ -17,22 +17,33 @@ public class BotChristianCoders implements BotAPI {
     @Override
     public String getCommand() {
         // First, See if the last world should be challenged
-        System.out.println("\nChallenge??");
-        if(callChallenge() && challengeCount == 0)
-        {
-            challengeCount++;
-            return "CHALLENGE";
-        }
-        challengeCount = 0;
+//        System.out.println("\nChecking for Challenge");
+//        try {
+//            if(callChallenge() && challengeCount == 0)
+//            {
+//                challengeCount++;
+//                return "CHALLENGE";
+//            }
+//            challengeCount = 0;
+//        } catch (ArrayIndexOutOfBoundsException e) {
+//            System.out.println("No Challenge");
+//        }
 
+        System.out.println("Frame is: " + me.getFrameAsString());
         System.out.println("\nFinding Words");
         // Otherwise, See what words we can place...
         updateTilesRemaining();
         System.out.println("Tiles updated");
         ArrayList<PossibleWord> possibleWords = findPossibleWords();
-        System.out.println("Possible Words Found");
+        System.out.println("Possible Words Found:");
+        for (PossibleWord pw:possibleWords) {
+            System.out.println(pw.toString());
+        }
         ArrayList<Word> legalWords = findLegalWords(possibleWords);
-        System.out.println("Tiles Updated");
+        System.out.println("Legal Words Found:");
+        for (Word w:legalWords) {
+            System.out.println(w);
+        }
 
         // If we have no legal words, we should refill our FRAME
         if (legalWords.isEmpty()) {
@@ -48,6 +59,7 @@ public class BotChristianCoders implements BotAPI {
         Word word = mostValuableWord(legalWords);
 
         System.out.println("\nWord found!");
+        System.out.println(word);
         return createPlaceCommand(word);
     }
 
@@ -87,7 +99,7 @@ public class BotChristianCoders implements BotAPI {
                     col = j;
                     char letter;
                     if(board.getSquareCopy(i, j+1).isOccupied() && board.getSquareCopy(i+1, j).isOccupied())
-                    {
+                    { //Two words
                         while(board.getSquareCopy(row, j).isOccupied())
                         {
                             isHorizontal = true;
@@ -204,17 +216,19 @@ public class BotChristianCoders implements BotAPI {
      */
     private boolean checkVerticalSpace(int row, int col)
     {
-        if (!board.getSquareCopy(row +1, col).isOccupied() && !board.getSquareCopy(row -1, col).isOccupied())
-        {
-            if (board.getSquareCopy(row -1, col +1).isOccupied() || board.getSquareCopy(row -1, col -1).isOccupied())
+        if (row+1 <= 14 && col+1 <= 14 && col-1 >=0 && row-1 >= 0) {
+            if (!board.getSquareCopy(row +1, col).isOccupied() && !board.getSquareCopy(row -1, col).isOccupied())
             {
-                return !board.getSquareCopy(row + 1, col + 1).isOccupied() && !board.getSquareCopy(row + 1, col - 1).isOccupied();
-            }
-            else if (board.getSquareCopy(row +1, col +1).isOccupied() || board.getSquareCopy(row +1, col -1).isOccupied())
-            {
-                return !board.getSquareCopy(row - 1, col + 1).isOccupied() && !board.getSquareCopy(row - 1, col - 1).isOccupied();
-            } else {
-                return true;
+                if (board.getSquareCopy(row -1, col +1).isOccupied() || board.getSquareCopy(row -1, col -1).isOccupied())
+                {
+                    return !board.getSquareCopy(row + 1, col + 1).isOccupied() && !board.getSquareCopy(row + 1, col - 1).isOccupied();
+                }
+                else if (board.getSquareCopy(row +1, col +1).isOccupied() || board.getSquareCopy(row +1, col -1).isOccupied())
+                {
+                    return !board.getSquareCopy(row - 1, col + 1).isOccupied() && !board.getSquareCopy(row - 1, col - 1).isOccupied();
+                } else {
+                    return true;
+                }
             }
         }
         return false;
@@ -228,17 +242,19 @@ public class BotChristianCoders implements BotAPI {
      */
     private boolean checkHorizontalSpace(int row, int col)
     {
-        if (!board.getSquareCopy(row, col +1).isOccupied() && !board.getSquareCopy(row, col -1).isOccupied())
-        {
-            if (board.getSquareCopy(row +1, col +1).isOccupied() || board.getSquareCopy(row -1, col +1).isOccupied())
+        if (row+1 <= 14 && col+1 <= 14 && col-1 >=0 && row-1 >= 0) {
+            if (!board.getSquareCopy(row, col +1).isOccupied() && !board.getSquareCopy(row, col -1).isOccupied())
             {
-                return !board.getSquareCopy(row + 1, col - 1).isOccupied() && !board.getSquareCopy(row - 1, col - 1).isOccupied();
-            }
-            else if (board.getSquareCopy(row +1, col -1).isOccupied() || board.getSquareCopy(row -1, col -1).isOccupied())
-            {
-                return !board.getSquareCopy(row - 1, col + 1).isOccupied() && !board.getSquareCopy(row + 1, col + 1).isOccupied();
-            } else {
-                return true;
+                if (board.getSquareCopy(row +1, col +1).isOccupied() || board.getSquareCopy(row -1, col +1).isOccupied())
+                {
+                    return !board.getSquareCopy(row + 1, col - 1).isOccupied() && !board.getSquareCopy(row - 1, col - 1).isOccupied();
+                }
+                else if (board.getSquareCopy(row +1, col -1).isOccupied() || board.getSquareCopy(row -1, col -1).isOccupied())
+                {
+                    return !board.getSquareCopy(row - 1, col + 1).isOccupied() && !board.getSquareCopy(row + 1, col + 1).isOccupied();
+                } else {
+                    return true;
+                }
             }
         }
         return false;
@@ -387,7 +403,7 @@ public class BotChristianCoders implements BotAPI {
                 end = i-2;
                 break;
             }
-            else if (board.getSquareCopy(i, col-1).isOccupied() || board.getSquareCopy(i, col-1).isOccupied())
+            else if (board.getSquareCopy(i, col-1).isOccupied() || board.getSquareCopy(i, col+1).isOccupied())
             {
                 end = i-1;
                 break;
@@ -539,16 +555,24 @@ public class BotChristianCoders implements BotAPI {
         {
             Word word = new Word(possibleWord.row, possibleWord.column, possibleWord.isHorizontal, s); //creating a new word object using the
 
-            if(fitsOnBoard(word)) //catch any words that may not fit on the board.
+//            if(fitsOnBoard(word)) //catch any words that may not fit on the board.
+//            {
+//                wordList.add(word);
+//            }
+            Frame frame = new Frame();
+            char[] frameArray = me.getFrameAsString().toCharArray();
+            ArrayList<Tile> frameTiles = new ArrayList<>();
+            for (char e:frameArray) {
+                if (Character.isLetter(e)) {
+                    frameTiles.add(new Tile(e));
+                }
+            }
+            frame.addTiles(frameTiles);
+            //TODO delete usage of isLegalPlay here if the new fitsOnBoard function sorts the problem, also delete the frame created as we no longer need it.
+            if(board.isLegalPlay(frame, word)) //catch any illegal words that are passed (such as words that would not fit on the board)
             {
                 wordList.add(word);
             }
-
-            //TODO delete usage of isLegalPlay here if the new fitsOnBoard function sorts the problem, also delete the frame created as we no longer need it.
-            /*if(board.isLegalPlay(frame, word)) //catch any illegal words that are passed (such as words that would not fit on the board)
-            {
-                wordList.add(word);
-            }*/
         }
         return wordList;
     }
@@ -585,6 +609,7 @@ public class BotChristianCoders implements BotAPI {
         {
             String frame = frameToString();
 
+            //Temp notes from Toe (TNFT) Generates every permutation of all letters in the Frame
             ArrayList<String> arrayList = getPermutations(frame);
 
             arrayList.remove("");
@@ -597,24 +622,29 @@ public class BotChristianCoders implements BotAPI {
             for (String s : arrayList)
             {
                 StringBuilder stringbuilder = new StringBuilder(s);
+                //TNFT: When a letter already exists on the board, insert it at the appropriate index
                 if(index!=-1 && !(index>stringbuilder.length()))
                 {
                     stringbuilder.insert(index, ch);
                 }
                 if(!(index>stringbuilder.length()))
                 {
-                    for (int i = 0; i < stringbuilder.length() - wordLength; i++)
-                    {
-                        stringbuilder.deleteCharAt(stringbuilder.length() - 1); //trims the strings to only output the permutations that fit in wordLength
+                    String wordString = stringbuilder.toString();
+                    if (wordString.length() > word.length) {
+                        wordString = wordString.substring(0, word.length-1);
                     }
+//                    for (int i = 0; i < stringbuilder.length() - wordLength; i++)
+//                    {
+//                        stringbuilder.deleteCharAt(stringbuilder.length() - 1); //trims the strings to only output the permutations that fit in wordLength
+//                    }
 
                     ArrayList<Word> singleWord = new ArrayList<Word>();
-                    Word dictionaryTest = new Word(0, 0, true, stringbuilder.toString());
+                    Word dictionaryTest = new Word(0, 0, true, wordString);
                     singleWord.add(dictionaryTest);
 
                     if(dictionary.areWords(singleWord)) //if the word is an actual word, add it to the set
                     {
-                        set.add(stringbuilder.toString()); //set does not allow for duplicates therefore gets rid of our dupes (which come from the non-perfect trimming system)
+                        set.add(wordString); //set does not allow for duplicates therefore gets rid of our dupes (which come from the non-perfect trimming system)
                     }
                 }
             }
@@ -629,7 +659,6 @@ public class BotChristianCoders implements BotAPI {
         ArrayList<Coordinates> oldLetterCoords = new ArrayList<>();
         int r = word.getFirstRow();
         int c = word.getFirstColumn();
-        System.out.println();
         for (int i = 0; i<word.length(); i++)
         {
             if (board.getSquareCopy(r,c).isOccupied())
@@ -687,7 +716,7 @@ public class BotChristianCoders implements BotAPI {
     private Word mostValuableWord(ArrayList<Word> legalWords)
     {
         int highestScore = 0;
-        int score = 0;
+        //int score = 0;
         int bestWordIndex = 0;
         int index = 0;
         Word bestWord;
@@ -695,10 +724,10 @@ public class BotChristianCoders implements BotAPI {
         for(Word word: legalWords)
         {
             int wordPoints = getWordPoints(word);
-            score += wordPoints;
-            if(score >= highestScore)
+            //score += wordPoints;
+            if(wordPoints >= highestScore)
             {
-                highestScore = score;
+                highestScore = wordPoints;
                 bestWordIndex = index;
             }
             index++;
