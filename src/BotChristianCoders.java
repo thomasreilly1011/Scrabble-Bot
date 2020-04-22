@@ -7,20 +7,10 @@ public class BotChristianCoders implements BotAPI {
 
     private int tilesRemaining;
 
-    Frame frame = new Frame();
-
     public BotChristianCoders(PlayerAPI me, OpponentAPI opponent, BoardAPI board, UserInterfaceAPI ui, DictionaryAPI dictionary) {
         this.me = me;
         this.board = board;
         this.dictionary = dictionary;
-
-        String frameLetters = frameToString();
-        ArrayList<Tile> tileArrayList = new ArrayList<Tile>(7);
-        for(int i=0; i<frameLetters.length(); i++)
-        {
-            tileArrayList.add(new Tile(frameLetters.charAt(i)));
-        }
-        frame.addTiles(tileArrayList);
     }
 
     @Override
