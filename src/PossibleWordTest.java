@@ -458,11 +458,11 @@ public class PossibleWordTest {
     {
         if(word.isHorizontal())
         {
-            return word.getRow() + word.length() - 1 <= 14;
+            return word.getColumn() + word.length() - 1 <= 14;
         }
         else {
 
-            return word.getColumn() + word.length() - 1 <= 14;
+            return word.getRow() + word.length() - 1 <= 14;
         }
     }
 

@@ -532,21 +532,11 @@ public class BotChristianCoders implements BotAPI {
     {
         if(word.isHorizontal())
         {
-            if(word.getRow()+word.length()-1 > 14)
-            {
-                return false;
-            } else {
-                return true;
-            }
+            return word.getColumn() + word.length() - 1 <= 14;
         }
         else {
 
-            if(word.getColumn()+word.length()-1 > 14)
-            {
-                return false;
-            } else {
-                return true;
-            }
+            return word.getRow() + word.length() - 1 <= 14;
         }
     }
 
