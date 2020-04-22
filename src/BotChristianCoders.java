@@ -43,7 +43,12 @@ public class BotChristianCoders implements BotAPI {
 
         // If we have no legal words, we should refill our FRAME
         if (legalWords.isEmpty()) {
-            return "REFILL";
+            String tiles = me.getFrameAsString();
+            tiles = tiles.replace("[", "");
+            tiles = tiles.replace("]", "");
+            tiles = tiles.replace(" ", "");
+            tiles = tiles.replace(",", "");
+            return "EXCHANGE " + tiles;
         }
 
         // Otherwise, find the best possible word and place that.
@@ -56,9 +61,8 @@ public class BotChristianCoders implements BotAPI {
     private String createPlaceCommand(Word word) {
         char col = (char) (((int ) 'A') + word.getFirstColumn());
         StringBuilder command = new StringBuilder();
-        command.append("PLACE ");
         command.append(col);
-        command.append(word.getFirstRow());
+        command.append(word.getFirstRow()+1);
         if (word.isHorizontal()) {
             command.append(" A ");
         } else {
