@@ -35,13 +35,13 @@ public class PossibleWordTest {
             //System.out.println("Row: " + possibleWord.row + ", Col: " + possibleWord.column + ", Length:  " + possibleWord.length + ", Letter: " + Character.toString(possibleWord.existingLetter) + ", Letter Index: " + possibleWord.existingLetterIndex + " , IsHorizontal: " + Boolean.toString(possibleWord.isHorizontal));
         }
         System.out.println(possibleWords.size() + " possible word placements generated");
-        ArrayList<Word> actualWords = t.findLegalWords(possibleWords);
-        for(Word actualWord : actualWords)
-        {
-            System.out.println(actualWord.toString() + " " + actualWord.getRow() + " " + actualWord.getColumn() + " " + actualWord.isHorizontal());
-        }
-        Word mvw = t.mostValuableWord(actualWords);
-        System.out.println("The Most Valuable word is! ... " + mvw + "\n");
+//        ArrayList<Word> actualWords = t.findLegalWords(possibleWords);
+//        for(Word actualWord : actualWords)
+//        {
+//            System.out.println(actualWord.toString() + " " + actualWord.getRow() + " " + actualWord.getColumn() + " " + actualWord.isHorizontal());
+//        }
+//        Word mvw = t.mostValuableWord(actualWords);
+//        System.out.println("The Most Valuable word is! ... " + mvw + "\n");
 
         /* TEST 2 - Word 'Hello' is already on the board */
         System.out.println("\n-------------Test 2---------------");
@@ -57,13 +57,13 @@ public class PossibleWordTest {
             //System.out.println("Row: " + possibleWord.row + ", Col: " + possibleWord.column + ", Length: " + possibleWord.length + ", Letter: " + Character.toString(possibleWord.existingLetter) + ", Letter Index: " + possibleWord.existingLetterIndex + ", IsHorizontal: " + Boolean.toString(possibleWord.isHorizontal));
         }
         System.out.println(possibleWords.size() + " possible word placements generated");
-        actualWords = t.findLegalWords(possibleWords);
-        for(Word actualWord : actualWords)
-        {
-            System.out.println(actualWord.toString() + " " + actualWord.getRow() + " " + actualWord.getColumn() + " " + actualWord.isHorizontal());
-        }
-        mvw = t.mostValuableWord(actualWords);
-        System.out.println("The Most Valuable word is! ... " + mvw + "\n");
+//        actualWords = t.findLegalWords(possibleWords);
+//        for(Word actualWord : actualWords)
+//        {
+//            System.out.println(actualWord.toString() + " " + actualWord.getRow() + " " + actualWord.getColumn() + " " + actualWord.isHorizontal());
+//        }
+//        mvw = t.mostValuableWord(actualWords);
+//        System.out.println("The Most Valuable word is! ... " + mvw + "\n");
 
         /* TEST 3 - Words 'Hello' and 'World' are already on the board */
         System.out.println("\n-------------Test 3---------------");
@@ -78,14 +78,43 @@ public class PossibleWordTest {
             //System.out.println("Row: " + possibleWord.row + ", Col: " + possibleWord.column + ", Length: " + possibleWord.length + ", Letter: " + Character.toString(possibleWord.existingLetter) + ", Letter Index: " + possibleWord.existingLetterIndex + ", IsHorizontal: " + Boolean.toString(possibleWord.isHorizontal));
         }
         System.out.println(possibleWords.size() + " possible word placements generated");
-        actualWords = t.findLegalWords(possibleWords);
-        System.out.println(botsFrame.toString());
-        for(Word actualWord : actualWords)
-        {
-            System.out.println(actualWord.toString() + " " + actualWord.getRow() + " " + actualWord.getColumn() + " " + actualWord.isHorizontal() + " " + board.isLegalPlay(botsFrame, actualWord));
+//        actualWords = t.findLegalWords(possibleWords);
+//        System.out.println(botsFrame.toString());
+//        for(Word actualWord : actualWords)
+//        {
+//            System.out.println(actualWord.toString() + " " + actualWord.getRow() + " " + actualWord.getColumn() + " " + actualWord.isHorizontal() + " " + board.isLegalPlay(botsFrame, actualWord));
+//        }
+//        mvw = t.mostValuableWord(actualWords);
+//        System.out.println("The Most Valuable word is! ... " + mvw + "\n");
+
+        /* TEST 4 - Words 'Hello','World' and 'Leap' are already on the board */
+        System.out.println("\n-------------Test 4---------------");
+        board.getSquare(9, 12).add(new Tile('E'));
+        board.getSquare(9, 13).add(new Tile('A'));
+        board.getSquare(9, 14).add(new Tile('P'));
+        board.numPlays = 1;
+        possibleWords = t.findPossibleWords();
+        for (PossibleWord possibleWord:possibleWords) {
+            System.out.println(possibleWord);
+            //System.out.println("Row: " + possibleWord.row + ", Col: " + possibleWord.column + ", Length: " + possibleWord.length + ", Letter: " + Character.toString(possibleWord.existingLetter) + ", Letter Index: " + possibleWord.existingLetterIndex + ", IsHorizontal: " + Boolean.toString(possibleWord.isHorizontal));
         }
-        mvw = t.mostValuableWord(actualWords);
-        System.out.println("The Most Valuable word is! ... " + mvw + "\n");
+        System.out.println(possibleWords.size() + " possible word placements generated");
+
+        /* TEST 5 - Words 'Hello','World', 'Leap', and 'Bellows' are already on the board */
+        System.out.println("\n-------------Test 5---------------");
+        board.getSquare(6, 8).add(new Tile('B'));
+        board.getSquare(8, 8).add(new Tile('L'));
+        board.getSquare(9, 8).add(new Tile('L'));
+        board.getSquare(10, 8).add(new Tile('O'));
+        board.getSquare(11, 8).add(new Tile('W'));
+        board.getSquare(12, 8).add(new Tile('S'));
+        board.numPlays = 1;
+        possibleWords = t.findPossibleWords();
+        for (PossibleWord possibleWord:possibleWords) {
+            System.out.println(possibleWord);
+            //System.out.println("Row: " + possibleWord.row + ", Col: " + possibleWord.column + ", Length: " + possibleWord.length + ", Letter: " + Character.toString(possibleWord.existingLetter) + ", Letter Index: " + possibleWord.existingLetterIndex + ", IsHorizontal: " + Boolean.toString(possibleWord.isHorizontal));
+        }
+        System.out.println(possibleWords.size() + " possible word placements generated");
     }
 
     /**
@@ -122,20 +151,20 @@ public class PossibleWordTest {
     }
 
     /*
-    Checks if there is space above or below of the given coordinates.
-    If there is space, it then checks if there is any words directly left or right that space.
-    Returns false if it fails either of these tests.
-    Returns true if and only if it passes both of them.
-     */
+   Checks if there is space above or below of the given coordinates.
+   If there is space, it then checks if there is any words directly left or right that space.
+   Returns false if it fails either of these tests.
+   Returns true if and only if it passes both of them.
+    */
     private boolean checkVerticalSpace(int row, int col)
     {
-        if (!board.getSquareCopy(row +1, col).isOccupied() && !board.getSquareCopy(row -1, col).isOccupied())
+        if (row+1 <= 14 && row-1 >= 0 && !board.getSquareCopy(row +1, col).isOccupied() && !board.getSquareCopy(row -1, col).isOccupied())
         {
-            if (board.getSquareCopy(row -1, col +1).isOccupied() || board.getSquareCopy(row -1, col -1).isOccupied())
+            if ((col+1 <= 14 && board.getSquareCopy(row -1, col +1).isOccupied()) || (col-1 >= 0 && board.getSquareCopy(row -1, col -1).isOccupied()))
             {
                 return !board.getSquareCopy(row + 1, col + 1).isOccupied() && !board.getSquareCopy(row + 1, col - 1).isOccupied();
             }
-            else if (board.getSquareCopy(row +1, col +1).isOccupied() || board.getSquareCopy(row +1, col -1).isOccupied())
+            else if ((col+1 <= 14 && board.getSquareCopy(row +1, col +1).isOccupied()) || (col-1 >= 0 && board.getSquareCopy(row +1, col -1).isOccupied()))
             {
                 return !board.getSquareCopy(row - 1, col + 1).isOccupied() && !board.getSquareCopy(row - 1, col - 1).isOccupied();
             } else {
@@ -153,13 +182,13 @@ public class PossibleWordTest {
      */
     private boolean checkHorizontalSpace(int row, int col)
     {
-        if (!board.getSquareCopy(row, col +1).isOccupied() && !board.getSquareCopy(row, col -1).isOccupied())
+        if (col+1 <= 14 && col-1 >= 0 && !board.getSquareCopy(row, col +1).isOccupied() && !board.getSquareCopy(row, col -1).isOccupied())
         {
-            if (board.getSquareCopy(row +1, col +1).isOccupied() || board.getSquareCopy(row -1, col +1).isOccupied())
+            if ((row+1 <= 14 && board.getSquareCopy(row +1, col +1).isOccupied()) || (row-1 >= 0 && board.getSquareCopy(row -1, col +1).isOccupied()))
             {
                 return !board.getSquareCopy(row + 1, col - 1).isOccupied() && !board.getSquareCopy(row - 1, col - 1).isOccupied();
             }
-            else if (board.getSquareCopy(row +1, col -1).isOccupied() || board.getSquareCopy(row -1, col -1).isOccupied())
+            else if ((row+1 <=14 && board.getSquareCopy(row +1, col -1).isOccupied()) || (row-1 >= 0 && board.getSquareCopy(row -1, col -1).isOccupied()))
             {
                 return !board.getSquareCopy(row - 1, col + 1).isOccupied() && !board.getSquareCopy(row + 1, col + 1).isOccupied();
             } else {
@@ -199,7 +228,7 @@ public class PossibleWordTest {
                 start = i+2;
                 break;
             }
-            else if (board.getSquareCopy(row-1, i).isOccupied() || board.getSquareCopy(row+1, i).isOccupied())
+            else if ((row-1 > 0 && board.getSquareCopy(row-1, i).isOccupied()) || (row+1 < 14 && board.getSquareCopy(row+1, i).isOccupied()))
             {
                 start = i+1;
                 break;
@@ -213,7 +242,7 @@ public class PossibleWordTest {
                 end = i-2;
                 break;
             }
-            else if (board.getSquareCopy(row-1, i).isOccupied() || board.getSquareCopy(row+1, i).isOccupied())
+            else if ((row-1 > 0 && board.getSquareCopy(row-1, i).isOccupied()) || (row+1 < 14 && board.getSquareCopy(row+1, i).isOccupied()))
             {
                 end = i-1;
                 break;
@@ -298,7 +327,7 @@ public class PossibleWordTest {
                 start = i+2;
                 break;
             }
-            else if (board.getSquareCopy(i, col-1).isOccupied() || board.getSquareCopy(i, col+1).isOccupied())
+            else if ((col-1 > 0 && board.getSquareCopy(i, col-1).isOccupied()) || (col+1 < 14 && board.getSquareCopy(i, col+1).isOccupied()))
             {
                 start = i+1;
                 break;
@@ -312,7 +341,7 @@ public class PossibleWordTest {
                 end = i-2;
                 break;
             }
-            else if (board.getSquareCopy(i, col-1).isOccupied() || board.getSquareCopy(i, col-1).isOccupied())
+            else if ((col-1 > 0 && board.getSquareCopy(i, col-1).isOccupied()) || (col+1 < 14 && board.getSquareCopy(i, col+1).isOccupied()))
             {
                 end = i-1;
                 break;
@@ -391,13 +420,6 @@ public class PossibleWordTest {
             this.isHorizontal = isHorizontal;
             this.length = length;
         }
-
-        public int getRow() { return row; }
-        public int getColumn() { return column; }
-        public boolean isHorizontal() { return isHorizontal; }
-        public int getLength() { return length; }
-        public char getExistingLetter() { return existingLetter; }
-        public int getExistingLetterIndex() { return existingLetterIndex; }
 
         public boolean hasExistingLetter() { return existingLetter != '\0'; }
 

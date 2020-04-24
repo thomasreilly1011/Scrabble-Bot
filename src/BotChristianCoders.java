@@ -167,7 +167,7 @@ public class BotChristianCoders implements BotAPI {
         int count = 0;
         for (char c:frameCharArray)
         {
-            if (Character.isLetter(c))
+            if (Character.isLetter(c) || c == '_')
             {
                 count++;
             }
@@ -209,26 +209,24 @@ public class BotChristianCoders implements BotAPI {
     }
 
     /*
-    Checks if there is space above or below of the given coordinates.
-    If there is space, it then checks if there is any words directly left or right that space.
-    Returns false if it fails either of these tests.
-    Returns true if and only if it passes both of them.
-     */
+  Checks if there is space above or below of the given coordinates.
+  If there is space, it then checks if there is any words directly left or right that space.
+  Returns false if it fails either of these tests.
+  Returns true if and only if it passes both of them.
+   */
     private boolean checkVerticalSpace(int row, int col)
     {
-        if (row+1 <= 14 && col+1 <= 14 && col-1 >=0 && row-1 >= 0) {
-            if (!board.getSquareCopy(row +1, col).isOccupied() && !board.getSquareCopy(row -1, col).isOccupied())
+        if (row+1 <= 14 && row-1 >= 0 && !board.getSquareCopy(row +1, col).isOccupied() && !board.getSquareCopy(row -1, col).isOccupied())
+        {
+            if ((col+1 <= 14 && board.getSquareCopy(row -1, col +1).isOccupied()) || (col-1 >= 0 && board.getSquareCopy(row -1, col -1).isOccupied()))
             {
-                if (board.getSquareCopy(row -1, col +1).isOccupied() || board.getSquareCopy(row -1, col -1).isOccupied())
-                {
-                    return !board.getSquareCopy(row + 1, col + 1).isOccupied() && !board.getSquareCopy(row + 1, col - 1).isOccupied();
-                }
-                else if (board.getSquareCopy(row +1, col +1).isOccupied() || board.getSquareCopy(row +1, col -1).isOccupied())
-                {
-                    return !board.getSquareCopy(row - 1, col + 1).isOccupied() && !board.getSquareCopy(row - 1, col - 1).isOccupied();
-                } else {
-                    return true;
-                }
+                return !(col+1 <= 14 && col-1 >= 0 && board.getSquareCopy(row + 1, col + 1).isOccupied() && board.getSquareCopy(row + 1, col - 1).isOccupied());
+            }
+            else if ((col+1 <= 14 && board.getSquareCopy(row +1, col +1).isOccupied()) || (col-1 >= 0 && board.getSquareCopy(row +1, col -1).isOccupied()))
+            {
+                return !(col+1 <= 14 && col-1 >= 0 && board.getSquareCopy(row - 1, col + 1).isOccupied() && board.getSquareCopy(row - 1, col - 1).isOccupied());
+            } else {
+                return true;
             }
         }
         return false;
@@ -242,19 +240,17 @@ public class BotChristianCoders implements BotAPI {
      */
     private boolean checkHorizontalSpace(int row, int col)
     {
-        if (row+1 <= 14 && col+1 <= 14 && col-1 >=0 && row-1 >= 0) {
-            if (!board.getSquareCopy(row, col +1).isOccupied() && !board.getSquareCopy(row, col -1).isOccupied())
+        if (col+1 <= 14 && col-1 >= 0 && !board.getSquareCopy(row, col +1).isOccupied() && !board.getSquareCopy(row, col -1).isOccupied())
+        {
+            if ((row+1 <= 14 && board.getSquareCopy(row +1, col +1).isOccupied()) || (row-1 >= 0 && board.getSquareCopy(row -1, col +1).isOccupied()))
             {
-                if (board.getSquareCopy(row +1, col +1).isOccupied() || board.getSquareCopy(row -1, col +1).isOccupied())
-                {
-                    return !board.getSquareCopy(row + 1, col - 1).isOccupied() && !board.getSquareCopy(row - 1, col - 1).isOccupied();
-                }
-                else if (board.getSquareCopy(row +1, col -1).isOccupied() || board.getSquareCopy(row -1, col -1).isOccupied())
-                {
-                    return !board.getSquareCopy(row - 1, col + 1).isOccupied() && !board.getSquareCopy(row + 1, col + 1).isOccupied();
-                } else {
-                    return true;
-                }
+                return !(row+1 <= 14 && row-1 >= 0 && board.getSquareCopy(row + 1, col - 1).isOccupied() && board.getSquareCopy(row - 1, col - 1).isOccupied());
+            }
+            else if ((row+1 <=14 && board.getSquareCopy(row +1, col -1).isOccupied()) || (row-1 >= 0 && board.getSquareCopy(row -1, col -1).isOccupied()))
+            {
+                return !(row+1 <= 14 && row-1 >= 0 && board.getSquareCopy(row - 1, col + 1).isOccupied() && board.getSquareCopy(row + 1, col + 1).isOccupied());
+            } else {
+                return true;
             }
         }
         return false;
@@ -290,7 +286,7 @@ public class BotChristianCoders implements BotAPI {
                 start = i+2;
                 break;
             }
-            else if (board.getSquareCopy(row-1, i).isOccupied() || board.getSquareCopy(row+1, i).isOccupied())
+            else if ((row-1 > 0 && board.getSquareCopy(row-1, i).isOccupied()) || (row+1 < 14 && board.getSquareCopy(row+1, i).isOccupied()))
             {
                 start = i+1;
                 break;
@@ -304,7 +300,7 @@ public class BotChristianCoders implements BotAPI {
                 end = i-2;
                 break;
             }
-            else if (board.getSquareCopy(row-1, i).isOccupied() || board.getSquareCopy(row+1, i).isOccupied())
+            else if ((row-1 > 0 && board.getSquareCopy(row-1, i).isOccupied()) || (row+1 < 14 && board.getSquareCopy(row+1, i).isOccupied()))
             {
                 end = i-1;
                 break;
@@ -389,7 +385,7 @@ public class BotChristianCoders implements BotAPI {
                 start = i+2;
                 break;
             }
-            else if (board.getSquareCopy(i, col-1).isOccupied() || board.getSquareCopy(i, col+1).isOccupied())
+            else if ((col-1 > 0 && board.getSquareCopy(i, col-1).isOccupied()) || (col+1 < 14 && board.getSquareCopy(i, col+1).isOccupied()))
             {
                 start = i+1;
                 break;
@@ -403,7 +399,7 @@ public class BotChristianCoders implements BotAPI {
                 end = i-2;
                 break;
             }
-            else if (board.getSquareCopy(i, col-1).isOccupied() || board.getSquareCopy(i, col+1).isOccupied())
+            else if ((col-1 > 0 && board.getSquareCopy(i, col-1).isOccupied()) || (col+1 < 14 && board.getSquareCopy(i, col+1).isOccupied()))
             {
                 end = i-1;
                 break;
