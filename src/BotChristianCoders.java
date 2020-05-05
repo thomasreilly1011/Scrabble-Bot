@@ -16,8 +16,7 @@ public class BotChristianCoders implements BotAPI {
 
     @Override
     public String getCommand() {
-//         First, See if the last world should be challenged
-        System.out.println("\nChecking for Challenge");
+//      First, See if the last world should be challenged
         try {
             if(callChallenge() && challengeCount == 0)
             {
@@ -26,24 +25,13 @@ public class BotChristianCoders implements BotAPI {
             }
             challengeCount = 0;
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("No Challenge");
+            //No Challenge
         }
 
-        System.out.println("Frame is: " + me.getFrameAsString());
-        System.out.println("\nFinding Words");
         // Otherwise, See what words we can place...
         updateTilesRemaining();
-        System.out.println("Tiles updated");
         ArrayList<PossibleWord> possibleWords = findPossibleWords();
-        System.out.println("Possible Words Found:");
-        for (PossibleWord pw:possibleWords) {
-            System.out.println(pw.toString());
-        }
         ArrayList<Word> legalWords = findLegalWords(possibleWords);
-        System.out.println("Legal Words Found:");
-        for (Word w:legalWords) {
-            System.out.println(w);
-        }
 
         // If we have no legal words, we should refill our FRAME
         if (legalWords.isEmpty()) {
@@ -58,8 +46,6 @@ public class BotChristianCoders implements BotAPI {
         // Otherwise, find the best possible word and place that.
         Word word = mostValuableWord(legalWords);
 
-        System.out.println("\nWord found!");
-        System.out.println(word);
         return createPlaceCommand(word);
     }
 
