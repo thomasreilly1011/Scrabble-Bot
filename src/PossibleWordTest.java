@@ -453,7 +453,6 @@ public class PossibleWordTest {
         return result;
     }
 
-
     private boolean fitsOnBoard(Word word)
     {
         if(word.isHorizontal())

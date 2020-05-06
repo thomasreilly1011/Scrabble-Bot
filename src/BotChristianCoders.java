@@ -1,3 +1,10 @@
+/*
+ * Group 34: Christian Coders
+ * Members: Daniel Portela Byrne, Thomas Reilly, Sean Lacey
+ * Student numbers: 18334263, 18483722, 18902826
+ */
+
+
 import java.util.*;
 
 public class BotChristianCoders implements BotAPI {
@@ -540,12 +547,6 @@ public class BotChristianCoders implements BotAPI {
             {
                 wordList.add(word);
             }
-
-            //TODO delete usage of isLegalPlay here if the new fitsOnBoard function sorts the problem, also delete the frame created as we no longer need it.
-            /*if(board.isLegalPlay(frame, word)) //catch any illegal words that are passed (such as words that would not fit on the board)
-            {
-                wordList.add(word);
-            }*/
         }
         return wordList;
     }
