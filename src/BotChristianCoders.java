@@ -1,3 +1,10 @@
+/*
+ * Group 34: Christian Coders
+ * Members: Daniel Portela Byrne, Thomas Reilly, Sean Lacey
+ * Student numbers: 18334263, 18483722, 18902826
+ */
+
+
 import java.util.*;
 
 public class BotChristianCoders implements BotAPI {
