@@ -14,17 +14,26 @@ public class BotChristianCoders implements BotAPI {
         this.dictionary = dictionary;
     }
 
+    private int turns = 0;
+
     @Override
     public String getCommand() {
+        if (turns == 0) {
+            turns++;
+            return "NAME BotChristianCoders";
+        }
+
 //      First, See if the last world should be challenged
         try {
             if(callChallenge() && challengeCount == 0)
             {
                 challengeCount++;
+                turns++;
                 return "CHALLENGE";
             }
             challengeCount = 0;
         } catch (ArrayIndexOutOfBoundsException e) {
+            challengeCount = 0;
             //No Challenge
         }
 
@@ -40,12 +49,14 @@ public class BotChristianCoders implements BotAPI {
             tiles = tiles.replace("]", "");
             tiles = tiles.replace(" ", "");
             tiles = tiles.replace(",", "");
+            turns++;
             return "EXCHANGE " + tiles;
         }
 
         // Otherwise, find the best possible word and place that.
         Word word = mostValuableWord(legalWords);
 
+        turns++;
         return createPlaceCommand(word);
     }
 
