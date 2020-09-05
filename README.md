@@ -1,5 +1,5 @@
 # Scrabble Game &  Bot
-![Image of Scrabble Board](./scrabble-project.jpg)
+![Image of Scrabble Board](./Scrabble-Board.png)
 
 My Software Engineering Project (COMP20050) completed as part of my Stage 2 studies in UCD. 
 A Scrabble game with JavaFX UI and programmed bot that you can play against.
